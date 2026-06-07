@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260607-project-text-scroll-final">
+    <link rel="stylesheet" href="static/css/style.css?v=20260607-mobile-project-manual-gesture">
 </head>
 
 <body class="is-home">
@@ -260,9 +260,7 @@
                 return;
             }
 
-            const isInsideTextZone = event.target.closest(".text-zone");
-
-            if (!isInsideTextZone) {
+            if (!event.target.closest(".text-zone")) {
                 event.preventDefault();
             }
         }, { passive: false });
@@ -279,18 +277,17 @@
                 return;
             }
 
-            const sliderWindow = slider.querySelector("[data-project-window]");
             const track = slider.querySelector("[data-project-track]");
             const previousButton = slider.querySelector("[data-project-prev]");
             const nextButton = slider.querySelector("[data-project-next]");
             const counter = slider.querySelector("[data-project-counter]");
             const slides = slider.querySelectorAll(".project-slide");
-            const swipeZones = slider.querySelectorAll(".project-preview-slider");
 
             let currentIndex = 0;
 
             let startX = 0;
             let startY = 0;
+            let lastY = 0;
             let currentX = 0;
 
             let isTouching = false;
@@ -298,7 +295,7 @@
 
             const totalSlides = slides.length;
             const swipeThreshold = 36;
-            const directionThreshold = 7;
+            const directionThreshold = 8;
 
             function updateSlider() {
                 track.style.transition = "transform 420ms ease";
@@ -322,6 +319,7 @@
 
                 startX = clientX;
                 startY = clientY;
+                lastY = clientY;
                 currentX = clientX;
 
                 track.style.transition = "none";
@@ -343,14 +341,20 @@
                     gestureMode = Math.abs(dragX) > Math.abs(dragY) ? "horizontal" : "vertical";
                 }
 
+                event.preventDefault();
+
                 if (gestureMode === "vertical") {
+                    if (textZone) {
+                        const deltaY = clientY - lastY;
+                        textZone.scrollTop -= deltaY;
+                    }
+
+                    lastY = clientY;
                     return;
                 }
 
-                event.preventDefault();
-
                 currentX = clientX;
-                sliderWindow.classList.add("is-dragging");
+                slider.classList.add("is-dragging");
 
                 track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`;
             }
@@ -362,7 +366,7 @@
 
                 const dragDistance = currentX - startX;
 
-                sliderWindow.classList.remove("is-dragging");
+                slider.classList.remove("is-dragging");
                 isTouching = false;
 
                 if (gestureMode !== "horizontal") {
@@ -388,46 +392,44 @@
             previousButton.addEventListener("click", moveToPrevious);
             nextButton.addEventListener("click", moveToNext);
 
-            /*
-                Swipe is attached only to project image areas.
-                Project text remains free for vertical scrolling.
-            */
-            swipeZones.forEach((zone) => {
-                zone.addEventListener("touchstart", (event) => {
-                    if (!event.touches.length) {
-                        return;
-                    }
+            slider.addEventListener("touchstart", (event) => {
+                if (!event.touches.length || event.target.closest(".project-slider-controls")) {
+                    return;
+                }
 
-                    beginTouch(event.touches[0].clientX, event.touches[0].clientY);
-                }, { passive: true });
+                beginTouch(event.touches[0].clientX, event.touches[0].clientY);
+            }, { passive: true });
 
-                zone.addEventListener("touchmove", (event) => {
-                    if (!event.touches.length) {
-                        return;
-                    }
+            slider.addEventListener("touchmove", (event) => {
+                if (!event.touches.length || event.target.closest(".project-slider-controls")) {
+                    return;
+                }
 
-                    moveTouch(event.touches[0].clientX, event.touches[0].clientY, event);
-                }, { passive: false });
+                moveTouch(event.touches[0].clientX, event.touches[0].clientY, event);
+            }, { passive: false });
 
-                zone.addEventListener("touchend", (event) => {
-                    endTouch(event);
-                }, { passive: false });
+            slider.addEventListener("touchend", (event) => {
+                endTouch(event);
+            }, { passive: false });
 
-                zone.addEventListener("touchcancel", (event) => {
-                    endTouch(event);
-                }, { passive: false });
+            slider.addEventListener("touchcancel", (event) => {
+                endTouch(event);
+            }, { passive: false });
 
-                zone.addEventListener("mousedown", (event) => {
-                    event.preventDefault();
+            slider.addEventListener("mousedown", (event) => {
+                if (event.target.closest(".project-slider-controls")) {
+                    return;
+                }
 
-                    isTouching = true;
-                    gestureMode = "horizontal";
-                    startX = event.clientX;
-                    currentX = event.clientX;
+                event.preventDefault();
 
-                    sliderWindow.classList.add("is-dragging");
-                    track.style.transition = "none";
-                });
+                isTouching = true;
+                gestureMode = "horizontal";
+                startX = event.clientX;
+                currentX = event.clientX;
+
+                slider.classList.add("is-dragging");
+                track.style.transition = "none";
             });
 
             window.addEventListener("mousemove", (event) => {

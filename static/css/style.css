@@ -279,11 +279,9 @@ h2 {
     width: 100%;
     overflow: hidden;
     cursor: grab;
-
-    touch-action: pan-y;
-    overscroll-behavior: contain;
 }
 
+.project-slider.is-dragging,
 .project-slider-window.is-dragging {
     cursor: grabbing;
 }
@@ -716,9 +714,9 @@ h2 {
         overflow-y: auto !important;
         overflow-x: hidden !important;
 
-        touch-action: pan-y !important;
+        touch-action: none !important;
         overscroll-behavior: contain !important;
-        -webkit-overflow-scrolling: touch;
+        -webkit-overflow-scrolling: auto;
 
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -787,35 +785,36 @@ h2 {
 
     .project-slider {
         max-width: 100%;
-    }
 
-    .project-slider-window,
-    .project-slider-track,
-    .project-slide {
-        touch-action: pan-y !important;
-        overscroll-behavior: contain !important;
+        touch-action: none !important;
+        overscroll-behavior: none !important;
     }
 
     .project-slider-window {
         overflow: hidden !important;
+
+        touch-action: none !important;
+        overscroll-behavior: none !important;
+    }
+
+    .project-slider-track,
+    .project-slide,
+    .project-card,
+    .project-card h3,
+    .project-subtitle,
+    .project-card p,
+    .project-extra,
+    .project-status,
+    .project-link,
+    .project-preview-slider {
+        touch-action: none !important;
+        overscroll-behavior: none !important;
     }
 
     .project-preview-slider {
         max-width: 100%;
         aspect-ratio: 16 / 10;
         margin-bottom: 16px;
-
-        touch-action: none !important;
-        overscroll-behavior: none !important;
-    }
-
-    .project-card,
-    .project-card h3,
-    .project-subtitle,
-    .project-card p,
-    .project-status,
-    .project-link {
-        touch-action: pan-y !important;
     }
 
     .project-card h3 {
@@ -919,45 +918,5 @@ h2 {
         line-height: 1.35;
         letter-spacing: 0.025em;
         color: rgba(0, 0, 0, 0.56);
-    }
-}
-
-/* FINAL FIX: PROJECT TEXT MUST SCROLL FROM ANY TEXT AREA */
-@media (max-width: 520px) {
-    .text-zone {
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-        touch-action: pan-y !important;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain !important;
-    }
-
-    .project-slider {
-        overflow: visible !important;
-        clip-path: inset(0 0 0 0);
-    }
-
-    .project-slider-window {
-        overflow: visible !important;
-        touch-action: auto !important;
-        overscroll-behavior: contain !important;
-    }
-
-    .project-slider-track,
-    .project-slide,
-    .project-card,
-    .project-card h3,
-    .project-subtitle,
-    .project-card p,
-    .project-extra,
-    .project-status,
-    .project-link {
-        touch-action: auto !important;
-        overscroll-behavior: contain !important;
-    }
-
-    .project-preview-slider,
-    .project-preview-slider * {
-        touch-action: none !important;
     }
 }
