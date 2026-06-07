@@ -23,6 +23,7 @@ body {
     overflow-x: hidden;
 }
 
+/* BACKGROUND */
 .page-bg {
     position: fixed;
     inset: 0;
@@ -125,7 +126,7 @@ button.is-active,
     font-weight: 600;
 }
 
-/* SINGLE TEXT AREA */
+/* TEXT AREA */
 .text-zone {
     position: absolute;
 
@@ -161,7 +162,7 @@ button.is-active,
     pointer-events: none;
 }
 
-/* TEXT SWAP ANIMATION */
+/* TEXT TRANSITION */
 .content-inner {
     opacity: 1;
     transform: translateY(0);
@@ -279,8 +280,8 @@ h2 {
     overflow: hidden;
     cursor: grab;
 
-    touch-action: none;
-    overscroll-behavior: none;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
 }
 
 .project-slider-window.is-dragging {
@@ -600,14 +601,16 @@ h2 {
     }
 }
 
-/* MOBILE - LOCKED VIEWPORT */
+/* MOBILE */
 @media (max-width: 520px) {
     html {
         width: 100%;
         height: var(--app-height);
         min-height: var(--app-height);
+
         overflow: hidden !important;
         overscroll-behavior: none !important;
+
         background: #000;
     }
 
@@ -710,11 +713,21 @@ h2 {
         margin: 0;
         padding: 16px 14px 18px;
 
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
 
+        touch-action: pan-y !important;
+        overscroll-behavior: contain !important;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .text-zone::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
     }
 
     .text-zone::before {
@@ -780,8 +793,12 @@ h2 {
     .project-slider-track,
     .project-slide,
     .project-preview-slider {
-        touch-action: none !important;
-        overscroll-behavior: none !important;
+        touch-action: pan-y !important;
+        overscroll-behavior: contain !important;
+    }
+
+    .project-slider-window {
+        overflow: hidden !important;
     }
 
     .project-preview-slider {
