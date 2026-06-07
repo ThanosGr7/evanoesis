@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260607-mobile-scroll-slider-fix">
+    <link rel="stylesheet" href="static/css/style.css?v=20260607-project-text-scroll-final">
 </head>
 
 <body class="is-home">
@@ -178,10 +178,6 @@
                                 <p class="project-status">
                                     Status: In Development
                                 </p>
-
-                                <a class="project-link" aria-label="Visual Pathway Intelligence app download link">
-                                    App download link: Coming soon
-                                </a>
                             </article>
 
                         </div>
@@ -259,12 +255,6 @@
             setTimeout(setMobileViewportHeight, 250);
         });
 
-        /*
-            Mobile behavior:
-            - Outside text-zone: locked, so the background cannot move.
-            - Inside text-zone: vertical scrolling is allowed.
-            - Inside project slider: horizontal swipe is handled by the slider.
-        */
         document.addEventListener("touchmove", (event) => {
             if (!isMobileViewport()) {
                 return;
@@ -295,6 +285,7 @@
             const nextButton = slider.querySelector("[data-project-next]");
             const counter = slider.querySelector("[data-project-counter]");
             const slides = slider.querySelectorAll(".project-slide");
+            const swipeZones = slider.querySelectorAll(".project-preview-slider");
 
             let currentIndex = 0;
 
@@ -397,40 +388,46 @@
             previousButton.addEventListener("click", moveToPrevious);
             nextButton.addEventListener("click", moveToNext);
 
-            sliderWindow.addEventListener("touchstart", (event) => {
-                if (!event.touches.length) {
-                    return;
-                }
+            /*
+                Swipe is attached only to project image areas.
+                Project text remains free for vertical scrolling.
+            */
+            swipeZones.forEach((zone) => {
+                zone.addEventListener("touchstart", (event) => {
+                    if (!event.touches.length) {
+                        return;
+                    }
 
-                beginTouch(event.touches[0].clientX, event.touches[0].clientY);
-            }, { passive: true });
+                    beginTouch(event.touches[0].clientX, event.touches[0].clientY);
+                }, { passive: true });
 
-            sliderWindow.addEventListener("touchmove", (event) => {
-                if (!event.touches.length) {
-                    return;
-                }
+                zone.addEventListener("touchmove", (event) => {
+                    if (!event.touches.length) {
+                        return;
+                    }
 
-                moveTouch(event.touches[0].clientX, event.touches[0].clientY, event);
-            }, { passive: false });
+                    moveTouch(event.touches[0].clientX, event.touches[0].clientY, event);
+                }, { passive: false });
 
-            sliderWindow.addEventListener("touchend", (event) => {
-                endTouch(event);
-            }, { passive: false });
+                zone.addEventListener("touchend", (event) => {
+                    endTouch(event);
+                }, { passive: false });
 
-            sliderWindow.addEventListener("touchcancel", (event) => {
-                endTouch(event);
-            }, { passive: false });
+                zone.addEventListener("touchcancel", (event) => {
+                    endTouch(event);
+                }, { passive: false });
 
-            sliderWindow.addEventListener("mousedown", (event) => {
-                event.preventDefault();
+                zone.addEventListener("mousedown", (event) => {
+                    event.preventDefault();
 
-                isTouching = true;
-                gestureMode = "horizontal";
-                startX = event.clientX;
-                currentX = event.clientX;
+                    isTouching = true;
+                    gestureMode = "horizontal";
+                    startX = event.clientX;
+                    currentX = event.clientX;
 
-                sliderWindow.classList.add("is-dragging");
-                track.style.transition = "none";
+                    sliderWindow.classList.add("is-dragging");
+                    track.style.transition = "none";
+                });
             });
 
             window.addEventListener("mousemove", (event) => {

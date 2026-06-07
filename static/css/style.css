@@ -791,8 +791,7 @@ h2 {
 
     .project-slider-window,
     .project-slider-track,
-    .project-slide,
-    .project-preview-slider {
+    .project-slide {
         touch-action: pan-y !important;
         overscroll-behavior: contain !important;
     }
@@ -805,6 +804,18 @@ h2 {
         max-width: 100%;
         aspect-ratio: 16 / 10;
         margin-bottom: 16px;
+
+        touch-action: none !important;
+        overscroll-behavior: none !important;
+    }
+
+    .project-card,
+    .project-card h3,
+    .project-subtitle,
+    .project-card p,
+    .project-status,
+    .project-link {
+        touch-action: pan-y !important;
     }
 
     .project-card h3 {
