@@ -290,6 +290,8 @@
             nextButton.addEventListener("click", moveToNext);
 
             sliderWindow.addEventListener("pointerdown", (event) => {
+                event.preventDefault();
+
                 isPointerDown = true;
                 startX = event.clientX;
                 currentX = startX;
