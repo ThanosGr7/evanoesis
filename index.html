@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260607-home-quote">
+    <link rel="stylesheet" href="static/css/style.css?v=20260607-mobile-locked-viewport-final">
 </head>
 
 <body class="is-home">
@@ -46,7 +46,7 @@
 
                 <div class="home-quote">
                     <p class="quote-greek">
-                        Ἐάν μή ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει.
+                        Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει
                     </p>
 
                     <p class="quote-english">
@@ -84,7 +84,7 @@
 
                 <div class="home-quote">
                     <p class="quote-greek">
-                        Ἐάν μή ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει.
+                        Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει
                     </p>
 
                     <p class="quote-english">
@@ -243,6 +243,44 @@
 
         let isChanging = false;
 
+        function isMobileViewport() {
+            return window.matchMedia("(max-width: 520px)").matches;
+        }
+
+        function setMobileViewportHeight() {
+            const height = window.innerHeight;
+            document.documentElement.style.setProperty("--app-height", `${height}px`);
+        }
+
+        setMobileViewportHeight();
+        window.addEventListener("resize", setMobileViewportHeight);
+        window.addEventListener("orientationchange", () => {
+            setTimeout(setMobileViewportHeight, 250);
+        });
+
+        /*
+            Mobile hard lock:
+            This prevents the browser/body/background from rubber-banding.
+            Text can still live inside the fixed text layer.
+        */
+        document.addEventListener("touchmove", (event) => {
+            if (!isMobileViewport()) {
+                return;
+            }
+
+            const isInsideTextZone = event.target.closest(".text-zone");
+            const isInsideProjectSlider = event.target.closest("[data-project-window]");
+
+            if (isInsideProjectSlider) {
+                event.preventDefault();
+                return;
+            }
+
+            if (!isInsideTextZone) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
         function updatePageState(target) {
             document.body.classList.toggle("is-home", target === "home");
             document.body.classList.toggle("is-section-open", target !== "home");
@@ -265,10 +303,10 @@
             let currentIndex = 0;
             let startX = 0;
             let currentX = 0;
-            let isPointerDown = false;
+            let isDragging = false;
 
             const totalSlides = slides.length;
-            const swipeThreshold = 42;
+            const swipeThreshold = 36;
 
             function updateSlider() {
                 track.style.transition = "transform 420ms ease";
@@ -286,43 +324,35 @@
                 updateSlider();
             }
 
-            previousButton.addEventListener("click", moveToPrevious);
-            nextButton.addEventListener("click", moveToNext);
-
-            sliderWindow.addEventListener("pointerdown", (event) => {
-                event.preventDefault();
-
-                isPointerDown = true;
-                startX = event.clientX;
-                currentX = startX;
+            function beginDrag(clientX) {
+                isDragging = true;
+                startX = clientX;
+                currentX = clientX;
 
                 sliderWindow.classList.add("is-dragging");
                 track.style.transition = "none";
+            }
 
-                sliderWindow.setPointerCapture(event.pointerId);
-            });
-
-            sliderWindow.addEventListener("pointermove", (event) => {
-                if (!isPointerDown) {
+            function moveDrag(clientX) {
+                if (!isDragging) {
                     return;
                 }
 
-                event.preventDefault();
-
-                currentX = event.clientX;
+                currentX = clientX;
                 const dragDistance = currentX - startX;
 
                 track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${dragDistance}px))`;
-            });
-            function endSwipe() {
-                if (!isPointerDown) {
+            }
+
+            function endDrag() {
+                if (!isDragging) {
                     return;
                 }
 
                 const dragDistance = currentX - startX;
 
                 sliderWindow.classList.remove("is-dragging");
-                isPointerDown = false;
+                isDragging = false;
 
                 if (dragDistance > swipeThreshold) {
                     moveToPrevious();
@@ -337,9 +367,54 @@
                 updateSlider();
             }
 
-            sliderWindow.addEventListener("pointerup", endSwipe);
-            sliderWindow.addEventListener("pointercancel", endSwipe);
-            sliderWindow.addEventListener("pointerleave", endSwipe);
+            previousButton.addEventListener("click", moveToPrevious);
+            nextButton.addEventListener("click", moveToNext);
+
+            sliderWindow.addEventListener("touchstart", (event) => {
+                if (!event.touches.length) {
+                    return;
+                }
+
+                event.preventDefault();
+                beginDrag(event.touches[0].clientX);
+            }, { passive: false });
+
+            sliderWindow.addEventListener("touchmove", (event) => {
+                if (!event.touches.length) {
+                    return;
+                }
+
+                event.preventDefault();
+                moveDrag(event.touches[0].clientX);
+            }, { passive: false });
+
+            sliderWindow.addEventListener("touchend", (event) => {
+                event.preventDefault();
+                endDrag();
+            }, { passive: false });
+
+            sliderWindow.addEventListener("touchcancel", (event) => {
+                event.preventDefault();
+                endDrag();
+            }, { passive: false });
+
+            sliderWindow.addEventListener("mousedown", (event) => {
+                event.preventDefault();
+                beginDrag(event.clientX);
+            });
+
+            window.addEventListener("mousemove", (event) => {
+                if (!isDragging) {
+                    return;
+                }
+
+                event.preventDefault();
+                moveDrag(event.clientX);
+            });
+
+            window.addEventListener("mouseup", () => {
+                endDrag();
+            });
 
             updateSlider();
         }
