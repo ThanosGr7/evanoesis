@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Evanoesis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="EVANØESIS transforms meaningful ideas into practical digital projects — from vision to working reality.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/style.css?v=20260607-project-swipe-status-fix">
+</head>
+
+<body class="is-home">
+
+    <div class="page-bg"></div>
+
+    <nav class="top-menu" aria-label="Main navigation">
+        <button type="button" data-content="home" class="is-active">Home</button>
+        <button type="button" data-content="projects">Projects</button>
+        <button type="button" data-content="about">What We Do</button>
+        <button type="button" data-content="contact">Contact Us</button>
+    </nav>
+
+    <main class="site-shell">
+
+        <section class="text-zone" aria-live="polite">
+            <div id="content-inner" class="content-inner">
+                <h1 class="brand-title">EVANØESIS<span>TM</span></h1>
+
+                <p class="tagline">
+                    From vision to working reality.
+                </p>
+
+                <p class="body-text">
+                    EVANØESIS transforms meaningful ideas into practical digital projects —
+                    built with purpose, care, and a belief in technology that serves people.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>
+            © 2026 EVANØESIS. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        const content = {
+            home: `
+                <h1 class="brand-title">EVANØESIS<span>TM</span></h1>
+
+                <p class="tagline">
+                    From vision to working reality.
+                </p>
+
+                <p class="body-text">
+                    EVANØESIS transforms meaningful ideas into practical digital projects —
+                    built with purpose, care, and a belief in technology that serves people.
+                </p>
+            `,
+
+            projects: `
+                <h2>Projects</h2>
+
+                <div class="project-slider" data-project-slider>
+                    <div class="project-slider-window" data-project-window>
+                        <div class="project-slider-track" data-project-track>
+
+                            <article class="project-card project-slide">
+                                <div class="project-preview-slider" aria-label="Code Evryma project preview">
+                                    <img
+                                        class="project-preview-image project-preview-base"
+                                        src="static/images/code-evryma-preview-1.png"
+                                        alt="Code Evryma field intelligence preview, marble style">
+
+                                    <img
+                                        class="project-preview-image project-preview-top"
+                                        src="static/images/code-evryma-preview-2.png"
+                                        alt="Code Evryma field intelligence preview, blue sky style">
+                                </div>
+
+                                <h3>1. Code Evryma</h3>
+
+                                <p class="project-subtitle">
+                                    Built for the field. Designed for discovery.
+                                </p>
+
+                                <p class="body-text">
+                                    Code Evryma brings AI-powered field intelligence to metal detecting —
+                                    helping users interpret detector signals, understand ground conditions,
+                                    and work with real-time field data through a powerful set of connected tools.
+                                </p>
+
+                                <p class="body-text project-extra">
+                                    The project is designed for people who need clearer decisions in the field:
+                                    signal reading, target context, depth awareness, ground behaviour, and organised
+                                    discovery data brought together into one practical digital experience.
+                                </p>
+
+                                <p class="project-status">
+                                    Status: Featured Project
+                                </p>
+
+                                <a class="project-link" aria-label="Code Evryma app download link">
+                                    App download link: Coming soon
+                                </a>
+                            </article>
+
+                            <article class="project-card project-slide">
+                                <div class="project-preview-slider" aria-label="Visual pathway biomedical project preview">
+                                    <img
+                                        class="project-preview-image project-preview-base"
+                                        src="static/images/visual-pathway-preview-1.png"
+                                        alt="Biomedical visual nervous system preview, marble style">
+
+                                    <img
+                                        class="project-preview-image project-preview-top"
+                                        src="static/images/visual-pathway-preview-2.png"
+                                        alt="Biomedical visual nervous system preview, full colour style">
+                                </div>
+
+                                <h3>2. Visual Pathway Intelligence</h3>
+
+                                <p class="project-subtitle">
+                                    AI-assisted insight into the visual nervous system.
+                                </p>
+
+                                <p class="body-text">
+                                    A biomedical project focused on the connection between vision, neural activity,
+                                    and clinical interpretation — designed to support physicians with advanced tools
+                                    for analyzing complex patterns across the visual pathway.
+                                </p>
+
+                                <p class="body-text project-extra">
+                                    The project explores how structured visual data and intelligent analysis can help
+                                    make complex diagnostic signals easier to review, compare, and understand in a
+                                    clinical context.
+                                </p>
+
+                                <p class="project-status">
+                                    Status: In Development
+                                </p>
+
+                                <a class="project-link" aria-label="Visual Pathway Intelligence app download link">
+                                    App download link: Coming soon
+                                </a>
+                            </article>
+
+                        </div>
+                    </div>
+
+                    <div class="project-slider-controls" aria-label="Project slider controls">
+                        <button type="button" class="project-arrow" data-project-prev aria-label="Previous project">←</button>
+                        <span class="project-counter" data-project-counter>1 / 2</span>
+                        <button type="button" class="project-arrow" data-project-next aria-label="Next project">→</button>
+                    </div>
+                </div>
+            `,
+
+            about: `
+                <h2>What We Do</h2>
+
+                <p class="body-text">
+                    EVANØESIS is an independent digital project studio built around meaningful ideas,
+                    practical execution, and technology that serves people.
+                </p>
+
+                <p class="body-text">
+                    We develop focused digital products from early concept to working reality —
+                    combining research, design, software, and applied AI where it creates real value.
+                </p>
+
+                <p class="body-text">
+                    Our projects are built with purpose, clarity, and care. Each one begins with a
+                    problem worth solving and moves toward a useful tool that people can actually
+                    understand, trust, and use.
+                </p>
+
+                <p class="body-text">
+                    EVANØESIS is currently led by its founder, with each project developed through
+                    direct research, careful design, and hands-on execution.
+                </p>
+            `,
+
+            contact: `
+                <h2>Contact Us</h2>
+
+                <p class="body-text">
+                    For project enquiries, collaborations, or business communication,
+                    contact EVANØESIS directly.
+                </p>
+
+                <a class="email-link" href="mailto:contact@evanoesis.com">
+                    contact@evanoesis.com
+                </a>
+
+                <p class="body-text contact-note">
+                    LinkedIn and additional official channels will be added soon.
+                </p>
+            `
+        };
+
+        const buttons = document.querySelectorAll("[data-content]");
+        const contentInner = document.getElementById("content-inner");
+
+        let isChanging = false;
+
+        function updatePageState(target) {
+            document.body.classList.toggle("is-home", target === "home");
+            document.body.classList.toggle("is-section-open", target !== "home");
+        }
+
+        function initProjectSlider() {
+            const slider = document.querySelector("[data-project-slider]");
+
+            if (!slider) {
+                return;
+            }
+
+            const sliderWindow = slider.querySelector("[data-project-window]");
+            const track = slider.querySelector("[data-project-track]");
+            const previousButton = slider.querySelector("[data-project-prev]");
+            const nextButton = slider.querySelector("[data-project-next]");
+            const counter = slider.querySelector("[data-project-counter]");
+            const slides = slider.querySelectorAll(".project-slide");
+
+            let currentIndex = 0;
+            let startX = 0;
+            let currentX = 0;
+            let isPointerDown = false;
+
+            const totalSlides = slides.length;
+            const swipeThreshold = 42;
+
+            function updateSlider() {
+                track.style.transition = "transform 420ms ease";
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
+            }
+
+            function moveToPrevious() {
+                currentIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
+                updateSlider();
+            }
+
+            function moveToNext() {
+                currentIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
+                updateSlider();
+            }
+
+            previousButton.addEventListener("click", moveToPrevious);
+            nextButton.addEventListener("click", moveToNext);
+
+            sliderWindow.addEventListener("pointerdown", (event) => {
+                isPointerDown = true;
+                startX = event.clientX;
+                currentX = startX;
+
+                sliderWindow.classList.add("is-dragging");
+                track.style.transition = "none";
+
+                sliderWindow.setPointerCapture(event.pointerId);
+            });
+
+            sliderWindow.addEventListener("pointermove", (event) => {
+                if (!isPointerDown) {
+                    return;
+                }
+
+                currentX = event.clientX;
+                const dragDistance = currentX - startX;
+
+                track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${dragDistance}px))`;
+            });
+
+            function endSwipe() {
+                if (!isPointerDown) {
+                    return;
+                }
+
+                const dragDistance = currentX - startX;
+
+                sliderWindow.classList.remove("is-dragging");
+                isPointerDown = false;
+
+                if (dragDistance > swipeThreshold) {
+                    moveToPrevious();
+                    return;
+                }
+
+                if (dragDistance < -swipeThreshold) {
+                    moveToNext();
+                    return;
+                }
+
+                updateSlider();
+            }
+
+            sliderWindow.addEventListener("pointerup", endSwipe);
+            sliderWindow.addEventListener("pointercancel", endSwipe);
+            sliderWindow.addEventListener("pointerleave", endSwipe);
+
+            updateSlider();
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const target = button.dataset.content;
+
+                if (isChanging || button.classList.contains("is-active")) {
+                    return;
+                }
+
+                isChanging = true;
+
+                buttons.forEach((item) => {
+                    item.classList.toggle("is-active", item.dataset.content === target);
+                });
+
+                contentInner.classList.add("is-leaving");
+
+                setTimeout(() => {
+                    contentInner.innerHTML = content[target];
+                    updatePageState(target);
+
+                    if (target === "projects") {
+                        initProjectSlider();
+                    }
+
+                    contentInner.classList.remove("is-leaving");
+                    contentInner.classList.add("is-entering");
+
+                    setTimeout(() => {
+                        contentInner.classList.remove("is-entering");
+                        isChanging = false;
+                    }, 520);
+                }, 360);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
