@@ -782,3 +782,71 @@ h2 {
         color: rgba(0, 0, 0, 0.56);
     }
 }
+
+/* HOME QUOTE - LOWER, SMALLER, QUOTE ITALIC */
+.home-quote {
+    margin-top: 118px;
+    max-width: 360px;
+}
+
+.quote-greek {
+    margin: 0 0 9px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 13px;
+    line-height: 1.48;
+    font-weight: 400;
+    font-style: italic;
+
+    color: rgba(23, 21, 20, 0.66);
+}
+
+.quote-english {
+    margin: 0 0 9px;
+
+    font-size: 11.5px;
+    line-height: 1.48;
+    font-weight: 400;
+    font-style: italic;
+
+    color: rgba(23, 21, 20, 0.60);
+}
+
+.quote-author {
+    margin: 0;
+
+    font-size: 8.5px;
+    line-height: 1.3;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: rgba(23, 21, 20, 0.50);
+}
+
+@media (max-width: 520px) {
+    .home-quote {
+        margin-top: 62px;
+        max-width: 220px;
+    }
+
+    .quote-greek {
+        margin-bottom: 7px;
+        font-size: 9.5px;
+        line-height: 1.4;
+    }
+
+    .quote-english {
+        margin-bottom: 7px;
+        font-size: 8.5px;
+        line-height: 1.4;
+    }
+
+    .quote-author {
+        font-size: 6.8px;
+        line-height: 1.25;
+        font-weight: 600;
+        letter-spacing: 0.045em;
+    }
+}
