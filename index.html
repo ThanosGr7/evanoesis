@@ -46,7 +46,7 @@
 
                 <div class="home-quote">
                     <p class="quote-greek">
-                        Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει.
+                        Ἐάν μή ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει.
                     </p>
 
                     <p class="quote-english">
@@ -84,7 +84,7 @@
 
                 <div class="home-quote">
                     <p class="quote-greek">
-                        Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει.
+                        Ἐάν μή ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει.
                     </p>
 
                     <p class="quote-english">
@@ -305,12 +305,13 @@
                     return;
                 }
 
+                event.preventDefault();
+
                 currentX = event.clientX;
                 const dragDistance = currentX - startX;
 
                 track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${dragDistance}px))`;
             });
-
             function endSwipe() {
                 if (!isPointerDown) {
                     return;

@@ -1001,3 +1001,44 @@ h2 {
         letter-spacing: 0.04em;
     }
 }
+
+/* MOBILE QUOTE POSITION - LOWER ON SCREEN */
+@media (max-width: 520px) {
+    .home-quote {
+        position: fixed;
+        left: 28px;
+        top: 54vh;
+
+        margin-top: 0;
+        max-width: 205px;
+
+        z-index: 5;
+    }
+}
+
+/* MOBILE: KEEP BACKGROUND STILL WHILE SWIPING PROJECTS */
+@media (max-width: 520px) {
+
+    html,
+    body {
+        overscroll-behavior: none;
+    }
+
+    .page-bg {
+        position: fixed;
+        inset: 0;
+        transform: translateZ(0);
+        will-change: filter, transform, opacity;
+    }
+
+    .project-slider,
+    .project-slider-window,
+    .project-slider-track,
+    .project-slide {
+        touch-action: none;
+    }
+
+    .project-slider-window {
+        overscroll-behavior: contain;
+    }
+}
