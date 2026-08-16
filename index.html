@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260816-desktop-quote-bigger">
+    <link rel="stylesheet" href="static/css/style.css?v=20260816-quote-lower-right">
 </head>
 
 <body class="is-home">
@@ -43,24 +43,24 @@
                     EVANØESIS transforms meaningful ideas into practical digital projects —
                     built with purpose, care, and a belief in technology that serves people.
                 </p>
-
-                <div class="home-quote">
-                    <p class="quote-greek">
-                        Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει
-                    </p>
-
-                    <p class="quote-english">
-                        To discover the unseen, one must first hope for the unexpected.
-                    </p>
-
-                    <p class="quote-author">
-                        Heraclitus of Ephesus · c. 535–475 BCE
-                    </p>
-                </div>
             </div>
         </section>
 
     </main>
+
+    <aside class="home-quote" aria-label="Heraclitus quote">
+        <p class="quote-greek">
+            Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει
+        </p>
+
+        <p class="quote-english">
+            To discover the unseen, one must first hope for the unexpected.
+        </p>
+
+        <p class="quote-author">
+            Heraclitus of Ephesus · c. 535–475 BCE
+        </p>
+    </aside>
 
     <footer class="site-footer">
         <p>
@@ -81,20 +81,6 @@
                     EVANØESIS transforms meaningful ideas into practical digital projects —
                     built with purpose, care, and a belief in technology that serves people.
                 </p>
-
-                <div class="home-quote">
-                    <p class="quote-greek">
-                        Ἐὰν μὴ ἔλπηται, ἀνέλπιστον οὐκ ἐξευρήσει
-                    </p>
-
-                    <p class="quote-english">
-                        To discover the unseen, one must first hope for the unexpected.
-                    </p>
-
-                    <p class="quote-author">
-                        Heraclitus of Ephesus · c. 535–475 BCE
-                    </p>
-                </div>
             `,
 
             projects: `
@@ -255,6 +241,7 @@
         setMobileViewportHeight();
 
         window.addEventListener("resize", setMobileViewportHeight);
+
         window.addEventListener("orientationchange", () => {
             setTimeout(setMobileViewportHeight, 250);
         });
@@ -338,11 +325,17 @@
                 const dragY = clientY - startY;
 
                 if (!gestureMode) {
-                    if (Math.abs(dragX) < directionThreshold && Math.abs(dragY) < directionThreshold) {
+                    if (
+                        Math.abs(dragX) < directionThreshold &&
+                        Math.abs(dragY) < directionThreshold
+                    ) {
                         return;
                     }
 
-                    gestureMode = Math.abs(dragX) > Math.abs(dragY) ? "horizontal" : "vertical";
+                    gestureMode =
+                        Math.abs(dragX) > Math.abs(dragY)
+                            ? "horizontal"
+                            : "vertical";
                 }
 
                 event.preventDefault();
@@ -360,7 +353,8 @@
                 currentX = clientX;
                 slider.classList.add("is-dragging");
 
-                track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`;
+                track.style.transform =
+                    `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`;
             }
 
             function endTouch(event) {
@@ -397,19 +391,32 @@
             nextButton.addEventListener("click", moveToNext);
 
             slider.addEventListener("touchstart", (event) => {
-                if (!event.touches.length || event.target.closest(".project-slider-controls")) {
+                if (
+                    !event.touches.length ||
+                    event.target.closest(".project-slider-controls")
+                ) {
                     return;
                 }
 
-                beginTouch(event.touches[0].clientX, event.touches[0].clientY);
+                beginTouch(
+                    event.touches[0].clientX,
+                    event.touches[0].clientY
+                );
             }, { passive: true });
 
             slider.addEventListener("touchmove", (event) => {
-                if (!event.touches.length || event.target.closest(".project-slider-controls")) {
+                if (
+                    !event.touches.length ||
+                    event.target.closest(".project-slider-controls")
+                ) {
                     return;
                 }
 
-                moveTouch(event.touches[0].clientX, event.touches[0].clientY, event);
+                moveTouch(
+                    event.touches[0].clientX,
+                    event.touches[0].clientY,
+                    event
+                );
             }, { passive: false });
 
             slider.addEventListener("touchend", (event) => {
@@ -429,6 +436,7 @@
 
                 isTouching = true;
                 gestureMode = "horizontal";
+
                 startX = event.clientX;
                 currentX = event.clientX;
 
@@ -444,9 +452,11 @@
                 event.preventDefault();
 
                 currentX = event.clientX;
+
                 const dragDistance = currentX - startX;
 
-                track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${dragDistance}px))`;
+                track.style.transform =
+                    `translateX(calc(-${currentIndex * 100}% + ${dragDistance}px))`;
             });
 
             window.addEventListener("mouseup", (event) => {
@@ -460,20 +470,27 @@
             button.addEventListener("click", () => {
                 const target = button.dataset.content;
 
-                if (isChanging || button.classList.contains("is-active")) {
+                if (
+                    isChanging ||
+                    button.classList.contains("is-active")
+                ) {
                     return;
                 }
 
                 isChanging = true;
 
                 buttons.forEach((item) => {
-                    item.classList.toggle("is-active", item.dataset.content === target);
+                    item.classList.toggle(
+                        "is-active",
+                        item.dataset.content === target
+                    );
                 });
 
                 contentInner.classList.add("is-leaving");
 
                 setTimeout(() => {
                     contentInner.innerHTML = content[target];
+
                     updatePageState(target);
 
                     if (textZone) {
@@ -491,6 +508,7 @@
                         contentInner.classList.remove("is-entering");
                         isChanging = false;
                     }, 520);
+
                 }, 360);
             });
         });
