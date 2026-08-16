@@ -985,24 +985,24 @@ h2 {
     }
 }
 
-/* DESKTOP ONLY - MAKE HOME QUOTE MORE READABLE */
+/* DESKTOP ONLY - FORCE BIGGER HOME QUOTE */
 @media (min-width: 521px) {
     .home-quote {
-        max-width: 390px;
+        max-width: 430px !important;
     }
 
     .quote-greek {
-        font-size: 14px;
-        line-height: 1.5;
+        font-size: 16px !important;
+        line-height: 1.55 !important;
     }
 
     .quote-english {
-        font-size: 13px;
-        line-height: 1.5;
+        font-size: 15px !important;
+        line-height: 1.55 !important;
     }
 
     .quote-author {
-        font-size: 10px;
-        line-height: 1.35;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
     }
 }
