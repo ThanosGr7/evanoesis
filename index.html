@@ -15,7 +15,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260816-desktop-bg-v3">
+    <script>
+        const backgroundCacheVersion = Date.now();
+
+        document.documentElement.style.setProperty(
+            "--desktop-bg",
+            `url("static/images/evanoesis-bg-desktop-test.png?v=${backgroundCacheVersion}")`
+        );
+
+        document.documentElement.style.setProperty(
+            "--mobile-bg",
+            `url("static/images/evanoesis-bg-mobile-test.png?v=${backgroundCacheVersion}")`
+        );
+    </script>
+
+    <link rel="stylesheet" href="static/css/style.css?v=20260816-background-test-system">
 </head>
 
 <body class="is-home">
