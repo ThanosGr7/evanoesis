@@ -3,8 +3,8 @@
 }
 
 :root {
-    --ink: #171514;
-    --ink-soft: rgba(23, 21, 20, 0.74);
+    --ink: #e8e2d8;
+    --ink-soft: rgba(232, 226, 216, 0.80);
     --wash-main: rgba(246, 241, 237, 0.82);
     --wash-soft: rgba(246, 241, 237, 0.42);
     --app-height: 100vh;
@@ -39,7 +39,7 @@ body {
     height: 100vh;
     height: 100dvh;
 
-    background-color: #000;
+    background-color: #e8e2d8;
     background-image: var(--desktop-bg);
     background-size: cover;
     background-position: center center;
@@ -102,7 +102,7 @@ button,
     letter-spacing: 0.13em;
     text-transform: uppercase;
 
-    color: #000;
+    color: #e8e2d8;
 
     background: transparent !important;
     background-color: transparent !important;
@@ -415,7 +415,7 @@ h2 {
 
 .project-subtitle {
     margin-bottom: 16px !important;
-    color: #000 !important;
+    color: #e8e2d8 !important;
     font-weight: 500 !important;
 }
 
@@ -433,7 +433,7 @@ h2 {
     letter-spacing: 0.06em;
     text-transform: uppercase;
 
-    color: rgba(0, 0, 0, 0.56);
+    color: rgba(232, 226, 216, 0.68);
 }
 
 .project-link {
@@ -446,7 +446,7 @@ h2 {
     letter-spacing: 0.055em;
     text-transform: uppercase;
 
-    color: rgba(0, 0, 0, 0.52);
+    color: rgba(232, 226, 216, 0.62);
     text-decoration: none;
 
     cursor: default;
@@ -475,7 +475,7 @@ h2 {
     font-weight: 500;
     letter-spacing: 0.12em;
 
-    color: rgba(0, 0, 0, 0.62);
+    color: rgba(232, 226, 216, 0.72);
 }
 
 
@@ -494,7 +494,7 @@ h2 {
 }
 
 .email-link:hover {
-    color: #000;
+    color: #e8e2d8;
 }
 
 .contact-note {
@@ -545,7 +545,7 @@ body:not(.is-home) .home-quote {
     transform: skewX(-7deg);
     transform-origin: left center;
 
-    color: rgba(23, 21, 20, 0.68);
+    color: rgba(232, 226, 216, 0.84);
 }
 
 .quote-english {
@@ -556,7 +556,7 @@ body:not(.is-home) .home-quote {
     font-weight: 400;
     font-style: normal !important;
 
-    color: rgba(23, 21, 20, 0.64);
+    color: rgba(232, 226, 216, 0.78);
 }
 
 .quote-author {
@@ -569,7 +569,7 @@ body:not(.is-home) .home-quote {
     letter-spacing: 0.07em;
     text-transform: uppercase;
 
-    color: rgba(23, 21, 20, 0.52);
+    color: rgba(232, 226, 216, 0.66);
 }
 
 
@@ -596,7 +596,7 @@ body:not(.is-home) .home-quote {
     font-weight: 400;
     letter-spacing: 0.04em;
 
-    color: rgba(0, 0, 0, 0.62);
+    color: rgba(232, 226, 216, 0.72);
 }
 
 
@@ -688,7 +688,7 @@ body:not(.is-home) .home-quote {
         height: var(--app-height) !important;
         min-height: var(--app-height) !important;
 
-        background-color: #000;
+        background-color: #e8e2d8;
         background-image: var(--mobile-bg);
         background-size: cover;
         background-position: center center;
@@ -746,7 +746,7 @@ body:not(.is-home) .home-quote {
         font-size: 9px;
         letter-spacing: 0.04em;
 
-        color: #000;
+        color: #e8e2d8;
     }
 
     .text-zone {
@@ -952,7 +952,7 @@ body:not(.is-home) .home-quote {
         line-height: 1.45;
         font-weight: 500;
 
-        color: rgba(23, 21, 20, 0.68);
+        color: rgba(232, 226, 216, 0.84);
     }
 
     .quote-author {
@@ -961,7 +961,7 @@ body:not(.is-home) .home-quote {
         font-weight: 600;
         letter-spacing: 0.045em;
 
-        color: rgba(23, 21, 20, 0.56);
+        color: rgba(232, 226, 216, 0.70);
     }
 
     .site-footer {
@@ -979,6 +979,6 @@ body:not(.is-home) .home-quote {
         line-height: 1.35;
         letter-spacing: 0.025em;
 
-        color: rgba(0, 0, 0, 0.56);
+        color: rgba(232, 226, 216, 0.68);
     }
 }
