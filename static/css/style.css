@@ -920,3 +920,89 @@ h2 {
         color: rgba(0, 0, 0, 0.56);
     }
 }
+/* MOBILE ONLY - ENLARGE TEXT BY 20% */
+@media (max-width: 520px) {
+    .top-menu button,
+    button {
+        font-size: 9px;
+    }
+
+    .brand-title {
+        font-size: 25.2px;
+    }
+
+    .tagline {
+        font-size: 15.6px;
+    }
+
+    h2 {
+        font-size: 19.2px;
+    }
+
+    .body-text,
+    .project-card p {
+        font-size: 13.8px;
+    }
+
+    .project-card h3 {
+        font-size: 16.8px;
+    }
+
+    .project-status {
+        font-size: 9px;
+    }
+
+    .project-link {
+        font-size: 9.4px;
+    }
+
+    .project-arrow {
+        font-size: 19.2px !important;
+    }
+
+    .project-counter {
+        font-size: 10.2px;
+    }
+
+    .email-link {
+        font-size: 14.4px;
+    }
+
+    .quote-greek {
+        font-size: 9.6px;
+    }
+
+    .quote-english {
+        font-size: 9px;
+    }
+
+    .quote-author {
+        font-size: 7.7px;
+    }
+
+    .site-footer p {
+        font-size: 10.2px;
+    }
+}
+
+/* DESKTOP ONLY - MAKE HOME QUOTE MORE READABLE */
+@media (min-width: 521px) {
+    .home-quote {
+        max-width: 390px;
+    }
+
+    .quote-greek {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .quote-english {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .quote-author {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+}
