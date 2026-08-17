@@ -2196,3 +2196,12 @@ body:not(.is-home) .home-quote {
     }
 }
 
+/* =========================================================
+   PROJECT DIVIDER - REMOVE END ICON
+   Keep the divider line itself; remove only the small diamond.
+   ========================================================= */
+body.is-projects .project-ornament::after {
+    display: none !important;
+    content: none !important;
+}
+
