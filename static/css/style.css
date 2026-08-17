@@ -3,15 +3,24 @@
 }
 
 :root {
-    --ink: #e8e2d8;
-    --ink-soft: rgba(232, 226, 216, 0.80);
+    --ink: #171514;
+    --ink-soft: rgba(23, 21, 20, 0.74);
     --wash-main: rgba(246, 241, 237, 0.82);
     --wash-soft: rgba(246, 241, 237, 0.42);
     --app-height: 100vh;
 
-    /* PERMANENT BACKGROUND TEST FILES */
+    /* NORMAL SITE BACKGROUNDS */
     --desktop-bg: url("../images/evanoesis-bg-desktop-test.png");
+    --desktop-bg-clean: url("../images/evanoesis-bg-desktop-clean.png");
+    --desktop-bg-clean-what: url("../images/evanoesis-bg-desktop-clean-what.png");
     --mobile-bg: url("../images/evanoesis-bg-mobile-test.png");
+
+    /* PROJECT-SPECIFIC BACKGROUNDS */
+    --project-code-desktop-bg: url("../images/project-code-evryma-desktop.png");
+    --project-code-mobile-bg: url("../images/project-code-evryma-mobile.png");
+
+    --project-visual-desktop-bg: url("../images/project-visual-pathway-desktop.png");
+    --project-visual-mobile-bg: url("../images/project-visual-pathway-mobile.png");
 }
 
 html,
@@ -39,9 +48,9 @@ body {
     height: 100vh;
     height: 100dvh;
 
-    background-color: #e8e2d8;
+    background-color: #000;
     background-image: var(--desktop-bg);
-    background-size: cover;
+    background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
 
@@ -52,6 +61,63 @@ body {
         filter 520ms ease,
         transform 520ms ease,
         opacity 520ms ease;
+}
+
+/* DESKTOP PROJECTS USE THE SAME BACKGROUND AS HOME */
+body.is-project-code .page-bg,
+body.is-project-visual .page-bg {
+    background-image: var(--desktop-bg);
+}
+
+/* DESKTOP ONLY - HIDE PROCESS SKETCHES OUTSIDE HOME */
+@media (min-width: 521px) {
+    .page-bg::after {
+        content: "";
+        position: absolute;
+
+        left: 3vw;
+        bottom: 12vh;
+
+        width: 49vw;
+        height: 38vh;
+
+        background:
+            radial-gradient(
+                ellipse at center,
+                rgba(248, 246, 242, 0.995) 0%,
+                rgba(248, 246, 242, 0.99) 48%,
+                rgba(248, 246, 242, 0.96) 64%,
+                rgba(248, 246, 242, 0.82) 78%,
+                rgba(248, 246, 242, 0.38) 90%,
+                rgba(248, 246, 242, 0) 100%
+            );
+
+        filter: blur(10px);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity 420ms ease,
+            visibility 420ms ease;
+
+        pointer-events: none;
+    }
+
+    body.is-section-open .page-bg::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.is-projects .page-bg::after {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    body.is-home .page-bg::after {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 .site-shell {
@@ -68,7 +134,7 @@ body {
 
 .top-menu {
     position: fixed;
-    top: 31px;
+    top: 86px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 60;
@@ -102,7 +168,7 @@ button,
     letter-spacing: 0.13em;
     text-transform: uppercase;
 
-    color: #e8e2d8;
+    color: #000;
 
     background: transparent !important;
     background-color: transparent !important;
@@ -415,7 +481,7 @@ h2 {
 
 .project-subtitle {
     margin-bottom: 16px !important;
-    color: #e8e2d8 !important;
+    color: #000 !important;
     font-weight: 500 !important;
 }
 
@@ -433,7 +499,7 @@ h2 {
     letter-spacing: 0.06em;
     text-transform: uppercase;
 
-    color: rgba(232, 226, 216, 0.68);
+    color: rgba(0, 0, 0, 0.56);
 }
 
 .project-link {
@@ -446,7 +512,7 @@ h2 {
     letter-spacing: 0.055em;
     text-transform: uppercase;
 
-    color: rgba(232, 226, 216, 0.62);
+    color: rgba(0, 0, 0, 0.52);
     text-decoration: none;
 
     cursor: default;
@@ -475,7 +541,7 @@ h2 {
     font-weight: 500;
     letter-spacing: 0.12em;
 
-    color: rgba(232, 226, 216, 0.72);
+    color: rgba(0, 0, 0, 0.62);
 }
 
 
@@ -494,7 +560,7 @@ h2 {
 }
 
 .email-link:hover {
-    color: #e8e2d8;
+    color: #000;
 }
 
 .contact-note {
@@ -537,7 +603,7 @@ body:not(.is-home) .home-quote {
     margin: 0 0 10px;
 
     font-family: "Times New Roman", Georgia, serif !important;
-    font-size: 16px;
+    font-size: 19px;
     line-height: 1.5;
     font-weight: 700;
     font-style: italic !important;
@@ -545,31 +611,43 @@ body:not(.is-home) .home-quote {
     transform: skewX(-7deg);
     transform-origin: left center;
 
-    color: rgba(232, 226, 216, 0.84);
+    color: rgba(23, 21, 20, 0.82);
+    text-shadow:
+        0 0 5px rgba(246, 241, 237, 0.95),
+        0 0 12px rgba(246, 241, 237, 0.80),
+        0 1px 18px rgba(246, 241, 237, 0.65);
 }
 
 .quote-english {
     margin: 0 0 10px;
 
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.5;
-    font-weight: 400;
+    font-weight: 500;
     font-style: normal !important;
 
-    color: rgba(232, 226, 216, 0.78);
+    color: rgba(23, 21, 20, 0.80);
+    text-shadow:
+        0 0 5px rgba(246, 241, 237, 0.95),
+        0 0 12px rgba(246, 241, 237, 0.80),
+        0 1px 18px rgba(246, 241, 237, 0.65);
 }
 
 .quote-author {
     margin: 0;
 
-    font-size: 11px;
+    font-size: 12.5px;
     line-height: 1.4;
-    font-weight: 600;
+    font-weight: 700;
     font-style: normal !important;
     letter-spacing: 0.07em;
     text-transform: uppercase;
 
-    color: rgba(232, 226, 216, 0.66);
+    color: rgba(23, 21, 20, 0.72);
+    text-shadow:
+        0 0 5px rgba(246, 241, 237, 0.95),
+        0 0 12px rgba(246, 241, 237, 0.78),
+        0 1px 16px rgba(246, 241, 237, 0.60);
 }
 
 
@@ -596,7 +674,7 @@ body:not(.is-home) .home-quote {
     font-weight: 400;
     letter-spacing: 0.04em;
 
-    color: rgba(232, 226, 216, 0.72);
+    color: rgba(0, 0, 0, 0.62);
 }
 
 
@@ -688,7 +766,7 @@ body:not(.is-home) .home-quote {
         height: var(--app-height) !important;
         min-height: var(--app-height) !important;
 
-        background-color: #e8e2d8;
+        background-color: #000;
         background-image: var(--mobile-bg);
         background-size: cover;
         background-position: center center;
@@ -698,6 +776,15 @@ body:not(.is-home) .home-quote {
         pointer-events: none;
 
         will-change: filter, transform, opacity;
+    }
+
+    /* PROJECT TAB - PROJECT-SPECIFIC MOBILE BACKGROUNDS */
+    body.is-project-code .page-bg {
+        background-image: var(--project-code-mobile-bg);
+    }
+
+    body.is-project-visual .page-bg {
+        background-image: var(--project-visual-mobile-bg);
     }
 
     body.is-section-open .page-bg {
@@ -746,7 +833,7 @@ body:not(.is-home) .home-quote {
         font-size: 9px;
         letter-spacing: 0.04em;
 
-        color: #e8e2d8;
+        color: #000;
     }
 
     .text-zone {
@@ -940,28 +1027,42 @@ body:not(.is-home) .home-quote {
     .quote-greek {
         margin-bottom: 8px;
 
-        font-size: 11.5px;
+        font-size: 13.5px;
         line-height: 1.42;
         font-weight: 700;
+
+        color: rgba(23, 21, 20, 0.84);
+        text-shadow:
+            0 0 4px rgba(246, 241, 237, 0.98),
+            0 0 10px rgba(246, 241, 237, 0.84),
+            0 1px 14px rgba(246, 241, 237, 0.68);
     }
 
     .quote-english {
         margin-bottom: 8px;
 
-        font-size: 10.5px;
+        font-size: 12px;
         line-height: 1.45;
-        font-weight: 500;
+        font-weight: 600;
 
-        color: rgba(232, 226, 216, 0.84);
+        color: rgba(23, 21, 20, 0.82);
+        text-shadow:
+            0 0 4px rgba(246, 241, 237, 0.98),
+            0 0 10px rgba(246, 241, 237, 0.84),
+            0 1px 14px rgba(246, 241, 237, 0.68);
     }
 
     .quote-author {
-        font-size: 8.2px;
+        font-size: 9.5px;
         line-height: 1.35;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.045em;
 
-        color: rgba(232, 226, 216, 0.70);
+        color: rgba(23, 21, 20, 0.74);
+        text-shadow:
+            0 0 4px rgba(246, 241, 237, 0.98),
+            0 0 9px rgba(246, 241, 237, 0.82),
+            0 1px 13px rgba(246, 241, 237, 0.64);
     }
 
     .site-footer {
@@ -979,6 +1080,1119 @@ body:not(.is-home) .home-quote {
         line-height: 1.35;
         letter-spacing: 0.025em;
 
-        color: rgba(232, 226, 216, 0.68);
+        color: rgba(0, 0, 0, 0.56);
     }
 }
+
+/* QUOTE ONLY - DARKER TEXT */
+.quote-greek {
+    color: rgba(10, 9, 8, 0.96);
+}
+
+.quote-english {
+    color: rgba(10, 9, 8, 0.92);
+}
+
+.quote-author {
+    color: rgba(10, 9, 8, 0.84);
+}
+
+/* DESKTOP ONLY - KEEP QUOTE AUTHOR ON ONE LINE */
+@media (min-width: 521px) {
+    .quote-author {
+        white-space: nowrap;
+        font-size: 11.5px;
+        letter-spacing: 0.05em;
+    }
+}
+
+/* =========================================================
+   DESKTOP - PERSISTENT SITE ELEMENTS + SPLIT PROJECT FRAME
+   Mobile/tablet behavior is intentionally left unchanged.
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* Toolbar stays in the same top-right position on every tab. */
+    .top-menu {
+        top: 24px;
+        left: auto;
+        right: 5.5vw;
+
+        transform: none;
+        justify-content: flex-end;
+    }
+
+    .top-menu button {
+        position: relative;
+        color: #231c17;
+    }
+
+    .top-menu button.is-active {
+        color: #9d7133;
+    }
+
+    .top-menu button.is-active::after {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: -10px;
+
+        height: 1px;
+
+        background: rgba(157, 113, 51, 0.72);
+    }
+
+    /* The Heraclitus quote stays visible in the same place on every tab. */
+    body:not(.is-home) .home-quote {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Projects keep the EVANOESIS brand at the upper-left. */
+    body.is-projects .projects-branding {
+        position: fixed;
+        left: 5.8vw;
+        top: 4.2vh;
+        z-index: 58;
+
+        pointer-events: none;
+    }
+
+    body.is-projects .projects-branding .brand-title {
+        margin: 0 0 9px;
+        padding-right: 0.44em;
+
+        font-size: clamp(29px, 2.35vw, 44px);
+        line-height: 1;
+        letter-spacing: 0.11em;
+
+        color: #171514;
+    }
+
+    body.is-projects .projects-branding .tagline {
+        margin: 0;
+
+        font-size: 14px;
+        line-height: 1.3;
+        font-weight: 400;
+
+        color: rgba(23, 21, 20, 0.68);
+    }
+
+    /* No page-level Projects heading. */
+    body.is-projects .content-inner > h2 {
+        display: none;
+    }
+
+    /* Main project composition: left side of the Home artwork. */
+    body.is-projects .text-zone {
+        position: fixed;
+        left: 5.3vw;
+        top: 18.2vh;
+
+        width: clamp(650px, 55vw, 900px);
+        min-width: 0;
+        max-width: 900px;
+        min-height: 0;
+
+        padding: 0;
+    }
+
+    body.is-projects .text-zone::before {
+        display: none;
+    }
+
+    /* Very thin dark-brown outer frame, no shadow. */
+    body.is-projects .project-slider {
+        position: relative;
+
+        width: 100%;
+        max-width: none;
+
+        margin: 0;
+        padding: 0 0 46px;
+
+        background: rgba(249, 247, 243, 0.15);
+
+        border: 1px solid rgba(76, 54, 37, 0.27);
+        border-radius: 15px;
+
+        box-shadow: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+
+        overflow: hidden;
+    }
+
+    body.is-projects .project-slider-window {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    body.is-projects .project-slider-track {
+        align-items: stretch;
+    }
+
+    /* Each project = project number | text | illustration. */
+    body.is-projects .project-card {
+        display: grid;
+        grid-template-columns: 74px minmax(0, 0.93fr) minmax(0, 1.20fr);
+        align-items: stretch;
+
+        min-height: clamp(350px, 45vh, 430px);
+
+        padding: 0;
+        margin: 0;
+
+        color: #2b231d;
+
+        background: transparent;
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    /* Narrow project-number rail on the far left. */
+    body.is-projects .project-meta-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 78px 10px 20px;
+
+        border-right: 1px solid rgba(76, 54, 37, 0.23);
+    }
+
+    body.is-projects .project-meta-column span {
+        margin-bottom: 5px;
+
+        font-size: 8px;
+        line-height: 1;
+        font-weight: 500;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+
+        color: rgba(57, 45, 36, 0.70);
+    }
+
+    body.is-projects .project-meta-column strong {
+        font-size: 12px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+
+        color: #a97734;
+    }
+
+    /* Meaning/project information on the left. */
+    body.is-projects .project-copy-pane {
+        position: relative;
+
+        padding: 25px 28px 26px;
+    }
+
+    body.is-projects .project-stage {
+        position: relative;
+
+        margin: 0 0 13px !important;
+        padding-left: 13px;
+
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+
+        color: rgba(47, 38, 31, 0.76) !important;
+    }
+
+    body.is-projects .project-stage::before {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        top: 50%;
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+        background: #aa7936;
+
+        transform: translateY(-50%);
+    }
+
+    body.is-projects .project-card h3 {
+        margin: 0 0 8px;
+
+        font-family: "Michroma", sans-serif;
+        font-size: clamp(22px, 1.65vw, 29px);
+        line-height: 1.13;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+
+        color: #211b17;
+    }
+
+    body.is-projects .project-subtitle {
+        margin: 0 0 15px !important;
+
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.025em;
+        text-transform: none;
+
+        color: #a47131 !important;
+    }
+
+    /* Small technical divider inspired by the reference. */
+    body.is-projects .project-ornament {
+        position: relative;
+
+        width: 46%;
+        height: 13px;
+
+        margin: 0 0 15px;
+
+        border-top: 1px solid rgba(149, 107, 53, 0.50);
+    }
+
+    body.is-projects .project-ornament::after {
+        content: "◇";
+        position: absolute;
+
+        top: -9px;
+        right: -3px;
+
+        padding: 0 3px;
+
+        font-size: 11px;
+        line-height: 1;
+
+        color: #a97734;
+        background: rgba(248, 246, 242, 0.92);
+    }
+
+    /* Darker and slightly larger than the previous version for readability. */
+    body.is-projects .project-copy-pane .body-text,
+    body.is-projects .project-copy-pane p {
+        font-size: 13.5px;
+        line-height: 1.52;
+        font-weight: 400;
+
+        color: rgba(38, 31, 26, 0.86);
+    }
+
+    body.is-projects .project-copy-pane .project-extra {
+        margin-top: 11px;
+    }
+
+    body.is-projects .project-status {
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        bottom: 22px;
+
+        margin: 0;
+        padding: 10px 0 0 14px;
+
+        border-top: 1px solid rgba(76, 54, 37, 0.18);
+
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.055em;
+        text-transform: uppercase;
+
+        color: rgba(45, 36, 29, 0.72) !important;
+    }
+
+    body.is-projects .project-status::before {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        top: 13px;
+
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+        background: #ae7c37;
+    }
+
+    body.is-projects .project-link {
+        position: absolute;
+        left: 42px;
+        bottom: 7px;
+
+        margin: 0;
+
+        font-size: 7.8px;
+        line-height: 1.2;
+        letter-spacing: 0.05em;
+
+        color: rgba(45, 36, 29, 0.48);
+    }
+
+    /* Illustration sits in its own right-hand framed area. */
+    body.is-projects .project-visual-pane {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-width: 0;
+
+        padding: 22px 26px 24px;
+
+        border-left: 1px solid rgba(76, 54, 37, 0.20);
+    }
+
+    body.is-projects .project-preview-slider {
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 1.28 / 1;
+
+        margin: 0;
+
+        overflow: hidden;
+
+        background: rgba(255, 255, 255, 0.06);
+
+        border: 0;
+        border-radius: 0;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    body.is-projects .project-preview-image {
+        object-fit: contain;
+
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    /* Controls stay inside the thin outer frame. */
+    body.is-projects .project-slider-controls {
+        position: absolute;
+
+        right: 7%;
+        bottom: 14px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+
+        margin: 0;
+    }
+
+    body.is-projects .project-arrow {
+        font-size: 17px !important;
+        color: #2d241d;
+    }
+
+    body.is-projects .project-counter {
+        min-width: 42px;
+
+        font-size: 9px;
+        line-height: 1;
+        letter-spacing: 0.10em;
+
+        text-align: center;
+
+        color: rgba(45, 36, 29, 0.68);
+    }
+
+    /* Keep the process artwork in the Home background visible on Projects. */
+    body.is-projects .page-bg::after {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* =========================================================
+   DESKTOP ONLY - KEEP HEADER ELEMENTS INSIDE THE BACKGROUND
+   Positioning fix only. Project frame/layout is unchanged.
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* Menu: top-right, but below the black top band. */
+    .top-menu {
+        top: 62px;
+        left: auto;
+        right: 5.5vw;
+        transform: none;
+        justify-content: flex-end;
+    }
+
+    /*
+       The Projects branding lives inside .content-inner.
+       Remove its permanent base transform/filter so fixed positioning
+       is relative to the viewport instead of the project card.
+    */
+    body.is-projects .content-inner {
+        transform: none;
+        filter: none;
+    }
+
+    /* EVANOESIS + "From vision to working reality." */
+    body.is-projects .projects-branding {
+        position: fixed;
+        left: 5.3vw;
+        top: 59px;
+        z-index: 58;
+
+        pointer-events: none;
+    }
+
+    body.is-projects .projects-branding .brand-title {
+        margin: 0 0 6px;
+        padding-right: 0.44em;
+
+        font-size: clamp(25px, 1.9vw, 34px);
+        line-height: 1;
+        letter-spacing: 0.11em;
+    }
+
+    body.is-projects .projects-branding .tagline {
+        margin: 0;
+
+        font-size: 11.5px;
+        line-height: 1.25;
+    }
+}
+
+/* =========================================================
+   DESKTOP ONLY - HEADER POSITION / TRANSITION REFINEMENT
+   Fixes the visible brand jump, lowers header elements,
+   and lightens the active-tab accent.
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* Keep Projects content from creating a transformed containing block
+       while the new tab fades in/out. This prevents the fixed brand from
+       visibly jumping from the project panel to the top-left. */
+    body.is-projects .content-inner,
+    body.is-projects .content-inner.is-leaving,
+    body.is-projects .content-inner.is-entering {
+        transform: none !important;
+        filter: none !important;
+    }
+
+    body.is-projects .content-inner.is-entering {
+        animation: projectsFadeOnly 420ms ease forwards !important;
+    }
+
+    /* Brand: lower and slightly smaller, still inside the background. */
+    body.is-projects .projects-branding {
+        left: 5.3vw;
+        top: 78px;
+    }
+
+    body.is-projects .projects-branding .brand-title {
+        margin-bottom: 5px;
+
+        font-size: clamp(22px, 1.65vw, 30px);
+        letter-spacing: 0.105em;
+    }
+
+    body.is-projects .projects-branding .tagline {
+        font-size: 10.5px;
+        line-height: 1.25;
+    }
+
+    /* Toolbar: lower so it no longer touches the black top band. */
+    .top-menu {
+        top: 80px;
+    }
+
+    /* Lighter selected-tab colour. */
+    .top-menu button.is-active {
+        color: #bc8c4c;
+    }
+
+    .top-menu button.is-active::after {
+        background: rgba(188, 140, 76, 0.72);
+    }
+}
+
+@keyframes projectsFadeOnly {
+    from {
+        opacity: 0;
+        transform: none;
+        filter: none;
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
+
+/* =========================================================
+   DESKTOP ONLY - PERSISTENT BRAND + NEUTRAL ACTIVE MENU
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /*
+       The non-Home brand now lives OUTSIDE the animated content area.
+       This eliminates the visible jump from the project card to top-left.
+    */
+    .persistent-branding {
+        position: fixed;
+        left: 5.3vw;
+        top: 78px;
+        z-index: 58;
+
+        pointer-events: none;
+
+        opacity: 1;
+        visibility: visible;
+
+        transition:
+            opacity 220ms ease,
+            visibility 220ms ease;
+    }
+
+    body.is-home .persistent-branding {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .persistent-branding .brand-title {
+        margin: 0 0 5px;
+        padding-right: 0.44em;
+
+        font-size: clamp(22px, 1.65vw, 30px);
+        line-height: 1;
+        letter-spacing: 0.105em;
+
+        color: #171514;
+    }
+
+    .persistent-branding .tagline {
+        margin: 0;
+
+        font-size: 10.5px;
+        line-height: 1.25;
+        font-weight: 400;
+
+        color: rgba(23, 21, 20, 0.68);
+    }
+
+    /* The old Projects-only branding is gone. */
+    body.is-projects .projects-branding {
+        display: none !important;
+    }
+
+    /* Keep the toolbar lower, inside the background. */
+    .top-menu {
+        top: 80px;
+    }
+
+    /* No brown/gold selected-tab treatment. */
+    .top-menu button.is-active,
+    body.is-projects .top-menu button.is-active {
+        color: #231c17 !important;
+    }
+
+    .top-menu button.is-active::after,
+    body.is-projects .top-menu button.is-active::after {
+        display: none !important;
+        content: none !important;
+    }
+}
+
+/* DESKTOP ONLY - SLIGHTLY ENLARGE SELECTED MENU TAB */
+@media (min-width: 901px) {
+    .top-menu button.is-active {
+        transform: scale(1.06);
+    }
+
+    .top-menu button.is-active:hover {
+        transform: translateY(-1px) scale(1.06);
+    }
+}
+
+/* DESKTOP ONLY - PROJECT INFO MORE READABLE */
+@media (min-width: 901px) {
+    /* Left project-number rail */
+    body.is-projects .project-meta-column span {
+        font-size: 9.5px;
+        font-weight: 600;
+        color: rgba(45, 35, 28, 0.82);
+    }
+
+    body.is-projects .project-meta-column strong {
+        font-size: 14px;
+        font-weight: 700;
+        color: #9a6b2f;
+    }
+
+    /* Small stage label above the title */
+    body.is-projects .project-stage {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        color: rgba(38, 30, 24, 0.88) !important;
+    }
+
+    /* Project title */
+    body.is-projects .project-card h3 {
+        font-size: clamp(23px, 1.75vw, 30px);
+        font-weight: 500;
+        color: #171311;
+    }
+
+    /* Gold project subtitle */
+    body.is-projects .project-subtitle {
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        color: #94662c !important;
+    }
+
+    /* Main project information */
+    body.is-projects .project-copy-pane .body-text,
+    body.is-projects .project-copy-pane p {
+        font-size: 14.2px;
+        line-height: 1.52;
+        font-weight: 500;
+        color: rgba(28, 23, 19, 0.92);
+    }
+
+    /* Status and app line */
+    body.is-projects .project-status {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        color: rgba(37, 29, 23, 0.84) !important;
+    }
+
+    body.is-projects .project-link {
+        font-size: 8.8px;
+        font-weight: 600;
+        color: rgba(40, 31, 24, 0.66);
+    }
+
+    /* Slider numbers + arrows */
+    body.is-projects .project-counter {
+        font-size: 10.5px;
+        font-weight: 700;
+        color: rgba(35, 28, 22, 0.82);
+    }
+
+    body.is-projects .project-arrow {
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }
+}
+
+/* DESKTOP ONLY - PROJECT FRAME SLIGHTLY HIGHER + STRONGER TYPE */
+@media (min-width: 901px) {
+    /* Move the complete Projects frame slightly upward. */
+    body.is-projects .text-zone {
+        top: 16.8vh;
+    }
+
+    /* Project number rail */
+    body.is-projects .project-meta-column span {
+        font-size: 10.5px;
+        font-weight: 700;
+        color: rgba(35, 27, 21, 0.92);
+    }
+
+    body.is-projects .project-meta-column strong {
+        font-size: 16px;
+        font-weight: 800;
+        color: #8d6028;
+    }
+
+    /* Stage label */
+    body.is-projects .project-stage {
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        color: rgba(30, 24, 19, 0.94) !important;
+    }
+
+    /* Main project title */
+    body.is-projects .project-card h3 {
+        font-size: clamp(25px, 1.9vw, 32px);
+        font-weight: 600;
+        color: #13100e;
+    }
+
+    /* Subtitle */
+    body.is-projects .project-subtitle {
+        font-size: 13px !important;
+        font-weight: 800 !important;
+        line-height: 1.4 !important;
+        color: #875b26 !important;
+    }
+
+    /* Main descriptive copy */
+    body.is-projects .project-copy-pane .body-text,
+    body.is-projects .project-copy-pane p {
+        font-size: 15.2px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: rgba(24, 20, 17, 0.96);
+    }
+
+    /* Status */
+    body.is-projects .project-status {
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        color: rgba(30, 24, 19, 0.92) !important;
+    }
+
+    body.is-projects .project-link {
+        font-size: 9.2px;
+        font-weight: 700;
+        color: rgba(36, 28, 22, 0.72);
+    }
+
+    /* Counter and arrows */
+    body.is-projects .project-counter {
+        font-size: 11.5px;
+        font-weight: 800;
+        color: rgba(28, 22, 18, 0.90);
+    }
+
+    body.is-projects .project-arrow {
+        font-size: 19px !important;
+        font-weight: 700 !important;
+    }
+}
+
+/* =========================================================
+   DESKTOP ONLY - CLEAN BACKGROUND ON EVERY NON-HOME TAB
+   Home keeps the original background with process sketches.
+   Projects / What We Do / Contact use the clean background.
+   ========================================================= */
+@media (min-width: 901px) {
+    body.is-home .page-bg {
+        background-image: var(--desktop-bg) !important;
+    }
+
+    body:not(.is-home) .page-bg {
+        background-image: var(--desktop-bg-clean) !important;
+    }
+
+    /* No masking layer is needed anymore. */
+    .page-bg::after {
+        display: none !important;
+        content: none !important;
+    }
+}
+
+/* =========================================================
+   DESKTOP HOME ONLY - "DISCOVER HOW IDEAS BECOME REALITY"
+   Restored CTA. The HTML already links it to What We Do.
+   ========================================================= */
+@media (min-width: 901px) {
+    .home-projects-cta {
+        position: fixed;
+        left: calc(5.8vw + 42px);
+        top: 43.8vh;
+        bottom: auto;
+        z-index: 57;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+
+        padding: 0 0 7px;
+
+        font-family: "Exo 2", sans-serif;
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+
+        color: #a97734;
+        text-decoration: none;
+
+        border-bottom: 1px solid rgba(169, 119, 52, 0.62);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition:
+            opacity 220ms ease,
+            transform 220ms ease,
+            color 220ms ease,
+            visibility 220ms ease;
+    }
+
+    body.is-home .home-projects-cta {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .home-projects-cta:hover {
+        color: #835923;
+        transform: translateX(2px);
+    }
+
+    .home-projects-cta-arrow {
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 400;
+    }
+}
+
+/* =========================================================
+   WHAT WE DO - RESTORED 2-PAGE SLIDER
+   Keeps page 1 and page 2 separate.
+   ========================================================= */
+
+.about-slider {
+    width: 100%;
+    max-width: 100%;
+}
+
+.about-slider-window {
+    width: 100%;
+    overflow: hidden;
+}
+
+.about-slider-track {
+    display: flex;
+    width: 100%;
+
+    transition: transform 420ms ease;
+    will-change: transform;
+}
+
+.about-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+}
+
+.about-slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-top: 22px;
+}
+
+.about-arrow {
+    font-size: 18px !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    font-weight: 600 !important;
+}
+
+.about-counter {
+    min-width: 40px;
+
+    font-size: 10.5px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+
+    color: rgba(23, 21, 20, 0.78);
+}
+
+
+/* =========================================================
+   DESKTOP ONLY - WHAT WE DO DEDICATED BACKGROUND
+   Home stays original.
+   Projects / Contact stay on the normal clean background.
+   What We Do uses evanoesis-bg-desktop-clean-what.png.
+   ========================================================= */
+@media (min-width: 901px) {
+    body.is-about .page-bg {
+        background-image: var(--desktop-bg-clean-what) !important;
+    }
+}
+
+
+/* MOBILE - keep existing background/layout; only style the 1 / 2 controls */
+@media (max-width: 520px) {
+    .about-slider-controls {
+        gap: 13px;
+        margin-top: 16px;
+    }
+
+    .about-arrow {
+        font-size: 19px !important;
+    }
+
+    .about-counter {
+        font-size: 10.2px;
+    }
+}
+
+/* DESKTOP ONLY - WHAT WE DO CONTROLS CLOSER TO CONTENT */
+@media (min-width: 901px) {
+    body.is-about .about-slider-controls {
+        margin-top: 12px;
+    }
+}
+
+/* =========================================================
+   DESKTOP ONLY - PROJECT TEXT ALIGNMENT / READABILITY FIX
+   Bigger text, cleaner spacing, and no text overlap.
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* Give the project composition more room for larger copy. */
+    body.is-projects .text-zone {
+        left: 4.8vw;
+        top: 18.2vh;
+
+        width: clamp(820px, 62vw, 1040px);
+        max-width: 1040px;
+    }
+
+    body.is-projects .project-card {
+        grid-template-columns: 82px minmax(0, 1.08fr) minmax(0, 1.12fr);
+        min-height: clamp(470px, 54vh, 550px);
+    }
+
+    /* Keep all copy in normal document flow so nothing can overlap. */
+    body.is-projects .project-copy-pane {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        min-width: 0;
+        padding: 32px 36px 30px;
+    }
+
+    /* Project rail alignment. */
+    body.is-projects .project-meta-column {
+        padding: 92px 12px 24px;
+    }
+
+    body.is-projects .project-meta-column span {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: rgba(30, 24, 19, 0.94);
+    }
+
+    body.is-projects .project-meta-column strong {
+        font-size: 18px;
+        font-weight: 800;
+        color: #825623;
+    }
+
+    /* Stage */
+    body.is-projects .project-stage {
+        margin: 0 0 14px !important;
+
+        font-size: 12px !important;
+        line-height: 1.25 !important;
+        font-weight: 800 !important;
+
+        color: rgba(25, 20, 16, 0.96) !important;
+    }
+
+    /* Main title */
+    body.is-projects .project-card h3 {
+        margin: 0 0 10px;
+
+        font-size: clamp(29px, 2.1vw, 36px);
+        line-height: 1.14;
+        font-weight: 600;
+
+        color: #100d0b;
+    }
+
+    /* Subtitle */
+    body.is-projects .project-subtitle {
+        margin: 0 0 16px !important;
+
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+        font-weight: 800 !important;
+
+        color: #7c4f1f !important;
+    }
+
+    body.is-projects .project-ornament {
+        margin-bottom: 17px;
+    }
+
+    /* Main descriptive text */
+    body.is-projects .project-copy-pane .body-text {
+        font-size: 16.4px;
+        line-height: 1.5;
+        font-weight: 600;
+
+        color: rgba(18, 15, 12, 0.97);
+    }
+
+    body.is-projects .project-copy-pane .project-extra {
+        margin-top: 14px;
+    }
+
+    /*
+       IMPORTANT:
+       Status and app line are no longer absolutely positioned.
+       They now stay underneath the descriptive text and cannot overlap it.
+    */
+    body.is-projects .project-status {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+
+        width: 100%;
+        margin: auto 0 0;
+        padding: 13px 0 0 14px;
+
+        font-size: 11.5px !important;
+        line-height: 1.25 !important;
+        font-weight: 800 !important;
+
+        color: rgba(24, 19, 15, 0.94) !important;
+    }
+
+    body.is-projects .project-status::before {
+        top: 16px;
+    }
+
+    body.is-projects .project-link {
+        position: relative;
+        left: auto;
+        bottom: auto;
+
+        align-self: flex-start;
+
+        margin: 8px 0 0 14px;
+
+        font-size: 9.8px;
+        line-height: 1.3;
+        font-weight: 700;
+
+        color: rgba(30, 23, 18, 0.74);
+    }
+
+    /* Keep the illustration comfortably aligned in the larger frame. */
+    body.is-projects .project-visual-pane {
+        padding: 28px 32px 32px;
+    }
+
+    /* Slightly clearer controls. */
+    body.is-projects .project-counter {
+        font-size: 12px;
+        font-weight: 800;
+        color: rgba(24, 19, 15, 0.92);
+    }
+
+    body.is-projects .project-arrow {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+    }
+}
+
