@@ -2313,3 +2313,29 @@ body.is-projects .project-ornament::after {
     }
 }
 
+/* =========================================================
+   DESKTOP TEST - SOFT BACKDROP BEHIND THE FULL QUOTE
+   Quote text/position stay unchanged.
+   ========================================================= */
+@media (min-width: 901px) {
+    .home-quote {
+        isolation: isolate;
+    }
+
+    .home-quote::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+
+        inset: -18px -22px -20px -22px;
+
+        background: rgba(246, 241, 237, 0.58);
+        border-radius: 24px;
+
+        filter: blur(14px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
+
+        pointer-events: none;
+    }
+}
+
