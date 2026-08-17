@@ -2428,52 +2428,268 @@ body.is-projects .project-ornament::after {
 }
 
 /* =========================================================
-   TWO DESKTOP SPACING FIXES ONLY
-   1) What We Do sits farther below the top brand.
-   2) Projects keeps a clear bottom margin on shorter laptops.
+   FINAL DESKTOP SAFE-AREA LOCK
+   Desktop/laptop only.
+
+   Rules:
+   - What We Do stays left, lower than the brand, and never crosses
+     the visible artwork bottom.
+   - Projects frame is locked between a fixed top and bottom safe gap.
+   - On shorter screens typography and padding shrink smoothly.
+   - Existing content, sliders, backgrounds, quote, CTA and mobile
+     behavior are untouched.
    ========================================================= */
 @media (min-width: 901px) {
 
-    /* 1) Move What We Do down without changing its typography/content. */
+    /* -----------------------------------------------------
+       WHAT WE DO
+       Keep it left. Do NOT let the text drift toward page center.
+       Lock both top AND bottom to the visible background frame.
+       ----------------------------------------------------- */
     body.is-about .text-zone {
-        top: calc(var(--desktop-safe-top) + 78px);
+        position: fixed;
+
+        left: calc(var(--desktop-safe-left) + clamp(42px, 5.3vw, 92px));
+        top: calc(var(--desktop-safe-top) + 112px);
+        bottom: calc(var(--desktop-safe-bottom) + 42px);
+
+        width: clamp(430px, 31vw, 555px);
+        min-width: 0;
+        max-width: 555px;
+
+        height: auto;
+        min-height: 0;
+        max-height: none;
+
+        padding: clamp(20px, 2.7vh, 30px) 34px
+                 clamp(18px, 2.3vh, 26px);
+
+        overflow: hidden;
     }
-}
 
-/* 2) Laptop / shorter-desktop Projects fit.
-   No font-size changes. The frame gets more horizontal room,
-   slightly tighter internal padding, and a protected bottom gap. */
-@media (min-width: 901px) and (max-height: 860px) {
+    body.is-about .about-slide h2 {
+        margin-bottom: clamp(13px, 1.8vh, 20px);
 
+        /*
+           Same visual hierarchy, but allowed to shrink on a short laptop.
+        */
+        font-size: clamp(22px, 3.1vh, 36px);
+        line-height: 1.08;
+    }
+
+    body.is-about .about-slide .body-text {
+        /*
+           Dynamic desktop type:
+           large screens stay at the existing 18px;
+           short laptops reduce only as much as necessary to remain inside.
+        */
+        font-size: clamp(14.5px, 1.72vh, 18px);
+        line-height: clamp(1.34, 1.4, 1.46);
+    }
+
+    body.is-about .about-slide .body-text + .body-text {
+        margin-top: clamp(7px, 1.05vh, 12px);
+    }
+
+    body.is-about .about-slider-controls {
+        margin-top: clamp(5px, 0.9vh, 9px);
+    }
+
+    body.is-about .about-arrow {
+        font-size: clamp(16px, 2vh, 19px) !important;
+    }
+
+    body.is-about .about-counter {
+        font-size: clamp(9.5px, 1.25vh, 11px);
+    }
+
+    /* Keep the existing clean no-wash solution on What We Do. */
+    body.is-about .text-zone::before {
+        display: none !important;
+        content: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       PROJECTS
+       The complete project frame is now LOCKED between a
+       fixed top gap and a fixed bottom gap of the visible artwork.
+       It cannot flow into the bottom black band.
+       ----------------------------------------------------- */
     body.is-projects .text-zone {
-        left: calc(var(--desktop-safe-left) + 50px);
-        top: calc(var(--desktop-safe-top) + 84px);
+        position: fixed;
 
-        width: min(1040px, calc(var(--desktop-safe-width) - 100px));
-        max-width: min(1040px, calc(var(--desktop-safe-width) - 100px));
+        left: calc(var(--desktop-safe-left) + clamp(34px, 4.6vw, 84px));
+        top: calc(var(--desktop-safe-top) + 110px);
+        bottom: calc(var(--desktop-safe-bottom) + 42px);
+
+        width: min(1040px, calc(var(--desktop-safe-width) - 110px));
+        max-width: min(1040px, calc(var(--desktop-safe-width) - 110px));
+
+        height: auto;
+        min-height: 0;
+        max-height: none;
+
+        padding: 0;
+    }
+
+    /*
+       Make every internal project layer consume the locked frame height
+       instead of imposing its own minimum height.
+    */
+    body.is-projects .project-slider {
+        height: 100%;
+        min-height: 0;
+
+        padding-bottom: clamp(38px, 5.2vh, 46px);
+    }
+
+    body.is-projects .project-slider-window {
+        height: 100%;
+        min-height: 0;
+    }
+
+    body.is-projects .project-slider-track {
+        height: 100%;
+        min-height: 0;
+        align-items: stretch;
     }
 
     body.is-projects .project-card {
-        min-height: clamp(
-            420px,
-            calc(var(--desktop-safe-height) - 220px),
-            470px
-        );
+        height: 100%;
+        min-height: 0 !important;
+
+        grid-template-columns:
+            clamp(64px, 5.7vw, 82px)
+            minmax(0, 1.08fr)
+            minmax(0, 1.12fr);
     }
 
-    /* Reduce only unused vertical padding so the frame does not run
-       into the lower black band on laptop-height screens. */
+    /* Dynamic internal spacing for laptop-height screens. */
     body.is-projects .project-copy-pane {
-        padding: 28px 32px 26px;
+        min-height: 0;
+
+        padding:
+            clamp(20px, 3.1vh, 32px)
+            clamp(24px, 2.8vw, 36px)
+            clamp(20px, 2.7vh, 30px);
     }
 
     body.is-projects .project-meta-column {
-        padding-top: 80px;
-        padding-bottom: 22px;
+        padding:
+            clamp(58px, 8.8vh, 92px)
+            10px
+            clamp(16px, 2.2vh, 24px);
     }
 
     body.is-projects .project-visual-pane {
-        padding: 24px 28px 26px;
+        min-height: 0;
+
+        padding:
+            clamp(18px, 2.6vh, 28px)
+            clamp(22px, 2.5vw, 32px)
+            clamp(20px, 2.8vh, 32px);
+    }
+
+    /*
+       The preview must also obey the frame height.
+       Images still use object-fit: contain, so no image distortion.
+    */
+    body.is-projects .project-preview-slider {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        aspect-ratio: auto;
+    }
+
+
+    /* -----------------------------------------------------
+       PROJECT TYPOGRAPHY
+       Preserve current desktop sizes at normal heights.
+       Shrink continuously only when vertical space is limited.
+       ----------------------------------------------------- */
+    body.is-projects .project-meta-column span {
+        font-size: clamp(9px, 1.18vh, 11.5px);
+    }
+
+    body.is-projects .project-meta-column strong {
+        font-size: clamp(14px, 1.8vh, 18px);
+    }
+
+    body.is-projects .project-stage {
+        margin-bottom: clamp(8px, 1.25vh, 14px) !important;
+
+        font-size: clamp(9.5px, 1.28vh, 12px) !important;
+        line-height: 1.2 !important;
+    }
+
+    body.is-projects .project-card h3 {
+        margin-bottom: clamp(6px, 1vh, 10px);
+
+        font-size: clamp(23px, 3.05vh, 36px);
+        line-height: 1.1;
+    }
+
+    body.is-projects .project-subtitle {
+        margin-bottom: clamp(9px, 1.35vh, 16px) !important;
+
+        font-size: clamp(11px, 1.48vh, 14px) !important;
+        line-height: 1.35 !important;
+    }
+
+    body.is-projects .project-ornament {
+        height: clamp(8px, 1.25vh, 13px);
+        margin-bottom: clamp(9px, 1.45vh, 17px);
+    }
+
+    body.is-projects .project-copy-pane .body-text {
+        font-size: clamp(13px, 1.72vh, 16.4px);
+        line-height: clamp(1.34, 1.4, 1.5);
+    }
+
+    body.is-projects .project-copy-pane .project-extra {
+        margin-top: clamp(7px, 1.25vh, 14px);
+    }
+
+    /*
+       Keep status/link in normal flow.
+       They cannot overlap descriptive text.
+    */
+    body.is-projects .project-status {
+        margin-top: auto;
+        padding-top: clamp(8px, 1.15vh, 13px);
+
+        font-size: clamp(9px, 1.2vh, 11.5px) !important;
+        line-height: 1.18 !important;
+    }
+
+    body.is-projects .project-status::before {
+        top: clamp(11px, 1.5vh, 16px);
+    }
+
+    body.is-projects .project-link {
+        margin-top: clamp(4px, 0.8vh, 8px);
+
+        font-size: clamp(8px, 1.03vh, 9.8px);
+        line-height: 1.2;
+    }
+
+    body.is-projects .project-slider-controls {
+        bottom: clamp(10px, 1.5vh, 14px);
+    }
+
+    body.is-projects .project-counter {
+        font-size: clamp(10px, 1.3vh, 12px);
+    }
+
+    body.is-projects .project-arrow {
+        font-size: clamp(17px, 2.1vh, 20px) !important;
+    }
+
+    /* Never restore the removed divider diamond. */
+    body.is-projects .project-ornament::after {
+        display: none !important;
+        content: none !important;
     }
 }
 
