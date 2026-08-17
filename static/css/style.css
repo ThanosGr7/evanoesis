@@ -2205,3 +2205,58 @@ body.is-projects .project-ornament::after {
     content: none !important;
 }
 
+/* =========================================================
+   DESKTOP POLISH - HOME CTA + WHAT WE DO FIT
+   Fixes only:
+   1) Home CTA vertical spacing
+   2) What We Do text/counter fitting
+   3) White wash leaking onto the bottom black band
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* 1) Give the Home CTA a little more breathing room below the intro. */
+    .home-projects-cta {
+        top: calc(43.8vh + 24px);
+    }
+
+    /*
+       2) What We Do:
+       Keep the SAME font size as before, but use the available width
+       better and tighten only line-height / paragraph spacing so both
+       pages fit comfortably above the bottom band.
+    */
+    body.is-about .text-zone {
+        width: 34vw;
+        max-width: 620px;
+    }
+
+    body.is-about .about-slide h2 {
+        margin-bottom: 22px;
+    }
+
+    body.is-about .about-slide .body-text {
+        font-size: 18px;
+        line-height: 1.52;
+    }
+
+    body.is-about .about-slide .body-text + .body-text {
+        margin-top: 13px;
+    }
+
+    /* Keep 1 / 2 and 2 / 2 directly beneath the text. */
+    body.is-about .about-slider-controls {
+        margin-top: 10px;
+    }
+
+    /*
+       3) The pale text wash was extending beyond the content area
+       and could show as a white haze on the lower black band.
+       The dedicated What We Do background is already light enough,
+       so disable the wash ONLY on this tab.
+    */
+    body.is-about .text-zone::before {
+        display: none;
+        content: none;
+    }
+}
+
