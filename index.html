@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260816-projects-home-style-v2">
+    <link rel="stylesheet" href="static/css/style.css?v=20260817-desktop-safe-frame-v1">
 </head>
 
 <body class="is-home">
@@ -323,9 +323,11 @@
         setMobileViewportHeight();
 
         window.addEventListener("resize", setMobileViewportHeight);
+        window.addEventListener("resize", updateDesktopSafeFrame);
 
         window.addEventListener("orientationchange", () => {
             setTimeout(setMobileViewportHeight, 250);
+            setTimeout(updateDesktopSafeFrame, 260);
         });
 
         document.addEventListener("touchmove", (event) => {
@@ -356,6 +358,216 @@
             if (target !== "projects") {
                 clearProjectBackground();
             }
+        }
+
+
+        /* =====================================================
+           DESKTOP SAFE FRAME
+           Measure the real rendered rectangle of the current
+           background image when background-size is "contain".
+           ===================================================== */
+        const pageBackground = document.querySelector(".page-bg");
+        const desktopBackgroundSizeCache = new Map();
+
+        function setDesktopSafeFrame(left, top, width, height) {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            const right = Math.max(0, viewportWidth - left - width);
+            const bottom = Math.max(0, viewportHeight - top - height);
+
+            const rootStyle = document.documentElement.style;
+
+            rootStyle.setProperty("--desktop-safe-left", `${left}px`);
+            rootStyle.setProperty("--desktop-safe-right", `${right}px`);
+            rootStyle.setProperty("--desktop-safe-top", `${top}px`);
+            rootStyle.setProperty("--desktop-safe-bottom", `${bottom}px`);
+            rootStyle.setProperty("--desktop-safe-width", `${width}px`);
+            rootStyle.setProperty("--desktop-safe-height", `${height}px`);
+        }
+
+        function useFullViewportAsSafeFrame() {
+            setDesktopSafeFrame(
+                0,
+                0,
+                window.innerWidth,
+                window.innerHeight
+            );
+        }
+
+        function applyDesktopBackgroundSize(imageWidth, imageHeight) {
+            if (
+                window.innerWidth <= 900 ||
+                !imageWidth ||
+                !imageHeight
+            ) {
+                useFullViewportAsSafeFrame();
+                return;
+            }
+
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            const imageRatio = imageWidth / imageHeight;
+            const viewportRatio = viewportWidth / viewportHeight;
+
+            let renderedWidth;
+            let renderedHeight;
+            let left;
+            let top;
+
+            if (viewportRatio > imageRatio) {
+                /* Side black bars. */
+                renderedHeight = viewportHeight;
+                renderedWidth = renderedHeight * imageRatio;
+                left = (viewportWidth - renderedWidth) / 2;
+                top = 0;
+            } else {
+                /* Top / bottom black bars. */
+                renderedWidth = viewportWidth;
+                renderedHeight = renderedWidth / imageRatio;
+                left = 0;
+                top = (viewportHeight - renderedHeight) / 2;
+            }
+
+            setDesktopSafeFrame(
+                left,
+                top,
+                renderedWidth,
+                renderedHeight
+            );
+
+            positionHomeCta();
+        }
+
+        function getCurrentDesktopBackgroundUrl() {
+            if (!pageBackground) {
+                return "";
+            }
+
+            const backgroundImage =
+                window.getComputedStyle(pageBackground).backgroundImage;
+
+            if (
+                !backgroundImage ||
+                backgroundImage === "none"
+            ) {
+                return "";
+            }
+
+            const match = backgroundImage.match(
+                /url\((['"]?)(.*?)\1\)/
+            );
+
+            return match ? match[2] : "";
+        }
+
+        function updateDesktopSafeFrame() {
+            if (window.innerWidth <= 900) {
+                useFullViewportAsSafeFrame();
+                return;
+            }
+
+            const source = getCurrentDesktopBackgroundUrl();
+
+            if (!source) {
+                useFullViewportAsSafeFrame();
+                positionHomeCta();
+                return;
+            }
+
+            const cachedSize = desktopBackgroundSizeCache.get(source);
+
+            if (cachedSize) {
+                applyDesktopBackgroundSize(
+                    cachedSize.width,
+                    cachedSize.height
+                );
+                return;
+            }
+
+            const image = new Image();
+
+            image.onload = () => {
+                const size = {
+                    width: image.naturalWidth,
+                    height: image.naturalHeight
+                };
+
+                desktopBackgroundSizeCache.set(source, size);
+
+                /*
+                   Only apply this image if it is still the current
+                   background when loading finishes.
+                */
+                if (getCurrentDesktopBackgroundUrl() === source) {
+                    applyDesktopBackgroundSize(
+                        size.width,
+                        size.height
+                    );
+                }
+            };
+
+            image.onerror = () => {
+                useFullViewportAsSafeFrame();
+                positionHomeCta();
+            };
+
+            image.src = source;
+        }
+
+        /*
+           HOME CTA:
+           Keep the existing clickable element and existing click handler.
+           Only its desktop position is measured from the actual intro text,
+           so it can never sit on top of that paragraph.
+        */
+        function positionHomeCta() {
+            if (
+                !homeProjectsCta ||
+                window.innerWidth <= 900 ||
+                !document.body.classList.contains("is-home")
+            ) {
+                return;
+            }
+
+            const intro = contentInner.querySelector(".body-text");
+
+            if (!intro) {
+                return;
+            }
+
+            const introRect = intro.getBoundingClientRect();
+
+            const rootStyle = window.getComputedStyle(
+                document.documentElement
+            );
+
+            const safeTop =
+                parseFloat(
+                    rootStyle.getPropertyValue("--desktop-safe-top")
+                ) || 0;
+
+            const safeHeight =
+                parseFloat(
+                    rootStyle.getPropertyValue("--desktop-safe-height")
+                ) || window.innerHeight;
+
+            const desiredTop = introRect.bottom + 24;
+
+            /*
+               Reserve a small bottom safety margin.
+               Home content is short, so this clamp should normally
+               never activate; it only protects very short screens.
+            */
+            const maximumTop =
+                safeTop + safeHeight - 72;
+
+            homeProjectsCta.style.left =
+                `${Math.round(introRect.left)}px`;
+
+            homeProjectsCta.style.top =
+                `${Math.round(Math.min(desiredTop, maximumTop))}px`;
         }
 
         function initProjectSlider() {
@@ -618,6 +830,8 @@
             updateAboutSlider();
         }
 
+        requestAnimationFrame(updateDesktopSafeFrame);
+
         buttons.forEach((button) => {
             button.addEventListener("click", () => {
                 const target = button.dataset.content;
@@ -644,6 +858,7 @@
                     contentInner.innerHTML = content[target];
 
                     updatePageState(target);
+                    requestAnimationFrame(updateDesktopSafeFrame);
 
                     if (textZone) {
                         textZone.scrollTop = 0;

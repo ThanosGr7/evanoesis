@@ -9,6 +9,15 @@
     --wash-soft: rgba(246, 241, 237, 0.42);
     --app-height: 100vh;
 
+    /* DESKTOP VISIBLE BACKGROUND SAFE FRAME
+       JS updates these to the exact rendered "contain" image rectangle. */
+    --desktop-safe-left: 0px;
+    --desktop-safe-right: 0px;
+    --desktop-safe-top: 0px;
+    --desktop-safe-bottom: 0px;
+    --desktop-safe-width: 100vw;
+    --desktop-safe-height: 100vh;
+
     /* NORMAL SITE BACKGROUNDS */
     --desktop-bg: url("../images/evanoesis-bg-desktop-test.png");
     --desktop-bg-clean: url("../images/evanoesis-bg-desktop-clean.png");
@@ -2282,3 +2291,139 @@ body.is-projects .project-ornament::after {
         pointer-events: none;
     }
 }
+
+/* =========================================================
+   DESKTOP SAFE FRAME
+   The desktop background uses background-size: contain.
+   JS measures the exact visible image rectangle and writes:
+   --desktop-safe-left / right / top / bottom / width / height.
+
+   This final layer ONLY locks desktop positioning inside that rectangle.
+   Mobile/tablet rules and touch gestures are untouched.
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* The desktop page itself must never create a vertical page scroll. */
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        overflow: hidden;
+    }
+
+    /* -----------------------------------------------------
+       HEADER
+       Fixed distance from the TOP edge of the visible artwork.
+       ----------------------------------------------------- */
+    .top-menu {
+        top: calc(var(--desktop-safe-top) + 30px);
+        right: calc(var(--desktop-safe-right) + clamp(34px, 5.5vw, 106px));
+    }
+
+    .persistent-branding {
+        left: calc(var(--desktop-safe-left) + clamp(34px, 5.3vw, 102px));
+        top: calc(var(--desktop-safe-top) + 28px);
+    }
+
+    /* -----------------------------------------------------
+       STANDARD TEXT AREA
+       Home / Contact remain visually where they already were,
+       but now their top edge follows the artwork, not the viewport.
+       ----------------------------------------------------- */
+    body:not(.is-projects):not(.is-about) .text-zone {
+        left: calc(var(--desktop-safe-left) + clamp(38px, 5.8vw, 112px));
+        top: calc(var(--desktop-safe-top) + 72px);
+    }
+
+    /* -----------------------------------------------------
+       HOME CTA
+       JS anchors it to the ACTUAL bottom of the intro paragraph.
+       CSS below is only a safe fallback before JS measures it.
+       ----------------------------------------------------- */
+    body.is-home .home-projects-cta {
+        left: calc(var(--desktop-safe-left) + clamp(80px, 8vw, 154px));
+        top: calc(var(--desktop-safe-top) + 340px);
+    }
+
+    /* -----------------------------------------------------
+       WHAT WE DO
+       Same font size as before.
+       More usable width + controlled vertical spacing means
+       page 1 / 2 and 2 / 2 stay inside the artwork without scrolling.
+       ----------------------------------------------------- */
+    body.is-about .text-zone {
+        left: calc(var(--desktop-safe-left) + clamp(38px, 5.8vw, 112px));
+        top: calc(var(--desktop-safe-top) + 46px);
+
+        width: clamp(560px, 42vw, 680px);
+        min-width: 0;
+        max-width: 680px;
+        min-height: 0;
+
+        padding: 28px 36px 26px;
+    }
+
+    body.is-about .about-slide h2 {
+        margin-bottom: 18px;
+    }
+
+    body.is-about .about-slide .body-text {
+        /* IMPORTANT: keep the same font size as page 1 already uses. */
+        font-size: 18px;
+        line-height: 1.46;
+    }
+
+    body.is-about .about-slide .body-text + .body-text {
+        margin-top: 10px;
+    }
+
+    body.is-about .about-slider-controls {
+        margin-top: 9px;
+    }
+
+    /* Keep the existing no-wash solution on What We Do. */
+    body.is-about .text-zone::before {
+        display: none !important;
+        content: none !important;
+    }
+
+    /* -----------------------------------------------------
+       PROJECTS
+       Preserve the current larger project design, but anchor
+       the complete frame to the visible artwork.
+       ----------------------------------------------------- */
+    body.is-projects .text-zone {
+        left: calc(var(--desktop-safe-left) + clamp(30px, 4.8vw, 92px));
+        top: calc(var(--desktop-safe-top) + 100px);
+
+        width: clamp(820px, 62vw, 1040px);
+        max-width: min(1040px, calc(var(--desktop-safe-width) - 90px));
+    }
+
+    /* The removed project-divider diamond stays removed. */
+    body.is-projects .project-ornament::after {
+        display: none !important;
+        content: none !important;
+    }
+
+    /* -----------------------------------------------------
+       QUOTE
+       Keep the preferred soft backdrop and lock the quote
+       above the BOTTOM edge of the visible artwork.
+       ----------------------------------------------------- */
+    .home-quote {
+        right: calc(var(--desktop-safe-right) + clamp(30px, 4.5vw, 86px));
+        bottom: calc(var(--desktop-safe-bottom) + 28px);
+    }
+
+    /* -----------------------------------------------------
+       FOOTER
+       Keep it inside the visible artwork, not in the black band.
+       ----------------------------------------------------- */
+    .site-footer {
+        right: calc(var(--desktop-safe-right) + 32px);
+        bottom: calc(var(--desktop-safe-bottom) + 12px);
+    }
+}
+
