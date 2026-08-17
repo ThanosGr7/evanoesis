@@ -2427,3 +2427,53 @@ body.is-projects .project-ornament::after {
     }
 }
 
+/* =========================================================
+   TWO DESKTOP SPACING FIXES ONLY
+   1) What We Do sits farther below the top brand.
+   2) Projects keeps a clear bottom margin on shorter laptops.
+   ========================================================= */
+@media (min-width: 901px) {
+
+    /* 1) Move What We Do down without changing its typography/content. */
+    body.is-about .text-zone {
+        top: calc(var(--desktop-safe-top) + 78px);
+    }
+}
+
+/* 2) Laptop / shorter-desktop Projects fit.
+   No font-size changes. The frame gets more horizontal room,
+   slightly tighter internal padding, and a protected bottom gap. */
+@media (min-width: 901px) and (max-height: 860px) {
+
+    body.is-projects .text-zone {
+        left: calc(var(--desktop-safe-left) + 50px);
+        top: calc(var(--desktop-safe-top) + 84px);
+
+        width: min(1040px, calc(var(--desktop-safe-width) - 100px));
+        max-width: min(1040px, calc(var(--desktop-safe-width) - 100px));
+    }
+
+    body.is-projects .project-card {
+        min-height: clamp(
+            420px,
+            calc(var(--desktop-safe-height) - 220px),
+            470px
+        );
+    }
+
+    /* Reduce only unused vertical padding so the frame does not run
+       into the lower black band on laptop-height screens. */
+    body.is-projects .project-copy-pane {
+        padding: 28px 32px 26px;
+    }
+
+    body.is-projects .project-meta-column {
+        padding-top: 80px;
+        padding-bottom: 22px;
+    }
+
+    body.is-projects .project-visual-pane {
+        padding: 24px 28px 26px;
+    }
+}
+
