@@ -2260,63 +2260,7 @@ body.is-projects .project-ornament::after {
     }
 }
 
-/* =========================================================
-   SHORT DESKTOP / LAPTOP FIT
-   Only affects desktop viewports with limited vertical height.
-   ========================================================= */
-@media (min-width: 901px) and (max-height: 860px) {
-
-    /*
-       Home CTA:
-       JS now sets left/top from the rendered introduction paragraph,
-       so it is always aligned with and 24px below that text.
-    */
-    .home-projects-cta {
-        bottom: auto;
-    }
-
-    /*
-       What We Do:
-       keep the same font size, but use more horizontal room and
-       tighter vertical spacing so page 1 / 2 and 2 / 2 fit without scrolling.
-    */
-    body.is-about .text-zone {
-        top: 10.5vh;
-        width: 40vw;
-        max-width: 700px;
-        min-width: 500px;
-        min-height: 0;
-        padding: 28px 38px 24px;
-    }
-
-    body.is-about .about-slide h2 {
-        margin-bottom: 18px;
-    }
-
-    body.is-about .about-slide .body-text {
-        font-size: 18px;
-        line-height: 1.44;
-    }
-
-    body.is-about .about-slide .body-text + .body-text {
-        margin-top: 10px;
-    }
-
-    body.is-about .about-slider-controls {
-        margin-top: 8px;
-    }
-
-    /* Keep the What We Do wash disabled so it cannot haze the bottom black band. */
-    body.is-about .text-zone::before {
-        display: none !important;
-        content: none !important;
-    }
-}
-
-/* =========================================================
-   DESKTOP TEST - SOFT BACKDROP BEHIND THE FULL QUOTE
-   Quote text/position stay unchanged.
-   ========================================================= */
+/* DESKTOP ONLY - SOFT BACKDROP BEHIND QUOTE */
 @media (min-width: 901px) {
     .home-quote {
         isolation: isolate;
@@ -2338,4 +2282,3 @@ body.is-projects .project-ornament::after {
         pointer-events: none;
     }
 }
-

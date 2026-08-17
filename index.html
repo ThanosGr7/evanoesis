@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260817-laptop-fit-v1">
+    <link rel="stylesheet" href="static/css/style.css?v=20260816-projects-home-style-v2">
 </head>
 
 <body class="is-home">
@@ -252,34 +252,27 @@
 
                                 <p class="body-text">
                                     <strong>Start with the reason</strong><br>
-                                    Every project begins by understanding why an idea matters, who it is meant to serve,
-                                    and what real problem it should solve. We look closely at the purpose before deciding
-                                    how the technology should be built.
+                                    We begin by understanding why an idea matters, who it serves,
+                                    and what real problem it should solve.
                                 </p>
 
                                 <p class="body-text">
                                     <strong>Build with precision</strong><br>
-                                    From research and early concept to structure, design, prototyping, testing, and
-                                    implementation, each step is examined carefully. We pay attention to the small
-                                    details because they are often what separate an interesting idea from a useful,
-                                    dependable product.
+                                    Research, design, prototyping, testing, and implementation are approached carefully,
+                                    with close attention to the details that make a product useful and dependable.
                                 </p>
 
                                 <p class="body-text">
                                     <strong>Ideas with meaningful impact</strong><br>
-                                    We are especially drawn to innovative ideas that challenge assumptions and have the
-                                    potential to create genuine human value. Technology, for us, is not the destination;
-                                    it is a way to build tools that can improve understanding, capability, and quality
-                                    of life.
+                                    We are drawn to innovative ideas with the potential to create genuine human value
+                                    and improve understanding, capability, or quality of life.
                                 </p>
 
                                 <p class="body-text">
                                     <strong>Where we are heading</strong><br>
-                                    EVANØESIS plans to become increasingly oriented toward biomedical and life-science
-                                    applications, including biological and microbiological systems, medical technology,
-                                    and practical tools related to human health and pathology. Our long-term purpose is
-                                    to contribute to work that can support researchers, clinicians, and ultimately
-                                    humanity itself.
+                                    Our long-term direction includes biomedical, life-science, microbiological,
+                                    medical-technology, and human-health applications — with the aim of contributing
+                                    to work that can meaningfully serve humanity.
                                 </p>
                             </section>
 
@@ -330,7 +323,6 @@
         setMobileViewportHeight();
 
         window.addEventListener("resize", setMobileViewportHeight);
-        window.addEventListener("resize", positionHomeCta);
 
         window.addEventListener("orientationchange", () => {
             setTimeout(setMobileViewportHeight, 250);
@@ -364,33 +356,6 @@
             if (target !== "projects") {
                 clearProjectBackground();
             }
-        }
-
-
-        /*
-           Desktop Home CTA positioning:
-           anchor it to the ACTUAL rendered intro paragraph instead of a vh value.
-           This keeps it below the introduction on both large monitors and shorter laptops.
-        */
-        function positionHomeCta() {
-            if (
-                !homeProjectsCta ||
-                !document.body.classList.contains("is-home") ||
-                window.matchMedia("(max-width: 900px)").matches
-            ) {
-                return;
-            }
-
-            const homeIntro = contentInner.querySelector(".body-text");
-
-            if (!homeIntro) {
-                return;
-            }
-
-            const introRect = homeIntro.getBoundingClientRect();
-
-            homeProjectsCta.style.left = `${Math.round(introRect.left)}px`;
-            homeProjectsCta.style.top = `${Math.round(introRect.bottom + 24)}px`;
         }
 
         function initProjectSlider() {
@@ -653,8 +618,6 @@
             updateAboutSlider();
         }
 
-        requestAnimationFrame(positionHomeCta);
-
         buttons.forEach((button) => {
             button.addEventListener("click", () => {
                 const target = button.dataset.content;
@@ -692,10 +655,6 @@
 
                     if (target === "about") {
                         initAboutSlider();
-                    }
-
-                    if (target === "home") {
-                        requestAnimationFrame(positionHomeCta);
                     }
 
                     contentInner.classList.remove("is-leaving");
