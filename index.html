@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260817-desktop-safe-frame-v1">
+    <link rel="stylesheet" href="static/css/style.css?v=20260817-laptop-breakpoint-fix-v1">
 </head>
 
 <body class="is-home">
@@ -316,6 +316,13 @@
             return window.matchMedia("(max-width: 520px)").matches;
         }
 
+
+        function usesDesktopLayout() {
+            return window.matchMedia(
+                "(min-width: 700px) and (hover: hover) and (pointer: fine)"
+            ).matches;
+        }
+
         function setMobileViewportHeight() {
             document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
         }
@@ -397,7 +404,7 @@
 
         function applyDesktopBackgroundSize(imageWidth, imageHeight) {
             if (
-                window.innerWidth <= 900 ||
+                !usesDesktopLayout() ||
                 !imageWidth ||
                 !imageHeight
             ) {
@@ -463,7 +470,7 @@
         }
 
         function updateDesktopSafeFrame() {
-            if (window.innerWidth <= 900) {
+            if (!usesDesktopLayout()) {
                 useFullViewportAsSafeFrame();
                 return;
             }
@@ -525,7 +532,7 @@
         function positionHomeCta() {
             if (
                 !homeProjectsCta ||
-                window.innerWidth <= 900 ||
+                !usesDesktopLayout() ||
                 !document.body.classList.contains("is-home")
             ) {
                 return;
