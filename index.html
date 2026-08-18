@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Michroma&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/style.css?v=20260817-laptop-breakpoint-fix-v2">
+    <link rel="stylesheet" href="static/css/style.css?v=20260818-responsive-layout-v1">
 </head>
 
 <body class="is-home">
@@ -318,9 +318,27 @@
 
 
         function usesDesktopLayout() {
-            return window.matchMedia(
-                "(min-width: 700px) and (hover: hover) and (pointer: fine)"
-            ).matches;
+            if (window.innerWidth < 700) {
+                return false;
+            }
+
+            /*
+               Desktop/laptop is capability-based, not one fragile media query.
+               any-pointer:fine catches scaled and hybrid laptops with a trackpad
+               even when the primary pointer/hover media feature differs.
+            */
+            return (
+                window.matchMedia("(pointer: fine)").matches ||
+                window.matchMedia("(any-pointer: fine)").matches ||
+                window.matchMedia("(hover: hover)").matches
+            );
+        }
+
+        function syncLayoutMode() {
+            document.documentElement.classList.toggle(
+                "layout-desktop",
+                usesDesktopLayout()
+            );
         }
 
         function setMobileViewportHeight() {
@@ -328,13 +346,20 @@
         }
 
         setMobileViewportHeight();
+        syncLayoutMode();
 
-        window.addEventListener("resize", setMobileViewportHeight);
-        window.addEventListener("resize", updateDesktopSafeFrame);
+        window.addEventListener("resize", () => {
+            setMobileViewportHeight();
+            syncLayoutMode();
+            updateDesktopSafeFrame();
+        });
 
         window.addEventListener("orientationchange", () => {
-            setTimeout(setMobileViewportHeight, 250);
-            setTimeout(updateDesktopSafeFrame, 260);
+            setTimeout(() => {
+                setMobileViewportHeight();
+                syncLayoutMode();
+                updateDesktopSafeFrame();
+            }, 250);
         });
 
         document.addEventListener("touchmove", (event) => {
@@ -838,6 +863,12 @@
         }
 
         requestAnimationFrame(updateDesktopSafeFrame);
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                positionHomeCta();
+            });
+        }
 
         buttons.forEach((button) => {
             button.addEventListener("click", () => {

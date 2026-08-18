@@ -2727,3 +2727,480 @@ body.is-projects .project-ornament::after {
     }
 }
 
+/* =========================================================
+   RESPONSIVE LAYOUT CONTROLLER V1
+   Authoritative desktop/laptop fit layer.
+
+   IMPORTANT:
+   - This does NOT replace the existing mobile/tablet rules.
+   - JS adds html.layout-desktop only on desktop-class devices.
+   - All vertical fit is calculated from the ACTUAL visible
+     background rectangle measured by the existing safe-frame JS.
+   - Home, Contact, menu, branding, quote, backgrounds and mobile
+     gestures keep their existing rules unless explicitly listed.
+   ========================================================= */
+
+/* WHAT WE DO + PROJECTS ONLY: the two sections that need hard fit control. */
+html.layout-desktop body.is-about .text-zone {
+    position: fixed !important;
+
+    /*
+       Keep the column clearly on the left and lower than the brand.
+       On very short artwork the top/bottom gaps compress before
+       typography has to become very small.
+    */
+    --about-top-gap:
+        clamp(104px, calc(var(--desktop-safe-height) * 0.16), 130px);
+    --about-bottom-gap:
+        clamp(24px, calc(var(--desktop-safe-height) * 0.06), 42px);
+
+    left: calc(var(--desktop-safe-left) + clamp(44px, 4.3vw, 66px)) !important;
+    top: calc(var(--desktop-safe-top) + var(--about-top-gap)) !important;
+    bottom: auto !important;
+
+    width: min(460px, calc(var(--desktop-safe-width) - 96px)) !important;
+    min-width: 0 !important;
+    max-width: 460px !important;
+
+    /* Never cross the lower edge of the visible artwork. */
+    height: auto !important;
+    min-height: 0 !important;
+    max-height:
+        calc(
+            var(--desktop-safe-height)
+            - var(--about-top-gap)
+            - var(--about-bottom-gap)
+        ) !important;
+
+    padding:
+        clamp(10px, calc(var(--desktop-safe-height) * 0.027), 28px)
+        30px
+        clamp(10px, calc(var(--desktop-safe-height) * 0.023), 24px) !important;
+
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-about .content-inner,
+html.layout-desktop body.is-about .about-slider,
+html.layout-desktop body.is-about .about-slider-window,
+html.layout-desktop body.is-about .about-slider-track {
+    min-width: 0 !important;
+    min-height: 0 !important;
+}
+
+html.layout-desktop body.is-about .about-slide h2 {
+    margin-bottom:
+        clamp(8px, calc(var(--desktop-safe-height) * 0.019), 18px) !important;
+
+    font-size:
+        clamp(
+            17.5px,
+            min(
+                calc(var(--desktop-safe-height) * 0.039),
+                calc(var(--desktop-safe-width) * 0.024)
+            ),
+            36px
+        ) !important;
+
+    line-height: 1.08 !important;
+}
+
+html.layout-desktop body.is-about .about-slide .body-text {
+    font-size:
+        clamp(
+            10px,
+            min(
+                calc(var(--desktop-safe-height) * 0.0215),
+                calc(var(--desktop-safe-width) * 0.0135)
+            ),
+            18px
+        ) !important;
+
+    line-height: 1.34 !important;
+}
+
+html.layout-desktop body.is-about .about-slide .body-text + .body-text {
+    margin-top:
+        clamp(4px, calc(var(--desktop-safe-height) * 0.011), 11px) !important;
+}
+
+html.layout-desktop body.is-about .about-slider-controls {
+    margin-top:
+        clamp(4px, calc(var(--desktop-safe-height) * 0.009), 9px) !important;
+}
+
+html.layout-desktop body.is-about .text-zone::before {
+    display: none !important;
+    content: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   PROJECTS
+   A definite frame height is computed from the safe artwork.
+   Normal desktop tops out at the existing ~550px visual size.
+   Short laptops shrink the frame, typography and spacing.
+   --------------------------------------------------------- */
+html.layout-desktop body.is-projects .text-zone {
+    position: fixed !important;
+
+    --projects-top-gap:
+        clamp(96px, calc(var(--desktop-safe-height) * 0.15), 112px);
+    --projects-bottom-gap:
+        clamp(24px, calc(var(--desktop-safe-height) * 0.055), 40px);
+
+    left: calc(var(--desktop-safe-left) + clamp(36px, 4.2vw, 54px)) !important;
+    top: calc(var(--desktop-safe-top) + var(--projects-top-gap)) !important;
+    bottom: auto !important;
+
+    width: min(1040px, calc(var(--desktop-safe-width) - 96px)) !important;
+    min-width: 0 !important;
+    max-width: 1040px !important;
+
+    height:
+        min(
+            550px,
+            calc(
+                var(--desktop-safe-height)
+                - var(--projects-top-gap)
+                - var(--projects-bottom-gap)
+            )
+        ) !important;
+
+    min-height: 0 !important;
+    max-height:
+        calc(
+            var(--desktop-safe-height)
+            - var(--projects-top-gap)
+            - var(--projects-bottom-gap)
+        ) !important;
+
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/*
+   Critical containment rule:
+   the dynamic .content-inner must fill the locked Projects frame.
+   Without this, height:100% descendants can resolve against auto-height
+   content and the project window can extend below the intended frame.
+*/
+html.layout-desktop body.is-projects .content-inner {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    transform: none !important;
+    filter: none !important;
+}
+
+html.layout-desktop body.is-projects .content-inner.is-leaving,
+html.layout-desktop body.is-projects .content-inner.is-entering {
+    transform: none !important;
+    filter: none !important;
+}
+
+html.layout-desktop body.is-projects .content-inner.is-entering {
+    animation: projectsFadeOnly 420ms ease forwards !important;
+}
+
+html.layout-desktop body.is-projects .project-slider {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: 100% !important;
+
+    margin: 0 !important;
+
+    padding:
+        0
+        0
+        clamp(32px, calc(var(--desktop-safe-height) * 0.052), 46px) !important;
+
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-projects .project-slider-window,
+html.layout-desktop body.is-projects .project-slider-track,
+html.layout-desktop body.is-projects .project-slide,
+html.layout-desktop body.is-projects .project-card {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+}
+
+html.layout-desktop body.is-projects .project-slider-window {
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-projects .project-slider-track {
+    align-items: stretch !important;
+}
+
+html.layout-desktop body.is-projects .project-card {
+    display: grid !important;
+
+    grid-template-columns:
+        clamp(54px, 5.5vw, 82px)
+        minmax(0, 1.08fr)
+        minmax(0, 1.12fr) !important;
+
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-projects .project-copy-pane {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    padding:
+        clamp(14px, calc(var(--desktop-safe-height) * 0.032), 30px)
+        clamp(20px, 2.4vw, 34px)
+        clamp(14px, calc(var(--desktop-safe-height) * 0.027), 26px) !important;
+
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-projects .project-meta-column {
+    min-height: 0 !important;
+
+    padding:
+        clamp(42px, calc(var(--desktop-safe-height) * 0.090), 88px)
+        8px
+        clamp(12px, calc(var(--desktop-safe-height) * 0.022), 22px) !important;
+
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-projects .project-visual-pane {
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    padding:
+        clamp(14px, calc(var(--desktop-safe-height) * 0.028), 26px)
+        clamp(16px, 2.2vw, 30px)
+        clamp(14px, calc(var(--desktop-safe-height) * 0.030), 28px) !important;
+
+    overflow: hidden !important;
+}
+
+html.layout-desktop body.is-projects .project-preview-slider {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+}
+
+
+/* Project typography scales with BOTH usable artwork height and width. */
+html.layout-desktop body.is-projects .project-meta-column span {
+    font-size:
+        clamp(
+            7.5px,
+            min(
+                calc(var(--desktop-safe-height) * 0.015),
+                calc(var(--desktop-safe-width) * 0.009)
+            ),
+            11.5px
+        ) !important;
+}
+
+html.layout-desktop body.is-projects .project-meta-column strong {
+    font-size:
+        clamp(
+            11px,
+            min(
+                calc(var(--desktop-safe-height) * 0.022),
+                calc(var(--desktop-safe-width) * 0.013)
+            ),
+            18px
+        ) !important;
+}
+
+html.layout-desktop body.is-projects .project-stage {
+    margin-bottom:
+        clamp(5px, calc(var(--desktop-safe-height) * 0.013), 13px) !important;
+
+    font-size:
+        clamp(
+            8px,
+            min(
+                calc(var(--desktop-safe-height) * 0.016),
+                calc(var(--desktop-safe-width) * 0.0095)
+            ),
+            12px
+        ) !important;
+
+    line-height: 1.18 !important;
+}
+
+html.layout-desktop body.is-projects .project-card h3 {
+    margin-bottom:
+        clamp(4px, calc(var(--desktop-safe-height) * 0.009), 10px) !important;
+
+    font-size:
+        clamp(
+            15px,
+            min(
+                calc(var(--desktop-safe-height) * 0.044),
+                calc(var(--desktop-safe-width) * 0.026)
+            ),
+            36px
+        ) !important;
+
+    line-height: 1.08 !important;
+}
+
+html.layout-desktop body.is-projects .project-subtitle {
+    margin-bottom:
+        clamp(5px, calc(var(--desktop-safe-height) * 0.013), 15px) !important;
+
+    font-size:
+        clamp(
+            8.5px,
+            min(
+                calc(var(--desktop-safe-height) * 0.018),
+                calc(var(--desktop-safe-width) * 0.0105)
+            ),
+            14px
+        ) !important;
+
+    line-height: 1.28 !important;
+}
+
+html.layout-desktop body.is-projects .project-ornament {
+    height:
+        clamp(5px, calc(var(--desktop-safe-height) * 0.011), 13px) !important;
+
+    margin-bottom:
+        clamp(5px, calc(var(--desktop-safe-height) * 0.013), 16px) !important;
+}
+
+html.layout-desktop body.is-projects .project-copy-pane .body-text {
+    font-size:
+        clamp(
+            8.8px,
+            min(
+                calc(var(--desktop-safe-height) * 0.021),
+                calc(var(--desktop-safe-width) * 0.012)
+            ),
+            16.4px
+        ) !important;
+
+    line-height: 1.31 !important;
+}
+
+html.layout-desktop body.is-projects .project-copy-pane .project-extra {
+    margin-top:
+        clamp(4px, calc(var(--desktop-safe-height) * 0.010), 13px) !important;
+}
+
+/* Status and app line stay in normal flow; no overlap with body copy. */
+html.layout-desktop body.is-projects .project-status {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    width: 100% !important;
+
+    margin: auto 0 0 !important;
+
+    padding:
+        clamp(5px, calc(var(--desktop-safe-height) * 0.011), 12px)
+        0 0 14px !important;
+
+    font-size:
+        clamp(
+            7px,
+            min(
+                calc(var(--desktop-safe-height) * 0.014),
+                calc(var(--desktop-safe-width) * 0.008)
+            ),
+            11.5px
+        ) !important;
+
+    line-height: 1.15 !important;
+}
+
+html.layout-desktop body.is-projects .project-status::before {
+    top:
+        clamp(8px, calc(var(--desktop-safe-height) * 0.015), 15px) !important;
+}
+
+html.layout-desktop body.is-projects .project-link {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+
+    align-self: flex-start !important;
+
+    margin:
+        clamp(3px, calc(var(--desktop-safe-height) * 0.006), 7px)
+        0 0 14px !important;
+
+    font-size:
+        clamp(
+            6.8px,
+            min(
+                calc(var(--desktop-safe-height) * 0.011),
+                calc(var(--desktop-safe-width) * 0.0068)
+            ),
+            9.8px
+        ) !important;
+
+    line-height: 1.18 !important;
+}
+
+html.layout-desktop body.is-projects .project-slider-controls {
+    bottom:
+        clamp(8px, calc(var(--desktop-safe-height) * 0.013), 14px) !important;
+}
+
+html.layout-desktop body.is-projects .project-counter {
+    font-size:
+        clamp(9px, calc(var(--desktop-safe-height) * 0.013), 12px) !important;
+}
+
+html.layout-desktop body.is-projects .project-arrow {
+    font-size:
+        clamp(15px, calc(var(--desktop-safe-height) * 0.021), 20px) !important;
+}
+
+/* Never restore the removed project-divider diamond. */
+html.layout-desktop body.is-projects .project-ornament::after {
+    display: none !important;
+    content: none !important;
+}
+
+
+/* Narrow desktop-class viewport: give text more horizontal room.
+   This is for scaled laptops, not mobile/touch layouts. */
+@media (max-width: 900px) {
+    html.layout-desktop body.is-projects .project-card {
+        grid-template-columns:
+            54px
+            minmax(0, 1.35fr)
+            minmax(0, 0.85fr) !important;
+    }
+
+    html.layout-desktop body.is-projects .project-copy-pane {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    html.layout-desktop body.is-projects .project-visual-pane {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+
