@@ -2,14 +2,14 @@
   EVANOESIS — MOBILE / DESKTOP-STYLE HOME TEST
   ------------------------------------------------------------
   TEST LAYER ONLY.
-  - Applies to phone-size layouts, including landscape touch phones.
+  - Applies to touch-only phone/tablet browsers regardless of reported CSS viewport width.
   - Applies only to the Home tab.
   - Does not alter the existing desktop/laptop rules.
   - Does not alter Projects / What We Do / Contact yet.
   - Remove the <link> to this file to revert instantly.
 */
 
-@media (max-width: 699px), (max-height: 600px) and (hover: none) and (pointer: coarse) {
+@media (hover: none) and (pointer: coarse) and (any-hover: none) {
 
     /* Keep the existing portrait artwork for now.
        We are testing the DESKTOP COMPOSITION, not forcing a wide
@@ -181,12 +181,12 @@
    MOBILE PROJECTS — DESKTOP-STYLE COMPOSITION, PHONE-SAFE
    ---------------------------------------------------------
    IMPORTANT:
-   - PHONE-SIZE / TOUCH-LANDSCAPE ONLY
+   - TOUCH-ONLY MOBILE/TABLET BROWSERS ONLY
    - Projects tab ONLY
    - Desktop/laptop CSS is untouched
    - Existing project swipe JS is untouched
    ========================================================= */
-@media (max-width: 699px), (max-height: 600px) and (hover: none) and (pointer: coarse) {
+@media (hover: none) and (pointer: coarse) and (any-hover: none) {
 
     /*
        Projects use the SAME new mobile artwork as Home.
