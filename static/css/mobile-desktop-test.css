@@ -17,7 +17,7 @@
     body.is-home .page-bg {
         background-image: url("../images/evanoesis-bg-mobile-test.png?v=355b81a-new") !important;
         background-size: cover !important;
-        background-position: center center !important;
+        background-position: center calc(50% + 70px) !important;
         filter: none !important;
         transform: none !important;
         opacity: 1 !important;
