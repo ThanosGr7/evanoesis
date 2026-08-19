@@ -1,0 +1,178 @@
+/*
+  EVANOESIS — MOBILE / DESKTOP-STYLE HOME TEST
+  ------------------------------------------------------------
+  TEST LAYER ONLY.
+  - Applies only at <= 520px.
+  - Applies only to the Home tab.
+  - Does not alter the existing desktop/laptop rules.
+  - Does not alter Projects / What We Do / Contact yet.
+  - Remove the <link> to this file to revert instantly.
+*/
+
+@media (max-width: 520px) {
+
+    /* Keep the existing portrait artwork for now.
+       We are testing the DESKTOP COMPOSITION, not forcing a wide
+       desktop image into a portrait screen. */
+    body.is-home .page-bg {
+        background-image: var(--mobile-bg) !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        filter: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    /* Home desktop does not show the separate persistent brand. */
+    body.is-home .persistent-branding {
+        display: none !important;
+    }
+
+    /* Desktop-like top-right navigation, scaled for phone width. */
+    body.is-home .top-menu {
+        top: 24px !important;
+        left: auto !important;
+        right: 16px !important;
+
+        width: calc(100% - 32px) !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: clamp(8px, 2.6vw, 13px) !important;
+
+        transform: none !important;
+    }
+
+    body.is-home .top-menu button {
+        font-size: clamp(8px, 2.25vw, 9px) !important;
+        letter-spacing: 0.035em !important;
+    }
+
+    body.is-home .top-menu button.is-active {
+        transform: scale(1.06);
+    }
+
+    /* Desktop-like left content column, adapted to portrait width. */
+    body.is-home .text-zone {
+        position: fixed !important;
+        left: 22px !important;
+        top: 82px !important;
+
+        width: min(82vw, 320px) !important;
+        max-width: 320px !important;
+        height: auto !important;
+        max-height: calc(var(--app-height) - 250px) !important;
+
+        padding: 20px 18px 22px !important;
+
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+
+    body.is-home .text-zone::before {
+        inset: -20px -18px -24px -18px !important;
+
+        background:
+            radial-gradient(
+                ellipse at center,
+                rgba(246, 241, 237, 0.82) 0%,
+                rgba(246, 241, 237, 0.70) 36%,
+                rgba(246, 241, 237, 0.36) 68%,
+                rgba(246, 241, 237, 0.10) 84%,
+                rgba(246, 241, 237, 0) 100%
+            ) !important;
+
+        filter: blur(11px) !important;
+    }
+
+    body.is-home .brand-title {
+        margin-bottom: 20px !important;
+
+        font-size: clamp(24px, 7.2vw, 29px) !important;
+        line-height: 1 !important;
+        letter-spacing: 0.085em !important;
+    }
+
+    body.is-home .tagline {
+        margin-bottom: 22px !important;
+
+        font-size: clamp(15px, 4.2vw, 17px) !important;
+        line-height: 1.35 !important;
+    }
+
+    body.is-home .body-text {
+        font-size: clamp(13.5px, 3.7vw, 15px) !important;
+        line-height: 1.58 !important;
+    }
+
+    /* Bring back the desktop CTA on Home.
+       First-pass position only; if we keep this direction we can
+       anchor it dynamically after the text in the next controlled step. */
+    body.is-home .home-projects-cta {
+        position: fixed !important;
+        left: 40px !important;
+        top: min(49vh, 405px) !important;
+        bottom: auto !important;
+        z-index: 57 !important;
+
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 9px !important;
+
+        padding: 0 0 6px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: 11.5px !important;
+        line-height: 1.2 !important;
+        font-weight: 500 !important;
+
+        color: #a97734 !important;
+        text-decoration: none !important;
+
+        border-bottom: 1px solid rgba(169, 119, 52, 0.62) !important;
+
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+
+    body.is-home .home-projects-cta-arrow {
+        font-size: 16px !important;
+        line-height: 1 !important;
+    }
+
+    /* Desktop-style quote treatment in the lower-right. */
+    body.is-home .home-quote {
+        right: 20px !important;
+        bottom: 66px !important;
+
+        width: min(218px, calc(100vw - 52px)) !important;
+
+        isolation: isolate;
+    }
+
+    body.is-home .home-quote::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+
+        inset: -12px -14px -14px -14px;
+
+        background: rgba(246, 241, 237, 0.56);
+        border-radius: 20px;
+
+        filter: blur(12px);
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+
+        pointer-events: none;
+    }
+
+    /* Keep footer in the same lower-right visual language as desktop. */
+    body.is-home .site-footer {
+        right: 18px !important;
+        bottom: 10px !important;
+
+        text-align: right !important;
+    }
+}
