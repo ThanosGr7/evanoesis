@@ -2,20 +2,20 @@
   EVANOESIS — MOBILE / DESKTOP-STYLE HOME TEST
   ------------------------------------------------------------
   TEST LAYER ONLY.
-  - Applies to touch-only phone/tablet browsers regardless of reported CSS viewport width.
+  - Applies only to the same <= 520px phone breakpoint already used by the existing mobile site.
   - Applies only to the Home tab.
   - Does not alter the existing desktop/laptop rules.
   - Does not alter Projects / What We Do / Contact yet.
   - Remove the <link> to this file to revert instantly.
 */
 
-@media (hover: none) and (pointer: coarse) and (any-hover: none) {
+@media (max-width: 520px) {
 
     /* Keep the existing portrait artwork for now.
        We are testing the DESKTOP COMPOSITION, not forcing a wide
        desktop image into a portrait screen. */
     body.is-home .page-bg {
-        background-image: var(--mobile-bg) !important;
+        background-image: url("../images/evanoesis-bg-mobile-test.png?v=355b81a-new") !important;
         background-size: cover !important;
         background-position: center center !important;
         filter: none !important;
@@ -181,12 +181,12 @@
    MOBILE PROJECTS — DESKTOP-STYLE COMPOSITION, PHONE-SAFE
    ---------------------------------------------------------
    IMPORTANT:
-   - TOUCH-ONLY MOBILE/TABLET BROWSERS ONLY
+   - PHONE ONLY — max-width 520px
    - Projects tab ONLY
    - Desktop/laptop CSS is untouched
    - Existing project swipe JS is untouched
    ========================================================= */
-@media (hover: none) and (pointer: coarse) and (any-hover: none) {
+@media (max-width: 520px) {
 
     /*
        Projects use the SAME new mobile artwork as Home.
@@ -194,7 +194,7 @@
        matching the current desktop idea of one consistent background.
     */
     body.is-projects .page-bg {
-        background-image: var(--mobile-bg) !important;
+        background-image: url("../images/evanoesis-bg-mobile-test.png?v=355b81a-new") !important;
         background-size: cover !important;
         background-position: center center !important;
         background-repeat: no-repeat !important;
