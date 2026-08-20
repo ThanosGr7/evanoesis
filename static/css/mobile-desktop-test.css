@@ -15,11 +15,15 @@
        We are testing the DESKTOP COMPOSITION, not forcing a wide
        desktop image into a portrait screen. */
     body.is-home .page-bg {
-        background-image: url("../images/evanoesis-bg-mobile-test.png?v=355b81a-new") !important;
+        background-image: url("../images/evanoesis-bg-mobile-test.png?v=20260820-mobile-bg2") !important;
         background-size: cover !important;
-        background-position: center calc(50% + 70px) !important;
+        background-position: center center !important;
+
+        /* Mobile-only overscan: lowers the artwork without exposing
+           the black page background at the top. */
         filter: none !important;
-        transform: none !important;
+        transform: translateY(40px) scale(1.14) !important;
+        transform-origin: center center !important;
         opacity: 1 !important;
     }
 
@@ -41,6 +45,7 @@
         justify-content: flex-end !important;
         gap: clamp(8px, 2.6vw, 13px) !important;
 
+        z-index: 90 !important;
         transform: none !important;
     }
 
@@ -194,7 +199,7 @@
        matching the current desktop idea of one consistent background.
     */
     body.is-projects .page-bg {
-        background-image: url("../images/evanoesis-bg-mobile-test.png?v=355b81a-new") !important;
+        background-image: url("../images/evanoesis-bg-mobile-test.png?v=20260820-mobile-bg2") !important;
         background-size: cover !important;
         background-position: center center !important;
         background-repeat: no-repeat !important;
