@@ -24,7 +24,7 @@
         filter: none !important;
         transform: translateY(40px) scale(1.14) !important;
         transform-origin: center center !important;
-        opacity: 1 !important;
+        opacity: 0.75 !important;
     }
 
     /* Home desktop does not show the separate persistent brand. */
@@ -76,19 +76,8 @@
     }
 
     body.is-home .text-zone::before {
-        inset: -20px -18px -24px -18px !important;
-
-        background:
-            radial-gradient(
-                ellipse at center,
-                rgba(246, 241, 237, 0.82) 0%,
-                rgba(246, 241, 237, 0.70) 36%,
-                rgba(246, 241, 237, 0.36) 68%,
-                rgba(246, 241, 237, 0.10) 84%,
-                rgba(246, 241, 237, 0) 100%
-            ) !important;
-
-        filter: blur(11px) !important;
+        display: none !important;
+        content: none !important;
     }
 
     body.is-home .brand-title {
