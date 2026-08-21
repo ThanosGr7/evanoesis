@@ -1,78 +1,95 @@
 /*
-  EVANOESIS — MOBILE / DESKTOP-STYLE HOME TEST
+  EVANOESIS — MOBILE HOME REFERENCE LAYOUT V18
   ------------------------------------------------------------
-  TEST LAYER ONLY.
-  - Applies only to the same <= 520px phone breakpoint already used by the existing mobile site.
-  - Applies only to the Home tab.
-  - Does not alter the existing desktop/laptop rules.
-  - Does not alter Projects / What We Do / Contact yet.
-  - Remove the <link> to this file to revert instantly.
+  MOBILE HOME ONLY (<= 520px).
+
+  Important fixes:
+  - no fixed inner .text-zone scroller;
+  - no pseudo-element artwork layers;
+  - no blur/backdrop/will-change effects;
+  - one single 9:16 background image mapped 1:1 to the mobile composition;
+  - old Home elements are hidden only while body.is-home is active;
+  - desktop CSS and desktop layout are untouched.
+
+  The existing mobile-home-reference HTML snippet from V16 is reused unchanged.
 */
+
+.mobile-home-reference,
+.mobile-home-menu-toggle {
+    display: none;
+}
 
 @media (max-width: 520px) {
 
-    /* Keep the existing portrait artwork for now.
-       We are testing the DESKTOP COMPOSITION, not forcing a wide
-       desktop image into a portrait screen. */
-    body.is-home .page-bg {
-        background-image: url("../images/evanoesis-bg-mobile-test.png?v=20260820-mobile-bg2") !important;
-        background-size: cover !important;
-        background-position: center center !important;
+    /* -----------------------------------------------------
+       HOME ONLY — stable body scrolling
+       ----------------------------------------------------- */
+    body.is-home {
+        position: fixed !important;
+        inset: 0 !important;
 
-        /* Mobile-only overscan: lowers the artwork without exposing
-           the black page background at the top. */
-        filter: none !important;
-        transform: translateY(40px) scale(1.14) !important;
-        transform-origin: center center !important;
-        opacity: 0.75 !important;
+        width: 100% !important;
+        height: var(--app-height) !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        overscroll-behavior-y: contain !important;
+        -webkit-overflow-scrolling: auto !important;
+
+        background: #f8f5ef !important;
     }
 
-    /* Home desktop does not show the separate persistent brand. */
-    body.is-home .persistent-branding {
+    body.is-home .page-bg,
+    body.is-home > .persistent-branding,
+    body.is-home > .top-menu,
+    body.is-home > .home-projects-cta,
+    body.is-home > .home-quote,
+    body.is-home > .site-footer {
         display: none !important;
     }
 
-    /* Desktop-like top-right navigation, scaled for phone width. */
-    body.is-home .top-menu {
-        top: 24px !important;
-        left: auto !important;
-        right: 16px !important;
+    body.is-home .site-shell {
+        position: relative !important;
+        inset: auto !important;
 
-        width: calc(100% - 32px) !important;
-
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-end !important;
-        gap: clamp(8px, 2.6vw, 13px) !important;
-
-        z-index: 90 !important;
-        transform: none !important;
-    }
-
-    body.is-home .top-menu button {
-        font-size: clamp(8px, 2.25vw, 9px) !important;
-        letter-spacing: 0.035em !important;
-    }
-
-    body.is-home .top-menu button.is-active {
-        transform: scale(1.06);
-    }
-
-    /* Desktop-like left content column, adapted to portrait width. */
-    body.is-home .text-zone {
-        position: fixed !important;
-        left: 22px !important;
-        top: 82px !important;
-
-        width: min(82vw, 320px) !important;
-        max-width: 320px !important;
+        width: 100% !important;
         height: auto !important;
-        max-height: calc(var(--app-height) - 250px) !important;
+        min-height: 0 !important;
 
-        padding: 20px 18px 22px !important;
+        margin: 0 !important;
+        padding: 0 !important;
 
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
+        overflow: visible !important;
+    }
+
+    body.is-home .text-zone {
+        position: relative !important;
+        inset: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+
+        touch-action: pan-y !important;
+        overscroll-behavior: auto !important;
+
+        background: #f8f5ef !important;
+        isolation: auto !important;
     }
 
     body.is-home .text-zone::before {
@@ -80,94 +97,673 @@
         content: none !important;
     }
 
-    body.is-home .brand-title {
-        margin-bottom: 20px !important;
+    /* The original desktop/mobile Home content is not painted underneath. */
+    body.is-home .text-zone > #content-inner {
+        display: none !important;
+    }
 
-        font-size: clamp(24px, 7.2vw, 29px) !important;
+    /* -----------------------------------------------------
+       ONE 9:16 MOBILE CANVAS
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-reference {
+        --mh-ink: #252321;
+        --mh-gold: #b78a4a;
+        --mh-paper: #f8f5ef;
+
+        position: relative !important;
+        z-index: 1 !important;
+
+        display: block !important;
+
+        width: 100vw !important;
+        height: 177.78vw !important;
+        min-height: 0 !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+
+        color: var(--mh-ink) !important;
+
+        /*
+           The UPDATED mobile file is the composition artwork:
+           marble paper + sculpture + circular sketch.
+           It is not transformed, zoomed, blurred or repeated.
+        */
+        background-color: var(--mh-paper) !important;
+        background-image:
+            linear-gradient(
+                to bottom,
+                rgba(248, 245, 239, 0) 0%,
+                rgba(248, 245, 239, 0) 60%,
+                rgba(248, 245, 239, 0.94) 62%,
+                var(--mh-paper) 64%,
+                var(--mh-paper) 100%
+            ),
+            url("../images/evanoesis-bg-mobile-test.png?v=20260820-mobile-ref-v19") !important;
+        background-size: 100% 100%, 100% auto !important;
+        background-position: center top, center top !important;
+        background-repeat: no-repeat, no-repeat !important;
+
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: inset 0 0 0 1px rgba(98, 79, 56, 0.18) !important;
+
+        overflow: hidden !important;
+
+        contain: none !important;
+    }
+
+    /* Absolutely positioned sections are tied to the 9:16 canvas,
+       matching the proportions of the supplied reference image. */
+
+    /* -----------------------------------------------------
+       HEADER — mobile brand + hamburger menu
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-header {
+        position: absolute !important;
+        z-index: 30 !important;
+
+        left: 5.4vw !important;
+        right: 4.8vw !important;
+        top: 0 !important;
+
+        display: block !important;
+        height: clamp(50px, 13vw, 58px) !important;
+        min-height: 0 !important;
+
+        border-bottom: 1px solid rgba(183, 138, 74, 0.30) !important;
+    }
+
+    body.is-home .mobile-home-brand {
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+
+        margin: 0 !important;
+
+        transform: translateY(-50%) !important;
+
+        font-family: "Michroma", sans-serif !important;
+        font-size: clamp(15px, 4.35vw, 21px) !important;
         line-height: 1 !important;
-        letter-spacing: 0.085em !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.05em !important;
+
+        color: var(--mh-gold) !important;
+        white-space: nowrap !important;
     }
 
-    body.is-home .tagline {
-        margin-bottom: 22px !important;
+    body.is-home .mobile-home-brand::after {
+        content: "TM" !important;
 
-        font-size: clamp(15px, 4.2vw, 17px) !important;
-        line-height: 1.35 !important;
-    }
-
-    body.is-home .body-text {
-        font-size: clamp(13.5px, 3.7vw, 15px) !important;
-        line-height: 1.58 !important;
-    }
-
-    /* Bring back the desktop CTA on Home.
-       First-pass position only; if we keep this direction we can
-       anchor it dynamically after the text in the next controlled step. */
-    body.is-home .home-projects-cta {
-        position: fixed !important;
-        left: 40px !important;
-        top: min(49vh, 405px) !important;
-        bottom: auto !important;
-        z-index: 57 !important;
-
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 9px !important;
-
-        padding: 0 0 6px !important;
+        position: absolute !important;
+        top: -0.55em !important;
+        right: -1.55em !important;
 
         font-family: "Exo 2", sans-serif !important;
-        font-size: 11.5px !important;
-        line-height: 1.2 !important;
+        font-size: 0.26em !important;
+        line-height: 1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.04em !important;
+
+        color: var(--mh-gold) !important;
+    }
+
+    body.is-home .mobile-home-menu-toggle {
+        position: absolute !important;
+        z-index: 32 !important;
+
+        top: 50% !important;
+        right: -1vw !important;
+
+        transform: translateY(-50%) !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 4px !important;
+
+        width: 34px !important;
+        height: 34px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        appearance: none !important;
+        -webkit-appearance: none !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    body.is-home .mobile-home-menu-toggle span {
+        display: block !important;
+
+        width: 20px !important;
+        height: 1.5px !important;
+
+        background: #8c6a35 !important;
+        border-radius: 999px !important;
+
+        transform-origin: center !important;
+        transition:
+            transform 160ms ease,
+            opacity 160ms ease !important;
+    }
+
+    body.is-home .mobile-home-header.is-menu-open .mobile-home-menu-toggle span:nth-child(1) {
+        transform: translateY(5.5px) rotate(45deg) !important;
+    }
+
+    body.is-home .mobile-home-header.is-menu-open .mobile-home-menu-toggle span:nth-child(2) {
+        opacity: 0 !important;
+    }
+
+    body.is-home .mobile-home-header.is-menu-open .mobile-home-menu-toggle span:nth-child(3) {
+        transform: translateY(-5.5px) rotate(-45deg) !important;
+    }
+
+    /*
+       Existing four navigation buttons become the dropdown itself.
+       The same data-content attributes are preserved, so the site's
+       existing tab navigation and mobile-history.js continue to work.
+    */
+    body.is-home .mobile-home-nav {
+        position: absolute !important;
+        z-index: 31 !important;
+
+        top: 100% !important;
+        right: 0 !important;
+        left: auto !important;
+
+        display: none !important;
+        grid-template-columns: 1fr !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+
+        width: min(52vw, 205px) !important;
+        min-width: 155px !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 7px !important;
+
+        background: rgba(248, 245, 239, 0.98) !important;
+        border: 1px solid rgba(183, 138, 74, 0.34) !important;
+        border-radius: 10px !important;
+        box-shadow: 0 9px 24px rgba(48, 38, 28, 0.12) !important;
+    }
+
+    body.is-home .mobile-home-header.is-menu-open .mobile-home-nav {
+        display: grid !important;
+    }
+
+    body.is-home .mobile-home-nav button {
+        position: relative !important;
+
+        width: 100% !important;
+        min-width: 0 !important;
+
+        margin: 0 !important;
+        padding: 11px 12px !important;
+
+        appearance: none !important;
+        -webkit-appearance: none !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 7px !important;
+        box-shadow: none !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: 11px !important;
+        line-height: 1.1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.075em !important;
+        text-transform: uppercase !important;
+        text-align: left !important;
+
+        color: var(--mh-ink) !important;
+        white-space: nowrap !important;
+
+        transform: none !important;
+        filter: none !important;
+        text-shadow: none !important;
+    }
+
+    body.is-home .mobile-home-nav button + button {
+        border-top: 1px solid rgba(183, 138, 74, 0.14) !important;
+    }
+
+    body.is-home .mobile-home-nav button.is-active {
+        color: #8c6a35 !important;
+        background: rgba(183, 138, 74, 0.07) !important;
+    }
+
+    body.is-home .mobile-home-nav button.is-active::after {
+        content: "" !important;
+
+        position: absolute !important;
+        right: 10px !important;
+        top: 50% !important;
+        left: auto !important;
+        bottom: auto !important;
+
+        width: 5px !important;
+        height: 5px !important;
+
+        border-radius: 50% !important;
+        background: var(--mh-gold) !important;
+
+        transform: translateY(-50%) !important;
+    }
+
+    /* -----------------------------------------------------
+       HERO — reference: y ≈ 22%–35% of page width scale
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-hero {
+        position: absolute !important;
+        z-index: 4 !important;
+
+        left: 5.5vw !important;
+        top: 23.3vw !important;
+
+        width: 49vw !important;
+        min-height: 0 !important;
+
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    body.is-home .mobile-home-marker,
+    body.is-home .mobile-home-marker-line,
+    body.is-home .mobile-home-marker-dot {
+        display: none !important;
+    }
+
+
+    body.is-home .mobile-home-hero-title {
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(32px, 8.85vw, 46px) !important;
+        line-height: 1.02 !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.025em !important;
+
+        color: var(--mh-ink) !important;
+
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+    body.is-home .mobile-home-hero-title span {
+        display: block !important;
+        white-space: nowrap !important;
+    }
+
+    body.is-home .mobile-home-hero-title .is-gold {
+        color: var(--mh-gold) !important;
+    }
+
+    /* -----------------------------------------------------
+       INTRO COPY — left column, exactly two rows
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-intro {
+        position: absolute !important;
+        z-index: 5 !important;
+
+        left: 5.5vw !important;
+        top: 61.8vw !important;
+
+        display: grid !important;
+        gap: 4.7vw !important;
+
+        width: 44.5vw !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.is-home .mobile-home-intro-row {
+        display: grid !important;
+        grid-template-columns: 7.5vw minmax(0, 1fr) !important;
+        align-items: start !important;
+        gap: 2.1vw !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.is-home .mobile-home-intro-icon {
+        color: var(--mh-gold) !important;
+    }
+
+    body.is-home .mobile-home-intro-icon svg {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    body.is-home .mobile-home-intro-row p {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(11.5px, 2.5vw, 14px) !important;
+        line-height: 1.50 !important;
+        font-weight: 700 !important;
+
+        color: var(--mh-ink) !important;
+
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+    /* -----------------------------------------------------
+       SERVICE CARDS
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-services {
+        display: none !important;
+    }
+
+    body.is-home .mobile-home-service:nth-child(3) {
+        display: none !important;
+    }
+
+    body.is-home .mobile-home-service {
+        display: grid !important;
+        grid-template-columns: 7.3vw minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: 1.5vw !important;
+
+        min-width: 0 !important;
+        height: 16vw !important;
+        min-height: 0 !important;
+
+        box-sizing: border-box !important;
+        padding: 2.4vw 2.1vw !important;
+
+        background: rgba(250, 248, 244, 0.91) !important;
+        border: 1px solid rgba(183, 138, 74, 0.26) !important;
+        border-radius: 2.1vw !important;
+
+        box-shadow: none !important;
+        filter: none !important;
+    }
+
+    body.is-home .mobile-home-service-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        padding-right: 1.4vw !important;
+
+        color: var(--mh-gold) !important;
+        border-right: 1px solid rgba(183, 138, 74, 0.23) !important;
+    }
+
+    body.is-home .mobile-home-service-icon svg {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    body.is-home .mobile-home-service-label {
+        min-width: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(8.4px, 1.95vw, 11px) !important;
+        line-height: 1.18 !important;
         font-weight: 500 !important;
 
-        color: #a97734 !important;
-        text-decoration: none !important;
+        color: var(--mh-ink) !important;
 
-        border-bottom: 1px solid rgba(169, 119, 52, 0.62) !important;
-
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: auto !important;
+        overflow-wrap: normal !important;
+        word-break: normal !important;
     }
 
-    body.is-home .home-projects-cta-arrow {
-        font-size: 16px !important;
+    /* -----------------------------------------------------
+       CTAs
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-actions {
+        position: absolute !important;
+        z-index: 7 !important;
+
+        left: 8.0vw !important;
+        right: 8.0vw !important;
+        top: 122.0vw !important;
+
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 3.8vw !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.is-home .mobile-home-action {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 2vw !important;
+
+        height: 8.4vw !important;
+        min-height: 42px !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 3.4vw !important;
+
+        appearance: none !important;
+        -webkit-appearance: none !important;
+
+        border-radius: 1.9vw !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(9.5px, 2.1vw, 12px) !important;
         line-height: 1 !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.14em !important;
+        text-transform: uppercase !important;
+
+        white-space: nowrap !important;
+
+        transform: none !important;
+        filter: none !important;
     }
 
-    /* Desktop-style quote treatment in the lower-right. */
-    body.is-home .home-quote {
-        right: 20px !important;
-        bottom: 66px !important;
+    body.is-home .mobile-home-action-primary {
+        color: #f5f0e8 !important;
+        background: #262422 !important;
 
-        width: min(218px, calc(100vw - 52px)) !important;
-
-        isolation: isolate;
+        border: 1px solid rgba(183, 138, 74, 0.75) !important;
+        box-shadow: 0 4px 12px rgba(56, 44, 30, 0.13) !important;
     }
 
-    body.is-home .home-quote::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
+    body.is-home .mobile-home-action-secondary {
+        color: var(--mh-ink) !important;
+        background: rgba(250, 248, 244, 0.93) !important;
 
-        inset: -12px -14px -14px -14px;
-
-        background: rgba(246, 241, 237, 0.56);
-        border-radius: 20px;
-
-        filter: blur(12px);
-        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
-
-        pointer-events: none;
+        border: 1px solid rgba(183, 138, 74, 0.64) !important;
+        box-shadow: none !important;
     }
 
-    /* Keep footer in the same lower-right visual language as desktop. */
-    body.is-home .site-footer {
-        right: 18px !important;
-        bottom: 10px !important;
+    body.is-home .mobile-home-action-arrow {
+        flex: 0 0 auto !important;
 
-        text-align: right !important;
+        font-size: clamp(19px, 4.1vw, 25px) !important;
+        line-height: 1 !important;
+        font-weight: 300 !important;
+
+        color: var(--mh-gold) !important;
+    }
+
+    /* -----------------------------------------------------
+       QUOTE CARD
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-quote-card {
+        position: absolute !important;
+        z-index: 8 !important;
+
+        left: 5.2vw !important;
+        right: 5.2vw !important;
+        top: 139.5vw !important;
+
+        display: grid !important;
+        grid-template-columns: 8.5vw minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: 2.7vw !important;
+
+        height: 26.5vw !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 3.8vw 4.1vw !important;
+
+        background: rgba(250, 248, 244, 0.94) !important;
+
+        border: 1px solid rgba(183, 138, 74, 0.27) !important;
+        border-radius: 2.2vw !important;
+
+        box-shadow: none !important;
+        filter: none !important;
+    }
+
+    body.is-home .mobile-home-quote-mark {
+        align-self: start !important;
+
+        margin: 0 !important;
+
+        font-family: Georgia, serif !important;
+        font-size: clamp(35px, 8.8vw, 48px) !important;
+        line-height: 0.8 !important;
+        font-weight: 700 !important;
+
+        color: var(--mh-gold) !important;
+    }
+
+    body.is-home .mobile-home-quote-copy {
+        min-width: 0 !important;
+    }
+
+    body.is-home .mobile-home-quote-greek {
+        margin: 0 0 1.7vw !important;
+
+        font-family: Georgia, "Times New Roman", serif !important;
+        font-size: clamp(11.5px, 2.65vw, 15px) !important;
+        line-height: 1.37 !important;
+        font-style: italic !important;
+        font-weight: 400 !important;
+
+        color: var(--mh-ink) !important;
+
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+    body.is-home .mobile-home-quote-english {
+        margin: 0 0 2vw !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(8.7px, 1.95vw, 11px) !important;
+        line-height: 1.38 !important;
+        font-weight: 400 !important;
+
+        color: var(--mh-ink) !important;
+
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+    body.is-home .mobile-home-quote-author {
+        margin: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(6.6px, 1.45vw, 8px) !important;
+        line-height: 1.2 !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.11em !important;
+        text-transform: uppercase !important;
+
+        color: var(--mh-gold) !important;
+
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+    body.is-home .mobile-home-quote-orbit {
+        display: none !important;
+    }
+
+    body.is-home .mobile-home-quote-orbit svg {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* -----------------------------------------------------
+       BOTTOM MOTTO
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-motto {
+        position: absolute !important;
+        z-index: 9 !important;
+
+        left: 5vw !important;
+        right: 5vw !important;
+        top: 171.0vw !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(6.8px, 1.55vw, 8.5px) !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.28em !important;
+        text-transform: uppercase !important;
+        text-align: center !important;
+
+        color: var(--mh-ink) !important;
+
+        white-space: nowrap !important;
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+    /* Narrow-phone safety without changing the reference structure. */
+    @media (max-width: 370px) {
+        body.is-home .mobile-home-brand {
+            font-size: 13.5px !important;
+        }
+
+        body.is-home .mobile-home-hero-title {
+            font-size: 31px !important;
+        }
+
+        body.is-home .mobile-home-intro-row p {
+            font-size: 11px !important;
+        }
+
+        body.is-home .mobile-home-service-label {
+            font-size: 8px !important;
+        }
+
+        body.is-home .mobile-home-action {
+            padding-left: 3vw !important;
+            padding-right: 3vw !important;
+            letter-spacing: 0.11em !important;
+        }
     }
 }
 
@@ -630,3 +1226,2422 @@
     }
 }
 
+
+
+/* =========================================================
+   MOBILE SHARED PAGE CHROME — ALL TABS
+   ---------------------------------------------------------
+   Keeps the SAME mobile background, EVANØESIS brand,
+   hamburger menu and separator line on Home / Projects /
+   What We Do / Contact.
+   Desktop is untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /*
+       mobile-menu.js moves .mobile-home-header to <body> on phones,
+       so this one header persists while site.js changes tab content.
+    */
+    body .mobile-home-header {
+        position: fixed !important;
+        z-index: 100 !important;
+
+        left: 5.4vw !important;
+        right: 4.8vw !important;
+        top: 0 !important;
+
+        display: block !important;
+        height: clamp(50px, 13vw, 58px) !important;
+        min-height: 0 !important;
+
+        border-bottom: 1px solid rgba(183, 138, 74, 0.30) !important;
+
+        pointer-events: auto !important;
+    }
+
+    body .mobile-home-brand {
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+
+        margin: 0 !important;
+
+        transform: translateY(-50%) !important;
+
+        font-family: "Michroma", sans-serif !important;
+        font-size: clamp(15px, 4.35vw, 21px) !important;
+        line-height: 1 !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.05em !important;
+
+        color: var(--mh-gold, #b78a4a) !important;
+        white-space: nowrap !important;
+    }
+
+    body .mobile-home-brand::after {
+        content: "TM" !important;
+
+        position: absolute !important;
+        top: -0.55em !important;
+        right: -1.55em !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: 0.26em !important;
+        line-height: 1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.04em !important;
+
+        color: var(--mh-gold, #b78a4a) !important;
+    }
+
+    body .mobile-home-menu-toggle {
+        position: absolute !important;
+        z-index: 102 !important;
+
+        top: 50% !important;
+        right: -1vw !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 4px !important;
+
+        width: 34px !important;
+        height: 34px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        appearance: none !important;
+        -webkit-appearance: none !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+
+        transform: translateY(-50%) !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    body .mobile-home-menu-toggle span {
+        display: block !important;
+
+        width: 20px !important;
+        height: 1.5px !important;
+
+        background: #8c6a35 !important;
+        border-radius: 999px !important;
+    }
+
+    body .mobile-home-header.is-menu-open .mobile-home-menu-toggle span:nth-child(1) {
+        transform: translateY(5.5px) rotate(45deg) !important;
+    }
+
+    body .mobile-home-header.is-menu-open .mobile-home-menu-toggle span:nth-child(2) {
+        opacity: 0 !important;
+    }
+
+    body .mobile-home-header.is-menu-open .mobile-home-menu-toggle span:nth-child(3) {
+        transform: translateY(-5.5px) rotate(-45deg) !important;
+    }
+
+    body .mobile-home-nav {
+        position: absolute !important;
+        z-index: 101 !important;
+
+        top: 100% !important;
+        right: 0 !important;
+        left: auto !important;
+
+        display: none !important;
+        grid-template-columns: 1fr !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+
+        width: min(52vw, 205px) !important;
+        min-width: 155px !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 7px !important;
+
+        background: rgba(248, 245, 239, 0.98) !important;
+        border: 1px solid rgba(183, 138, 74, 0.34) !important;
+        border-radius: 10px !important;
+        box-shadow: 0 9px 24px rgba(48, 38, 28, 0.12) !important;
+    }
+
+    body .mobile-home-header.is-menu-open .mobile-home-nav {
+        display: grid !important;
+    }
+
+    body .mobile-home-nav button {
+        position: relative !important;
+
+        width: 100% !important;
+        min-width: 0 !important;
+
+        margin: 0 !important;
+        padding: 11px 12px !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 7px !important;
+        box-shadow: none !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: 11px !important;
+        line-height: 1.1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.075em !important;
+        text-transform: uppercase !important;
+        text-align: left !important;
+
+        color: #252321 !important;
+        white-space: nowrap !important;
+
+        transform: none !important;
+        filter: none !important;
+        text-shadow: none !important;
+    }
+
+    body .mobile-home-nav button + button {
+        border-top: 1px solid rgba(183, 138, 74, 0.14) !important;
+    }
+
+    body .mobile-home-nav button.is-active {
+        color: #8c6a35 !important;
+        background: rgba(183, 138, 74, 0.07) !important;
+    }
+
+    body .mobile-home-nav button.is-active::after {
+        content: "" !important;
+
+        position: absolute !important;
+        right: 10px !important;
+        top: 50% !important;
+        left: auto !important;
+        bottom: auto !important;
+
+        width: 5px !important;
+        height: 5px !important;
+
+        border-radius: 50% !important;
+        background: #b78a4a !important;
+
+        transform: translateY(-50%) !important;
+    }
+
+    /*
+       Non-Home tabs inherit the same marble/sculpture treatment.
+       This deliberately overrides the old project-specific mobile
+       backgrounds while leaving the tab content itself unchanged.
+    */
+    body.is-section-open {
+        background: #f8f5ef !important;
+    }
+
+    body.is-section-open .page-bg,
+    body.is-projects.is-project-code .page-bg,
+    body.is-projects.is-project-visual .page-bg {
+        display: block !important;
+
+        background-color: #f8f5ef !important;
+        background-image:
+            linear-gradient(
+                to bottom,
+                rgba(248, 245, 239, 0) 0%,
+                rgba(248, 245, 239, 0) 60%,
+                rgba(248, 245, 239, 0.94) 62%,
+                #f8f5ef 64%,
+                #f8f5ef 100%
+            ),
+            url("../images/evanoesis-bg-mobile-test.png?v=20260820-mobile-shared-v31") !important;
+
+        background-size: 100% 100%, 100% auto !important;
+        background-position: center top, center top !important;
+        background-repeat: no-repeat, no-repeat !important;
+
+        filter: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    /*
+       The old desktop/mobile brand and text-tab bar stay hidden on
+       section pages; the shared hamburger header above replaces them.
+    */
+    body.is-section-open > .persistent-branding,
+    body.is-section-open > .top-menu {
+        display: none !important;
+    }
+}
+
+
+/* =========================================================
+   MOBILE ZOOM / ACCESSIBILITY — ALL TABS
+   ---------------------------------------------------------
+   Allows native browser pinch-zoom across the mobile site.
+   Keeps horizontal project swipe behavior available to site.js.
+   Desktop is untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    html,
+    body,
+    .site-shell,
+    .mobile-home-reference {
+        touch-action: pan-x pan-y pinch-zoom !important;
+    }
+
+    body.is-home .text-zone,
+    body.is-section-open .text-zone,
+    body.is-projects .text-zone,
+    body.is-projects .project-slider,
+    body.is-projects .project-slider-window,
+    body.is-projects .project-slider-track,
+    body.is-projects .project-card {
+        touch-action: pan-x pan-y pinch-zoom !important;
+    }
+
+    button,
+    a {
+        touch-action: manipulation !important;
+    }
+}
+
+
+/* =========================================================
+   MOBILE SHARED HEADER — DEFINITIVE BLACK COLORS
+   ---------------------------------------------------------
+   PHONE ONLY.
+   Same exact black header/menu colors on every tab.
+   Uses equal-or-higher specificity than the older Home/tab
+   rules, so these declarations actually override them.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* Brand + TM */
+    body[class*="is-"] .mobile-home-brand,
+    body[class*="is-"] .mobile-home-brand::after {
+        color: #171514 !important;
+        -webkit-text-fill-color: #171514 !important;
+        opacity: 1 !important;
+        filter: none !important;
+        mix-blend-mode: normal !important;
+        text-shadow: none !important;
+    }
+
+    /* Hamburger lines */
+    body[class*="is-"] .mobile-home-menu-toggle span {
+        background: #171514 !important;
+        background-color: #171514 !important;
+        opacity: 1 !important;
+        filter: none !important;
+        mix-blend-mode: normal !important;
+        box-shadow: none !important;
+    }
+
+    /* Thin separator under the header */
+    body[class*="is-"] .mobile-home-header {
+        border-bottom-color: rgba(23, 21, 20, 0.30) !important;
+    }
+
+    /* Dropdown frame */
+    body[class*="is-"] .mobile-home-nav {
+        border-color: rgba(23, 21, 20, 0.24) !important;
+    }
+
+    /* Every menu label stays black, including active/pressed/focused */
+    body[class*="is-"] .mobile-home-nav button,
+    body[class*="is-"] .mobile-home-nav button:hover,
+    body[class*="is-"] .mobile-home-nav button:focus,
+    body[class*="is-"] .mobile-home-nav button:active,
+    body[class*="is-"] .mobile-home-nav button.is-active {
+        color: #171514 !important;
+        -webkit-text-fill-color: #171514 !important;
+        background: transparent !important;
+        opacity: 1 !important;
+        filter: none !important;
+        mix-blend-mode: normal !important;
+        text-shadow: none !important;
+    }
+
+    /* Row separators + active dot are black too */
+    body[class*="is-"] .mobile-home-nav button + button {
+        border-top-color: rgba(23, 21, 20, 0.12) !important;
+    }
+
+    body[class*="is-"] .mobile-home-nav button.is-active::after {
+        background: #171514 !important;
+        background-color: #171514 !important;
+        opacity: 1 !important;
+    }
+}
+
+/* =========================================================
+   MOBILE ZOOMED PAGE — ONE-FINGER PAN IN ALL DIRECTIONS
+   ---------------------------------------------------------
+   When the browser is zoomed, a normal one-finger drag can
+   move the visual viewport horizontally and vertically.
+   PHONE ONLY. Desktop untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    body[class*="is-"],
+    body[class*="is-"] .site-shell,
+    body[class*="is-"] .text-zone,
+    body[class*="is-"] .content-inner,
+    body[class*="is-"] .mobile-home-reference,
+    body[class*="is-"] .project-slider,
+    body[class*="is-"] .project-slider-window,
+    body[class*="is-"] .project-slider-track,
+    body[class*="is-"] .project-card,
+    body[class*="is-"] .project-copy-pane,
+    body[class*="is-"] .project-visual-pane {
+        touch-action: pan-x pan-y pinch-zoom !important;
+    }
+
+    /*
+       Controls remain easy to tap, while dragging from normal
+       page/content areas pans the zoomed page natively.
+    */
+    body[class*="is-"] button,
+    body[class*="is-"] a {
+        touch-action: manipulation !important;
+    }
+}
+
+/* =========================================================
+   MOBILE NATIVE TOUCH — FINAL
+   ---------------------------------------------------------
+   The browser owns ALL phone touch gestures:
+   - pinch to zoom
+   - one-finger pan while zoomed
+   - normal vertical page movement
+
+   This intentionally overrides every older touch-action:none,
+   pan-y-only, and manipulation rule in style.css / this file.
+
+   Project swipe-by-drag is intentionally not used on phones;
+   its arrow controls remain available.
+   Desktop is untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    html,
+    body,
+    body *,
+    body *::before,
+    body *::after {
+        touch-action: auto !important;
+    }
+
+    html,
+    body,
+    body.is-home,
+    body.is-section-open {
+        overscroll-behavior: auto !important;
+    }
+
+    body.is-home .text-zone,
+    body.is-section-open .text-zone,
+    body.is-projects .text-zone {
+        overscroll-behavior: auto !important;
+    }
+}
+
+/* =========================================================
+   MOBILE PROJECTS — REFERENCE COMPOSITION V2
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   PROJECTS TAB ONLY
+
+   Project 01 gets the attached-reference layout.
+   Existing Project 02 and the arrow navigation are preserved.
+   Desktop and every other tab are untouched.
+   ========================================================= */
+
+.mobile-project-reference {
+    display: none;
+}
+
+@media (max-width: 520px) {
+
+    body.is-projects {
+        background: #f8f5ef !important;
+    }
+
+    /* Clean paper field for Projects only. */
+    body.is-projects .page-bg,
+    body.is-projects.is-project-code .page-bg,
+    body.is-projects.is-project-visual .page-bg {
+        background-color: #f8f5ef !important;
+        background-image:
+            radial-gradient(circle at 16% 12%, rgba(112, 91, 66, 0.035), transparent 28%),
+            radial-gradient(circle at 78% 42%, rgba(112, 91, 66, 0.025), transparent 32%),
+            linear-gradient(to bottom, #fbf9f5 0%, #f8f5ef 52%, #fbf9f5 100%) !important;
+        background-size: 100% 100% !important;
+        background-position: center top !important;
+        background-repeat: no-repeat !important;
+        filter: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    body.is-projects .content-inner > h2 {
+        display: none !important;
+    }
+
+    body.is-projects .site-shell {
+        position: fixed !important;
+        inset: 0 !important;
+
+        width: 100vw !important;
+        height: var(--app-height) !important;
+        min-height: var(--app-height) !important;
+
+        overflow: hidden !important;
+    }
+
+    /*
+       Full-width scrolling project canvas directly below the existing
+       shared black EVANØESIS / hamburger header.
+    */
+    body.is-projects .text-zone {
+        position: fixed !important;
+        z-index: 3 !important;
+
+        left: 0 !important;
+        right: 0 !important;
+        top: clamp(50px, 13vw, 58px) !important;
+        bottom: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        background: #f8f5ef !important;
+
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    body.is-projects .text-zone::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    body.is-projects .text-zone::before {
+        display: none !important;
+        content: none !important;
+    }
+
+    body.is-projects #content-inner {
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+    }
+
+    /*
+       Keep the existing slider machinery so Project 02 is NOT lost.
+       Remove only the old card/frame appearance around Project 01.
+    */
+    body.is-projects .project-slider {
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    body.is-projects .project-slider-window {
+        width: 100% !important;
+
+        overflow: hidden !important;
+
+        border-radius: 0 !important;
+    }
+
+    body.is-projects .project-slider-track {
+        align-items: flex-start !important;
+    }
+
+    /* Project 01 becomes the supplied reference design. */
+    body.is-projects .project-slide:first-child {
+        display: block !important;
+
+        min-width: 100% !important;
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Hide only Project 01's old desktop/mobile panes. */
+    body.is-projects .project-slide:first-child > .project-meta-column,
+    body.is-projects .project-slide:first-child > .project-copy-pane,
+    body.is-projects .project-slide:first-child > .project-visual-pane {
+        display: none !important;
+    }
+
+    body.is-projects .mobile-project-reference {
+        --mpr-ink: #171514;
+        --mpr-gold: #b88743;
+        --mpr-paper: #f8f5ef;
+        --mpr-line: rgba(23, 21, 20, 0.13);
+
+        display: block !important;
+
+        width: 100% !important;
+        min-height: 100% !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: clamp(22px, 5.6vw, 30px) 5.1vw 22px !important;
+
+        color: var(--mpr-ink) !important;
+
+        background:
+            radial-gradient(circle at 14% 17%, rgba(130, 104, 73, 0.026), transparent 30%),
+            radial-gradient(circle at 86% 72%, rgba(130, 104, 73, 0.022), transparent 30%),
+            linear-gradient(to bottom, #fbf9f5 0%, var(--mpr-paper) 55%, #fbf9f5 100%) !important;
+    }
+
+    /* TOP IMAGE */
+    body.is-projects .mobile-project-hero {
+        width: 100% !important;
+        aspect-ratio: 1.73 / 1 !important;
+
+        margin: 0 0 clamp(22px, 5.2vw, 28px) !important;
+
+        overflow: hidden !important;
+
+        border: 1px solid rgba(23, 21, 20, 0.12) !important;
+        border-radius: clamp(12px, 3.2vw, 17px) !important;
+
+        background: #ece8e1 !important;
+    }
+
+    body.is-projects .mobile-project-hero img {
+        display: block !important;
+
+        width: 100% !important;
+        height: 100% !important;
+
+        object-fit: cover !important;
+        object-position: center center !important;
+
+        border: 0 !important;
+        border-radius: inherit !important;
+        box-shadow: none !important;
+    }
+
+    /* PROJECT 01 + TITLE */
+    body.is-projects .mobile-project-heading {
+        margin: 0 0 clamp(20px, 5vw, 27px) !important;
+        padding: 0 0 0 0.2vw !important;
+    }
+
+    body.is-projects .mobile-project-number {
+        margin: 0 0 8px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(12px, 3.35vw, 15px) !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.045em !important;
+        text-transform: uppercase !important;
+
+        color: var(--mpr-gold) !important;
+    }
+
+    body.is-projects .mobile-project-heading h3 {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Michroma", sans-serif !important;
+        font-size: clamp(30px, 8.25vw, 41px) !important;
+        line-height: 1.09 !important;
+        font-weight: 400 !important;
+        letter-spacing: -0.025em !important;
+
+        color: var(--mpr-ink) !important;
+    }
+
+    body.is-projects .mobile-project-title-rule {
+        display: block !important;
+
+        width: 8.7vw !important;
+        min-width: 34px !important;
+        max-width: 43px !important;
+        height: 1px !important;
+
+        margin: 11px 0 9px !important;
+
+        background: var(--mpr-gold) !important;
+    }
+
+    body.is-projects .mobile-project-tagline {
+        margin: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(15px, 4vw, 18px) !important;
+        line-height: 1.35 !important;
+        font-weight: 500 !important;
+
+        color: var(--mpr-ink) !important;
+    }
+
+    /* THREE INFORMATION ROWS */
+    body.is-projects .mobile-project-facts {
+        margin: 0 0 clamp(12px, 3vw, 16px) !important;
+        padding: 0 !important;
+
+        overflow: hidden !important;
+
+        background: rgba(250, 248, 244, 0.62) !important;
+
+        border: 1px solid rgba(23, 21, 20, 0.12) !important;
+        border-radius: clamp(14px, 3.5vw, 18px) !important;
+    }
+
+    body.is-projects .mobile-project-fact {
+        display: grid !important;
+        grid-template-columns: clamp(64px, 17vw, 82px) minmax(0, 1fr) !important;
+        align-items: center !important;
+
+        min-height: clamp(118px, 29vw, 145px) !important;
+
+        margin: 0 !important;
+        padding: clamp(16px, 4.2vw, 21px) clamp(14px, 3.7vw, 18px) !important;
+    }
+
+    body.is-projects .mobile-project-fact + .mobile-project-fact {
+        border-top: 1px solid var(--mpr-line) !important;
+    }
+
+    body.is-projects .mobile-project-fact-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        width: clamp(48px, 12.5vw, 60px) !important;
+        height: clamp(48px, 12.5vw, 60px) !important;
+
+        margin: 0 auto !important;
+
+        color: var(--mpr-gold) !important;
+
+        border: 1px solid rgba(184, 135, 67, 0.78) !important;
+        border-radius: 50% !important;
+    }
+
+    body.is-projects .mobile-project-fact-icon svg {
+        display: block !important;
+
+        width: 58% !important;
+        height: 58% !important;
+    }
+
+    body.is-projects .mobile-project-fact-copy {
+        min-width: 0 !important;
+
+        padding-left: clamp(15px, 4vw, 20px) !important;
+
+        border-left: 1px solid rgba(184, 135, 67, 0.42) !important;
+    }
+
+    body.is-projects .mobile-project-fact-copy h4 {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+
+        margin: 0 0 7px !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(12.5px, 3.25vw, 15px) !important;
+        line-height: 1.12 !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.07em !important;
+        text-transform: uppercase !important;
+
+        color: var(--mpr-gold) !important;
+    }
+
+    body.is-projects .mobile-project-dot {
+        flex: 0 0 auto !important;
+
+        width: 6px !important;
+        height: 6px !important;
+
+        border-radius: 50% !important;
+        background: var(--mpr-gold) !important;
+    }
+
+    body.is-projects .mobile-project-fact-copy p {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(13px, 3.45vw, 15.5px) !important;
+        line-height: 1.47 !important;
+        font-weight: 500 !important;
+
+        color: var(--mpr-ink) !important;
+    }
+
+    /* STATUS / DOWNLOAD */
+    body.is-projects .mobile-project-meta {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+
+        margin: 0 0 clamp(22px, 5.5vw, 28px) !important;
+        padding: 0 !important;
+
+        overflow: hidden !important;
+
+        background: rgba(250, 248, 244, 0.68) !important;
+
+        border: 1px solid rgba(184, 135, 67, 0.54) !important;
+        border-radius: clamp(12px, 3.1vw, 16px) !important;
+    }
+
+    body.is-projects .mobile-project-meta-item {
+        display: grid !important;
+        grid-template-columns: clamp(42px, 11vw, 52px) minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: clamp(9px, 2.4vw, 12px) !important;
+
+        min-width: 0 !important;
+        min-height: clamp(66px, 16.5vw, 78px) !important;
+
+        padding: 10px clamp(10px, 2.7vw, 14px) !important;
+    }
+
+    body.is-projects .mobile-project-meta-item + .mobile-project-meta-item {
+        border-left: 1px solid rgba(184, 135, 67, 0.42) !important;
+    }
+
+    body.is-projects .mobile-project-meta-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        width: clamp(39px, 10vw, 48px) !important;
+        height: clamp(39px, 10vw, 48px) !important;
+
+        color: var(--mpr-gold) !important;
+
+        border: 1px solid rgba(184, 135, 67, 0.78) !important;
+        border-radius: 50% !important;
+    }
+
+    body.is-projects .mobile-project-meta-icon svg {
+        width: 59% !important;
+        height: 59% !important;
+    }
+
+    body.is-projects .mobile-project-meta-label {
+        display: block !important;
+
+        margin: 0 0 4px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(9px, 2.35vw, 11px) !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.055em !important;
+        text-transform: uppercase !important;
+
+        color: var(--mpr-gold) !important;
+    }
+
+    body.is-projects .mobile-project-meta strong {
+        display: block !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(11.5px, 3vw, 14px) !important;
+        line-height: 1.12 !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.02em !important;
+        text-transform: uppercase !important;
+
+        color: var(--mpr-ink) !important;
+        white-space: nowrap !important;
+    }
+
+    /* REFERENCE FOOTER */
+    body.is-projects > .site-footer {
+        display: none !important;
+    }
+
+    body.is-projects .mobile-project-footer {
+        display: grid !important;
+        grid-template-columns: minmax(28px, 1fr) auto minmax(28px, 1fr) !important;
+        align-items: center !important;
+        gap: clamp(12px, 3vw, 16px) !important;
+
+        margin: 0 !important;
+        padding: 0 0 2px !important;
+    }
+
+    body.is-projects .mobile-project-footer p {
+        margin: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(9px, 2.3vw, 10.5px) !important;
+        line-height: 1.2 !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.015em !important;
+
+        color: rgba(23, 21, 20, 0.64) !important;
+        white-space: nowrap !important;
+    }
+
+    body.is-projects .mobile-project-footer-line {
+        position: relative !important;
+
+        display: block !important;
+        height: 1px !important;
+
+        background: rgba(184, 135, 67, 0.72) !important;
+    }
+
+    body.is-projects .mobile-project-footer-line:first-child::after,
+    body.is-projects .mobile-project-footer-line:last-child::before {
+        content: "" !important;
+
+        position: absolute !important;
+        top: 50% !important;
+
+        width: 7px !important;
+        height: 7px !important;
+
+        box-sizing: border-box !important;
+
+        border: 1px solid var(--mpr-gold) !important;
+        border-radius: 50% !important;
+
+        background: var(--mpr-paper) !important;
+
+        transform: translateY(-50%) !important;
+    }
+
+    body.is-projects .mobile-project-footer-line:first-child::after {
+        right: -1px !important;
+    }
+
+    body.is-projects .mobile-project-footer-line:last-child::before {
+        left: -1px !important;
+    }
+
+    /*
+       Existing Project 02 remains available through the existing arrows.
+       Put its old mobile card back inside the same paper canvas.
+    */
+    body.is-projects .project-slide:nth-child(2) {
+        box-sizing: border-box !important;
+        padding: 5.1vw !important;
+    }
+
+    /*
+       Keep existing project controls functional but visually quiet.
+       They sit BELOW the reference footer, so the main Project 01
+       composition still matches the supplied screenshot.
+    */
+    body.is-projects .project-slider-controls {
+        position: static !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 16px !important;
+
+        margin: 0 !important;
+        padding: 15px 0 18px !important;
+
+        background: #f8f5ef !important;
+        border: 0 !important;
+    }
+
+    body.is-projects .project-arrow {
+        color: #171514 !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+    }
+
+    body.is-projects .project-counter {
+        color: rgba(23, 21, 20, 0.72) !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+    }
+
+    @media (max-width: 370px) {
+        body.is-projects .mobile-project-reference {
+            padding-left: 4.5vw !important;
+            padding-right: 4.5vw !important;
+        }
+
+        body.is-projects .mobile-project-heading h3 {
+            font-size: 28px !important;
+        }
+
+        body.is-projects .mobile-project-fact {
+            grid-template-columns: 58px minmax(0, 1fr) !important;
+        }
+
+        body.is-projects .mobile-project-fact-copy p {
+            font-size: 12.5px !important;
+        }
+
+        body.is-projects .mobile-project-meta-item {
+            grid-template-columns: 36px minmax(0, 1fr) !important;
+            gap: 7px !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+        }
+
+        body.is-projects .mobile-project-meta-icon {
+            width: 34px !important;
+            height: 34px !important;
+        }
+
+        body.is-projects .mobile-project-meta strong {
+            font-size: 10.5px !important;
+        }
+
+        body.is-projects .mobile-project-footer {
+            gap: 8px !important;
+        }
+
+        body.is-projects .mobile-project-footer p {
+            font-size: 8.2px !important;
+        }
+    }
+}
+
+/* =========================================================
+   MOBILE PROJECTS — V43 FINAL TWO FIXES
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   PROJECTS TAB ONLY
+
+   1) Project 01 ends after "What It Helps With".
+   2) Native pinch zoom works from ANY point of the Projects page.
+      Every ancestor + descendant in the Projects touch chain is
+      explicitly returned to browser-native touch handling.
+
+   No desktop / Home / What We Do / Contact changes.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       FIX 1 — END PROJECT 01 AFTER "WHAT IT HELPS WITH"
+       ----------------------------------------------------- */
+    body.is-projects .mobile-project-fact:nth-child(3),
+    body.is-projects .mobile-project-meta,
+    body.is-projects .mobile-project-footer {
+        display: none !important;
+    }
+
+    body.is-projects .mobile-project-facts {
+        margin-bottom: 0 !important;
+    }
+
+    /*
+       Leave the existing Project arrows underneath so Project 02
+       remains reachable without reintroducing swipe interception.
+    */
+    body.is-projects .project-slider-controls {
+        margin-top: 0 !important;
+    }
+
+    /* -----------------------------------------------------
+       FIX 2 — NATIVE ZOOM FROM THE ENTIRE PROJECT PAGE
+       -----------------------------------------------------
+       touch-action is resolved through the ancestor chain.
+       Older CSS contains more-specific touch-action:none rules,
+       so this block deliberately uses higher specificity and is
+       placed last.
+    */
+    html body.is-projects,
+    html body.is-projects .site-shell,
+    html body.is-projects .text-zone,
+    html body.is-projects #content-inner,
+    html body.is-projects .project-slider,
+    html body.is-projects .project-slider-window,
+    html body.is-projects .project-slider-track,
+    html body.is-projects .project-slide,
+    html body.is-projects .project-card,
+    html body.is-projects .mobile-project-reference,
+    html body.is-projects .mobile-project-reference * ,
+    html body.is-projects .project-slider * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+
+    /*
+       Controls must not fall back to the global
+       "touch-action: manipulation" rule while on Projects.
+       They remain tappable and can also be the starting point
+       of a browser pinch gesture.
+    */
+    html body.is-projects button,
+    html body.is-projects a {
+        touch-action: auto !important;
+    }
+}
+
+/* =========================================================
+   MOBILE PROJECTS — V44
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   PROJECTS TAB ONLY
+
+   Fixes:
+   1) Restores WHY IT MATTERS + status/download + reference footer.
+   2) Adds horizontal project swipe at 1x (JS handles it).
+   3) Applies the same reference layout to EVERY project slide.
+   4) Keeps native pinch zoom everywhere; when zoomed, JS does not
+      intercept one-finger panning.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* Restore the full reference content removed by V43. */
+    body.is-projects .mobile-project-fact:nth-child(3) {
+        display: grid !important;
+    }
+
+    body.is-projects .mobile-project-meta {
+        display: grid !important;
+    }
+
+    body.is-projects .mobile-project-footer {
+        display: grid !important;
+    }
+
+    body.is-projects .mobile-project-facts {
+        margin-bottom: clamp(12px, 3vw, 16px) !important;
+    }
+
+    /* SAME REFERENCE LAYOUT FOR EVERY PROJECT SLIDE. */
+    body.is-projects .project-slide {
+        display: block !important;
+
+        flex: 0 0 100% !important;
+        min-width: 100% !important;
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: transparent !important;
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Old project panes are desktop-only now. */
+    body.is-projects .project-slide > .project-meta-column,
+    body.is-projects .project-slide > .project-copy-pane,
+    body.is-projects .project-slide > .project-visual-pane {
+        display: none !important;
+    }
+
+    body.is-projects .project-slide .mobile-project-reference {
+        display: block !important;
+    }
+
+    /* Cancel the old special padding that was applied only to Project 02. */
+    body.is-projects .project-slide:nth-child(2) {
+        padding: 0 !important;
+    }
+
+    /*
+       Native pinch zoom must be able to begin ANYWHERE in the project page.
+       Vertical single-finger movement remains normal scrolling.
+       Horizontal 1x movement is available to the project's swipe JS.
+    */
+    html body.is-projects .site-shell,
+    html body.is-projects .text-zone,
+    html body.is-projects #content-inner,
+    html body.is-projects .project-slider,
+    html body.is-projects .project-slider-window,
+    html body.is-projects .project-slider-track,
+    html body.is-projects .project-slide,
+    html body.is-projects .mobile-project-reference,
+    html body.is-projects .mobile-project-reference *,
+    html body.is-projects .project-slider-controls,
+    html body.is-projects .project-slider-controls * {
+        touch-action: pan-y pinch-zoom !important;
+        overscroll-behavior: auto !important;
+    }
+
+    /*
+       The header/background are outside the slider and remain fully native.
+       Pinch can also start there.
+    */
+    html body.is-projects .mobile-home-header,
+    html body.is-projects .mobile-home-header *,
+    html body.is-projects .page-bg {
+        touch-action: auto !important;
+    }
+}
+
+/* =========================================================
+   MOBILE WHAT WE DO — REFERENCE COMPOSITION V1
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   WHAT WE DO TAB ONLY
+
+   Preserves:
+   - Home
+   - Projects
+   - Contact
+   - all desktop layouts
+   - shared black EVANØESIS / TM / hamburger header
+   - native mobile pinch zoom + one-finger pan
+   - zoom reset when changing tabs
+   ========================================================= */
+
+.mobile-about-reference {
+    display: none;
+}
+
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       PAGE CANVAS
+       ----------------------------------------------------- */
+    body.is-about {
+        background: #f8f5ef !important;
+    }
+
+    body.is-about .page-bg {
+        background-color: #f8f5ef !important;
+        background-image:
+            radial-gradient(circle at 72% 7%, rgba(130, 104, 73, 0.030), transparent 23%),
+            radial-gradient(circle at 22% 36%, rgba(130, 104, 73, 0.022), transparent 27%),
+            radial-gradient(circle at 84% 78%, rgba(130, 104, 73, 0.020), transparent 28%),
+            linear-gradient(to bottom, #fbfaf7 0%, #f7f3ed 52%, #fbfaf7 100%) !important;
+
+        background-size: 100% 100% !important;
+        background-position: center top !important;
+        background-repeat: no-repeat !important;
+
+        filter: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    /*
+       The new reference composition replaces only the old mobile
+       About slider. Desktop still uses the existing two-slide content.
+    */
+    body.is-about .about-slider {
+        display: none !important;
+    }
+
+    body.is-about .site-shell {
+        position: fixed !important;
+        inset: 0 !important;
+
+        width: 100vw !important;
+        height: var(--app-height) !important;
+        min-height: var(--app-height) !important;
+
+        overflow: hidden !important;
+    }
+
+    body.is-about .text-zone {
+        position: fixed !important;
+        z-index: 3 !important;
+
+        left: 0 !important;
+        right: 0 !important;
+        top: clamp(50px, 13vw, 58px) !important;
+        bottom: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        background: transparent !important;
+
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    body.is-about .text-zone::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    body.is-about .text-zone::before {
+        display: none !important;
+        content: none !important;
+    }
+
+    body.is-about #content-inner {
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+    }
+
+    body.is-about .mobile-about-reference {
+        --ma-ink: #171514;
+        --ma-gold: #b77e2d;
+        --ma-paper: #f8f5ef;
+        --ma-line: rgba(23, 21, 20, 0.11);
+
+        display: block !important;
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: clamp(18px, 4.8vw, 24px) 3.6vw 20px !important;
+
+        color: var(--ma-ink) !important;
+    }
+
+    /* -----------------------------------------------------
+       HERO
+       -----------------------------------------------------
+       This image is cropped directly from the supplied reference
+       so its typography, office scene, spacing and border treatment
+       match the sample closely.
+    */
+    body.is-about .mobile-about-hero {
+        width: 100% !important;
+
+        margin: 0 0 clamp(12px, 3.2vw, 16px) !important;
+        padding: 0 !important;
+
+        overflow: hidden !important;
+
+        border-radius: clamp(14px, 3.7vw, 18px) !important;
+        box-shadow:
+            0 7px 20px rgba(40, 31, 22, 0.08) !important;
+    }
+
+    body.is-about .mobile-about-hero img {
+        display: block !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* -----------------------------------------------------
+       STACKED FEATURE FRAMES
+       ----------------------------------------------------- */
+    body.is-about .mobile-about-cards {
+        display: grid !important;
+        gap: clamp(6px, 1.55vw, 8px) !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.is-about .mobile-about-card {
+        position: relative !important;
+
+        display: grid !important;
+        grid-template-columns:
+            clamp(70px, 18.5vw, 88px)
+            minmax(0, 1fr)
+            clamp(30px, 7.4vw, 36px) !important;
+        align-items: center !important;
+
+        min-height: clamp(130px, 31vw, 150px) !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding:
+            clamp(13px, 3.4vw, 16px)
+            clamp(12px, 3.2vw, 15px) !important;
+
+        background:
+            linear-gradient(
+                110deg,
+                rgba(253, 252, 249, 0.96) 0%,
+                rgba(249, 246, 241, 0.94) 48%,
+                rgba(251, 249, 246, 0.98) 100%
+            ) !important;
+
+        border: 1px solid rgba(23, 21, 20, 0.11) !important;
+        border-radius: clamp(13px, 3.4vw, 17px) !important;
+
+        box-shadow:
+            0 4px 11px rgba(45, 34, 23, 0.065) !important;
+    }
+
+    /* LEFT CIRCULAR ICON */
+    body.is-about .mobile-about-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        width: clamp(58px, 15vw, 72px) !important;
+        height: clamp(58px, 15vw, 72px) !important;
+
+        margin: 0 auto !important;
+
+        color: var(--ma-gold) !important;
+
+        border: 1px solid rgba(183, 126, 45, 0.86) !important;
+        border-radius: 50% !important;
+    }
+
+    body.is-about .mobile-about-icon svg {
+        display: block !important;
+
+        width: 62% !important;
+        height: 62% !important;
+    }
+
+    /* CENTER COPY WITH GOLD VERTICAL DIVIDER */
+    body.is-about .mobile-about-card-copy {
+        min-width: 0 !important;
+
+        padding:
+            0
+            clamp(11px, 2.9vw, 14px) !important;
+
+        border-left: 1px solid rgba(183, 126, 45, 0.64) !important;
+    }
+
+    body.is-about .mobile-about-number {
+        display: block !important;
+
+        margin: 0 0 3px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(10px, 2.55vw, 12px) !important;
+        line-height: 1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.04em !important;
+
+        color: var(--ma-gold) !important;
+    }
+
+    body.is-about .mobile-about-card h3 {
+        margin: 0 0 6px !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(14px, 3.55vw, 17px) !important;
+        line-height: 1.03 !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.015em !important;
+
+        color: var(--ma-ink) !important;
+    }
+
+    body.is-about .mobile-about-card p {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(10.5px, 2.75vw, 13px) !important;
+        line-height: 1.30 !important;
+        font-weight: 400 !important;
+
+        color: rgba(23, 21, 20, 0.90) !important;
+    }
+
+    /* RIGHT PLUS */
+    body.is-about .mobile-about-plus {
+        align-self: start !important;
+        justify-self: center !important;
+
+        margin-top: clamp(10px, 2.5vw, 12px) !important;
+
+        font-family: Arial, sans-serif !important;
+        font-size: clamp(28px, 7vw, 34px) !important;
+        line-height: 0.9 !important;
+        font-weight: 300 !important;
+
+        color: var(--ma-gold) !important;
+    }
+
+    /* -----------------------------------------------------
+       BOTTOM MOTTO
+       ----------------------------------------------------- */
+    body.is-about .mobile-about-motto {
+        margin: clamp(18px, 4.7vw, 23px) 0 0 !important;
+        padding: 0 2vw 1px !important;
+
+        text-align: center !important;
+    }
+
+    body.is-about .mobile-about-motto p {
+        margin: 0 0 10px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(8px, 2vw, 9.5px) !important;
+        line-height: 1.2 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.30em !important;
+        text-transform: uppercase !important;
+
+        color: var(--ma-gold) !important;
+        white-space: nowrap !important;
+    }
+
+    body.is-about .mobile-about-motto-rule {
+        position: relative !important;
+
+        width: 63% !important;
+        height: 11px !important;
+
+        margin: 0 auto !important;
+    }
+
+    body.is-about .mobile-about-motto-rule::before,
+    body.is-about .mobile-about-motto-rule::after {
+        content: "" !important;
+
+        position: absolute !important;
+        top: 5px !important;
+
+        width: calc(50% - 9px) !important;
+        height: 1px !important;
+
+        background: rgba(183, 126, 45, 0.75) !important;
+    }
+
+    body.is-about .mobile-about-motto-rule::before {
+        left: 0 !important;
+    }
+
+    body.is-about .mobile-about-motto-rule::after {
+        right: 0 !important;
+    }
+
+    body.is-about .mobile-about-motto-rule span {
+        position: absolute !important;
+        left: 50% !important;
+        top: 0 !important;
+
+        width: 11px !important;
+        height: 11px !important;
+
+        box-sizing: border-box !important;
+
+        border: 1px solid var(--ma-gold) !important;
+        border-radius: 50% !important;
+
+        background: var(--ma-paper) !important;
+
+        transform: translateX(-50%) !important;
+    }
+
+    /* The reference has its own bottom treatment. */
+    body.is-about > .site-footer {
+        display: none !important;
+    }
+
+    /* -----------------------------------------------------
+       NATIVE MOBILE ZOOM / PAN
+       -----------------------------------------------------
+       Explicitly keep every part of the new About composition
+       browser-native. No swipe/gesture interception is introduced.
+    */
+    html body.is-about,
+    html body.is-about .site-shell,
+    html body.is-about .text-zone,
+    html body.is-about #content-inner,
+    html body.is-about .mobile-about-reference,
+    html body.is-about .mobile-about-reference * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+
+    /* Narrow-phone tuning. */
+    @media (max-width: 370px) {
+        body.is-about .mobile-about-reference {
+            padding-left: 3.1vw !important;
+            padding-right: 3.1vw !important;
+        }
+
+        body.is-about .mobile-about-card {
+            grid-template-columns: 62px minmax(0, 1fr) 27px !important;
+            min-height: 126px !important;
+
+            padding-left: 10px !important;
+            padding-right: 9px !important;
+        }
+
+        body.is-about .mobile-about-icon {
+            width: 52px !important;
+            height: 52px !important;
+        }
+
+        body.is-about .mobile-about-card-copy {
+            padding-left: 10px !important;
+            padding-right: 8px !important;
+        }
+
+        body.is-about .mobile-about-card h3 {
+            font-size: 13px !important;
+        }
+
+        body.is-about .mobile-about-card p {
+            font-size: 9.8px !important;
+        }
+
+        body.is-about .mobile-about-motto p {
+            font-size: 7.2px !important;
+            letter-spacing: 0.23em !important;
+        }
+    }
+}
+
+/* =========================================================
+   MOBILE WHAT WE DO — PAGE 2 / TWO-PAGE SYSTEM V2
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   WHAT WE DO TAB ONLY
+
+   Page 1 remains exactly the accepted V45 composition.
+   Page 2 follows the supplied "How Ideas Become Reality" reference.
+   Desktop / Home / Projects / Contact are untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /*
+       Only one mobile What We Do reference page is painted at a time.
+       This overrides the V45 display:block rule without changing its
+       actual page-1 layout.
+    */
+    body.is-about .mobile-about-page {
+        display: none !important;
+    }
+
+    body.is-about .mobile-about-page.is-mobile-about-active {
+        display: block !important;
+    }
+
+    /* PAGE 2 — same overall frame language, no right-side plus marks. */
+    body.is-about .mobile-about-reference-secondary .mobile-about-card {
+        grid-template-columns:
+            clamp(70px, 18.5vw, 88px)
+            minmax(0, 1fr) !important;
+
+        min-height: clamp(136px, 33vw, 160px) !important;
+
+        padding-right: clamp(17px, 4.2vw, 21px) !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-card-copy {
+        padding-left: clamp(13px, 3.35vw, 16px) !important;
+        padding-right: 0 !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-card h3 {
+        margin-bottom: 7px !important;
+
+        font-size: clamp(14.5px, 3.72vw, 18px) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.012em !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-card p {
+        font-size: clamp(10.8px, 2.86vw, 13.5px) !important;
+        line-height: 1.36 !important;
+
+        color: rgba(23, 21, 20, 0.74) !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-number {
+        margin-bottom: 5px !important;
+
+        font-size: clamp(10.5px, 2.65vw, 12.5px) !important;
+        font-weight: 700 !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-icon {
+        width: clamp(58px, 15.2vw, 73px) !important;
+        height: clamp(58px, 15.2vw, 73px) !important;
+
+        border-color: rgba(183, 126, 45, 0.58) !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-icon svg {
+        width: 58% !important;
+        height: 58% !important;
+    }
+
+    /*
+       The supplied second-page motto is intentionally two lines.
+    */
+    body.is-about .mobile-about-motto-secondary {
+        margin-top: clamp(17px, 4.3vw, 22px) !important;
+    }
+
+    body.is-about .mobile-about-motto-secondary p {
+        margin-bottom: 9px !important;
+
+        font-size: clamp(8.2px, 2.08vw, 10px) !important;
+        line-height: 1.38 !important;
+        letter-spacing: 0.22em !important;
+    }
+
+    body.is-about .mobile-about-motto-secondary p span {
+        display: block !important;
+    }
+
+    /*
+       Keep browser-native zoom/pan available from EVERY element on
+       both What We Do pages. The swipe page-change listener never
+       calls preventDefault and automatically stands down while zoomed.
+    */
+    html body.is-about .mobile-about-page,
+    html body.is-about .mobile-about-page * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+
+    @media (max-width: 370px) {
+        body.is-about .mobile-about-reference-secondary .mobile-about-card {
+            grid-template-columns: 62px minmax(0, 1fr) !important;
+            min-height: 132px !important;
+        }
+
+        body.is-about .mobile-about-reference-secondary .mobile-about-card h3 {
+            font-size: 13.2px !important;
+        }
+
+        body.is-about .mobile-about-reference-secondary .mobile-about-card p {
+            font-size: 9.9px !important;
+        }
+    }
+}
+
+/* =========================================================
+   MOBILE WHAT WE DO — V47 CONSISTENCY + SLIDE INDICATOR
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   WHAT WE DO TAB ONLY
+
+   1) Both What We Do slides use identical feature-card frames.
+   2) Both slides show a clear 1/2 or 2/2 slider indicator.
+   Desktop and every other tab are untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       SAME FRAME DIMENSIONS ON BOTH SLIDES
+       -----------------------------------------------------
+       Page 2 previously used a slightly taller two-column card.
+       Both pages now share the exact same outer dimensions and
+       the same reserved right-side column width.
+    */
+    body.is-about .mobile-about-page .mobile-about-card {
+        grid-template-columns:
+            clamp(70px, 18.5vw, 88px)
+            minmax(0, 1fr)
+            clamp(30px, 7.4vw, 36px) !important;
+
+        min-height: clamp(136px, 33vw, 160px) !important;
+
+        padding:
+            clamp(13px, 3.4vw, 16px)
+            clamp(12px, 3.2vw, 15px) !important;
+    }
+
+    body.is-about .mobile-about-page .mobile-about-card-copy {
+        padding:
+            0
+            clamp(11px, 2.9vw, 14px) !important;
+    }
+
+    /*
+       Page 2 has no plus symbol in the supplied design.
+       The third grid column remains intentionally empty so the
+       frame/copy geometry matches slide 1 exactly.
+    */
+    body.is-about .mobile-about-reference-secondary .mobile-about-card {
+        grid-template-columns:
+            clamp(70px, 18.5vw, 88px)
+            minmax(0, 1fr)
+            clamp(30px, 7.4vw, 36px) !important;
+
+        min-height: clamp(136px, 33vw, 160px) !important;
+
+        padding:
+            clamp(13px, 3.4vw, 16px)
+            clamp(12px, 3.2vw, 15px) !important;
+    }
+
+    body.is-about .mobile-about-reference-secondary .mobile-about-card-copy {
+        padding:
+            0
+            clamp(11px, 2.9vw, 14px) !important;
+    }
+
+    /* -----------------------------------------------------
+       SLIDE INDICATOR — BOTH PAGES
+       ----------------------------------------------------- */
+    body.is-about .mobile-about-slide-indicator {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+
+        width: max-content !important;
+
+        margin:
+            clamp(14px, 3.6vw, 18px)
+            auto
+            clamp(8px, 2vw, 10px) !important;
+        padding: 5px 10px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+
+        color: #171514 !important;
+
+        background: rgba(250, 248, 244, 0.72) !important;
+        border: 1px solid rgba(23, 21, 20, 0.10) !important;
+        border-radius: 999px !important;
+
+        box-shadow: 0 2px 7px rgba(45, 34, 23, 0.045) !important;
+    }
+
+    body.is-about .mobile-about-slide-dot {
+        display: block !important;
+
+        width: 6px !important;
+        height: 6px !important;
+
+        border: 1px solid rgba(183, 126, 45, 0.58) !important;
+        border-radius: 50% !important;
+
+        background: transparent !important;
+    }
+
+    body.is-about .mobile-about-slide-dot.is-active {
+        background: #b77e2d !important;
+        border-color: #b77e2d !important;
+    }
+
+    body.is-about .mobile-about-slide-count {
+        min-width: 24px !important;
+
+        font-size: 9px !important;
+        line-height: 1 !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.08em !important;
+
+        text-align: center !important;
+
+        color: rgba(23, 21, 20, 0.72) !important;
+    }
+
+    body.is-about .mobile-about-slide-chevron {
+        font-family: Arial, sans-serif !important;
+        font-size: 15px !important;
+        line-height: 1 !important;
+        font-weight: 400 !important;
+
+        color: #b77e2d !important;
+    }
+
+    /* Keep native zoom/pan available from the indicator too. */
+    html body.is-about .mobile-about-slide-indicator,
+    html body.is-about .mobile-about-slide-indicator * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+
+    @media (max-width: 370px) {
+        body.is-about .mobile-about-page .mobile-about-card,
+        body.is-about .mobile-about-reference-secondary .mobile-about-card {
+            grid-template-columns:
+                62px
+                minmax(0, 1fr)
+                27px !important;
+
+            min-height: 132px !important;
+        }
+
+        body.is-about .mobile-about-slide-indicator {
+            gap: 7px !important;
+            padding-left: 9px !important;
+            padding-right: 9px !important;
+        }
+    }
+}
+
+/* =========================================================
+   MOBILE CONTACT — REFERENCE COMPOSITION V1
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   CONTACT TAB ONLY
+
+   Preserves:
+   - Home
+   - Projects
+   - both What We Do slides
+   - all desktop layouts
+   - shared black EVANØESIS / TM / hamburger header
+   - native mobile pinch zoom + one-finger pan
+   - zoom reset when changing tabs
+   ========================================================= */
+
+.mobile-contact-reference {
+    display: none;
+}
+
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       CONTACT PAGE CANVAS
+       ----------------------------------------------------- */
+    body.is-contact {
+        background: #faf8f4 !important;
+    }
+
+    body.is-contact .page-bg {
+        display: block !important;
+
+        background-color: #faf8f4 !important;
+        background-image:
+            radial-gradient(circle at 74% 16%, rgba(153, 126, 91, 0.025), transparent 24%),
+            radial-gradient(circle at 15% 62%, rgba(153, 126, 91, 0.018), transparent 27%),
+            linear-gradient(to bottom, #fbfaf7 0%, #f8f5ef 56%, #fbfaf7 100%) !important;
+
+        background-size: 100% 100% !important;
+        background-position: center top !important;
+        background-repeat: no-repeat !important;
+
+        filter: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    body.is-contact .site-shell {
+        position: fixed !important;
+        inset: 0 !important;
+
+        width: 100vw !important;
+        height: var(--app-height) !important;
+        min-height: var(--app-height) !important;
+
+        overflow: hidden !important;
+    }
+
+    /*
+       Full contact composition starts immediately under the existing
+       shared mobile header. The header itself is not restyled here.
+    */
+    body.is-contact .text-zone {
+        position: fixed !important;
+        z-index: 3 !important;
+
+        left: 0 !important;
+        right: 0 !important;
+        top: clamp(50px, 13vw, 58px) !important;
+        bottom: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        background: transparent !important;
+
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    body.is-contact .text-zone::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    body.is-contact .text-zone::before {
+        display: none !important;
+        content: none !important;
+    }
+
+    body.is-contact #content-inner {
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+    }
+
+    /* Existing desktop contact block stays present for desktop only. */
+    body.is-contact .contact-desktop-content {
+        display: none !important;
+    }
+
+    body.is-contact .mobile-contact-reference {
+        --mc-ink: #171514;
+        --mc-gold: #bd914e;
+        --mc-paper: #faf8f4;
+
+        position: relative !important;
+
+        display: block !important;
+
+        width: 100% !important;
+        min-height:
+            max(
+                calc(var(--app-height) - clamp(50px, 13vw, 58px)),
+                164vw
+            ) !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: hidden !important;
+
+        color: var(--mc-ink) !important;
+
+        background:
+            radial-gradient(circle at 74% 14%, rgba(151, 120, 82, 0.025), transparent 23%),
+            radial-gradient(circle at 18% 67%, rgba(151, 120, 82, 0.018), transparent 28%),
+            linear-gradient(to bottom, #fcfbf8 0%, #f8f5ef 62%, #fbfaf7 100%) !important;
+    }
+
+    /* -----------------------------------------------------
+       SMALL ORNAMENTAL LINE DIRECTLY BELOW HEADER
+       ----------------------------------------------------- */
+    body.is-contact .mobile-contact-ornamental-top {
+        position: absolute !important;
+        z-index: 4 !important;
+
+        left: 0 !important;
+        right: 0 !important;
+        top: 0 !important;
+
+        height: 12px !important;
+    }
+
+    body.is-contact .mobile-contact-ornamental-top::before,
+    body.is-contact .mobile-contact-ornamental-top::after {
+        content: "" !important;
+
+        position: absolute !important;
+        top: 5px !important;
+
+        width: calc(50% - 16px) !important;
+        height: 1px !important;
+
+        background: rgba(189, 145, 78, 0.72) !important;
+    }
+
+    body.is-contact .mobile-contact-ornamental-top::before {
+        left: 0 !important;
+    }
+
+    body.is-contact .mobile-contact-ornamental-top::after {
+        right: 0 !important;
+    }
+
+    body.is-contact .mobile-contact-ornamental-top span {
+        position: absolute !important;
+
+        left: 50% !important;
+        top: 0 !important;
+
+        width: 20px !important;
+        height: 12px !important;
+
+        transform: translateX(-50%) rotate(45deg) !important;
+
+        border-right: 1px solid rgba(189, 145, 78, 0.72) !important;
+        border-bottom: 1px solid rgba(189, 145, 78, 0.72) !important;
+        border-radius: 0 0 4px 0 !important;
+
+        background: var(--mc-paper) !important;
+    }
+
+    /* -----------------------------------------------------
+       PRIMARY CONTENT
+       ----------------------------------------------------- */
+    body.is-contact .mobile-contact-main {
+        position: relative !important;
+        z-index: 6 !important;
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding:
+            clamp(66px, 17vw, 84px)
+            9.2vw
+            30px !important;
+    }
+
+    body.is-contact .mobile-contact-main h2 {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: Georgia, "Times New Roman", serif !important;
+        font-size: clamp(48px, 13vw, 64px) !important;
+        line-height: 0.98 !important;
+        font-weight: 400 !important;
+        letter-spacing: -0.025em !important;
+
+        color: var(--mc-ink) !important;
+    }
+
+    /* Small ornamental divider under Contact Us */
+    body.is-contact .mobile-contact-title-rule {
+        display: flex !important;
+        align-items: center !important;
+
+        width: clamp(126px, 34vw, 162px) !important;
+
+        margin:
+            clamp(26px, 6.6vw, 32px)
+            0
+            clamp(31px, 7.9vw, 39px) !important;
+    }
+
+    body.is-contact .mobile-contact-title-rule-line {
+        flex: 1 1 auto !important;
+
+        height: 1px !important;
+
+        background: rgba(189, 145, 78, 0.76) !important;
+    }
+
+    body.is-contact .mobile-contact-title-rule-gem {
+        position: relative !important;
+
+        flex: 0 0 24px !important;
+
+        width: 24px !important;
+        height: 20px !important;
+    }
+
+    body.is-contact .mobile-contact-title-rule-gem::before {
+        content: "" !important;
+
+        position: absolute !important;
+
+        left: 50% !important;
+        top: 50% !important;
+
+        width: 18px !important;
+        height: 18px !important;
+
+        border: 1px solid rgba(189, 145, 78, 0.76) !important;
+
+        transform:
+            translate(-50%, -50%)
+            rotate(45deg) !important;
+    }
+
+    body.is-contact .mobile-contact-title-rule-gem::after {
+        content: "" !important;
+
+        position: absolute !important;
+
+        left: 50% !important;
+        top: 50% !important;
+
+        width: 6px !important;
+        height: 6px !important;
+
+        border: 1px solid rgba(189, 145, 78, 0.86) !important;
+        border-radius: 50% !important;
+
+        background: var(--mc-paper) !important;
+
+        transform: translate(-50%, -50%) !important;
+    }
+
+    body.is-contact .mobile-contact-intro {
+        width: 83% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(17px, 4.45vw, 21px) !important;
+        line-height: 1.48 !important;
+        font-weight: 400 !important;
+
+        color: rgba(23, 21, 20, 0.93) !important;
+    }
+
+    /* -----------------------------------------------------
+       EMAIL BLOCK
+       ----------------------------------------------------- */
+    body.is-contact .mobile-contact-email-block {
+        margin:
+            clamp(43px, 11vw, 54px)
+            0
+            0 !important;
+    }
+
+    body.is-contact .mobile-contact-email-label {
+        display: block !important;
+
+        margin: 0 0 13px !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(11px, 2.8vw, 13px) !important;
+        line-height: 1 !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.18em !important;
+        text-transform: uppercase !important;
+
+        color: var(--mc-gold) !important;
+    }
+
+    body.is-contact .mobile-contact-email {
+        display: block !important;
+
+        width: max-content !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(25px, 7.1vw, 34px) !important;
+        line-height: 1.06 !important;
+        font-weight: 400 !important;
+        letter-spacing: -0.025em !important;
+
+        color: var(--mc-ink) !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+    }
+
+    body.is-contact .mobile-contact-email-rule {
+        display: block !important;
+
+        width: clamp(124px, 33vw, 160px) !important;
+        height: 1px !important;
+
+        margin: clamp(21px, 5.4vw, 26px) 0 0 !important;
+
+        background: rgba(189, 145, 78, 0.76) !important;
+    }
+
+    /* -----------------------------------------------------
+       CHANNELS NOTE
+       ----------------------------------------------------- */
+    body.is-contact .mobile-contact-channels {
+        display: grid !important;
+        grid-template-columns:
+            clamp(50px, 13vw, 62px)
+            minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: clamp(22px, 5.4vw, 28px) !important;
+
+        width: min(67vw, 320px) !important;
+
+        margin:
+            clamp(40px, 10vw, 49px)
+            0
+            0 !important;
+    }
+
+    body.is-contact .mobile-contact-channels-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        width: clamp(48px, 12.5vw, 58px) !important;
+        height: clamp(48px, 12.5vw, 58px) !important;
+
+        color: rgba(189, 145, 78, 0.86) !important;
+    }
+
+    body.is-contact .mobile-contact-channels-icon svg {
+        display: block !important;
+
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    body.is-contact .mobile-contact-channels p {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(13px, 3.45vw, 16px) !important;
+        line-height: 1.46 !important;
+        font-weight: 400 !important;
+
+        color: rgba(23, 21, 20, 0.86) !important;
+    }
+
+    /* -----------------------------------------------------
+       LOWER-RIGHT SCULPTURE / ORBITAL ART
+       ----------------------------------------------------- */
+    body.is-contact .mobile-contact-figure {
+        position: absolute !important;
+        z-index: 2 !important;
+
+        right: -2vw !important;
+        bottom: -1px !important;
+
+        display: block !important;
+
+        width: clamp(230px, 60vw, 315px) !important;
+        height: auto !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        opacity: 0.50 !important;
+
+        pointer-events: none !important;
+        user-select: none !important;
+        -webkit-user-drag: none !important;
+
+        /*
+           Blend the screenshot crop gently into the paper background.
+           The image remains strongest at the lower-right sculpture.
+        */
+        -webkit-mask-image:
+            linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0,0,0,0.52) 13%,
+                #000 30%,
+                #000 100%
+            ) !important;
+        mask-image:
+            linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0,0,0,0.52) 13%,
+                #000 30%,
+                #000 100%
+            ) !important;
+    }
+
+    /* The reference composition uses no separate global footer. */
+    body.is-contact > .site-footer {
+        display: none !important;
+    }
+
+    /* -----------------------------------------------------
+       NATIVE ZOOM / PAN
+       ----------------------------------------------------- */
+    html body.is-contact,
+    html body.is-contact .site-shell,
+    html body.is-contact .text-zone,
+    html body.is-contact #content-inner,
+    html body.is-contact .mobile-contact-reference,
+    html body.is-contact .mobile-contact-reference * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+
+    /* Narrow-phone safety. */
+    @media (max-width: 370px) {
+        body.is-contact .mobile-contact-main {
+            padding-left: 8.2vw !important;
+            padding-right: 8.2vw !important;
+        }
+
+        body.is-contact .mobile-contact-main h2 {
+            font-size: 45px !important;
+        }
+
+        body.is-contact .mobile-contact-intro {
+            width: 88% !important;
+            font-size: 16px !important;
+        }
+
+        body.is-contact .mobile-contact-email {
+            font-size: 24px !important;
+        }
+
+        body.is-contact .mobile-contact-channels {
+            width: 72vw !important;
+        }
+
+        body.is-contact .mobile-contact-figure {
+            width: 62vw !important;
+        }
+    }
+}
+
+/* =========================================================
+   MOBILE CONTACT — V49 CLEANUP
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   CONTACT TAB ONLY
+
+   - removes the extra gold/brown ornamental line directly
+     below the shared black toolbar separator;
+   - LinkedIn/additional channels placeholder is removed
+     from the Contact markup.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    body.is-contact .mobile-contact-ornamental-top {
+        display: none !important;
+    }
+}

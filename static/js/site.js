@@ -20,6 +20,118 @@
                         <div class="project-slider-track" data-project-track>
 
                             <article class="project-card project-slide">
+                                <!-- MOBILE ONLY: Project 01 reference composition.
+                                     Existing desktop Project 01 markup remains below. -->
+                                <div class="mobile-project-reference">
+                                    <div class="mobile-project-hero">
+                                        <img
+                                            src="static/images/code-evryma-preview-2.png"
+                                            alt="Code Evryma field intelligence project preview">
+                                    </div>
+
+                                    <div class="mobile-project-heading">
+                                        <p class="mobile-project-number">Project 01</p>
+                                        <h3>Code Evryma</h3>
+                                        <span class="mobile-project-title-rule" aria-hidden="true"></span>
+                                        <p class="mobile-project-tagline">
+                                            Built for the field. Designed for discovery.
+                                        </p>
+                                    </div>
+
+                                    <section class="mobile-project-facts" aria-label="Code Evryma overview">
+                                        <div class="mobile-project-fact">
+                                            <div class="mobile-project-fact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <rect x="11" y="11" width="11" height="11" stroke="currentColor" stroke-width="1.7"/>
+                                                    <rect x="15" y="15" width="3" height="3" fill="currentColor"/>
+                                                    <rect x="27" y="11" width="10" height="10" stroke="currentColor" stroke-width="1.7"/>
+                                                    <rect x="30" y="14" width="4" height="4" fill="currentColor"/>
+                                                    <rect x="11" y="27" width="11" height="10" stroke="currentColor" stroke-width="1.7"/>
+                                                    <rect x="15" y="30" width="3" height="4" fill="currentColor"/>
+                                                    <path d="M27 27h4v4h-4zM34 27h4v4h-4zM27 34h4v4h-4zM34 34h4" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="mobile-project-fact-copy">
+                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Overview</h4>
+                                                <p>
+                                                    Code Evryma is an AI-powered field intelligence system that helps metal
+                                                    detectorists interpret signals, understand ground conditions, and capture
+                                                    real-time discovery data.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile-project-fact">
+                                            <div class="mobile-project-fact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <circle cx="24" cy="24" r="12" stroke="currentColor" stroke-width="1.7"/>
+                                                    <circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="1.7"/>
+                                                    <path d="M24 5v10M24 33v10M5 24h10M33 24h10" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="mobile-project-fact-copy">
+                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>What It Helps With</h4>
+                                                <p>
+                                                    Signal reading, target context, depth awareness, and ground behaviour —
+                                                    all delivered in real time through a connected set of smart tools.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile-project-fact">
+                                            <div class="mobile-project-fact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <ellipse cx="24" cy="13" rx="12" ry="5" stroke="currentColor" stroke-width="1.7"/>
+                                                    <path d="M12 13v20c0 2.8 5.4 5 12 5s12-2.2 12-5V13" stroke="currentColor" stroke-width="1.7"/>
+                                                    <path d="M12 23c0 2.8 5.4 5 12 5s12-2.2 12-5M12 33c0 2.8 5.4 5 12 5s12-2.2 12-5" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="mobile-project-fact-copy">
+                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Why It Matters</h4>
+                                                <p>
+                                                    Smarter decisions in the field. Less guesswork. Organised discovery data
+                                                    that builds knowledge, supports analysis, and elevates every hunt.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <section class="mobile-project-meta" aria-label="Project status and download">
+                                        <div class="mobile-project-meta-item">
+                                            <div class="mobile-project-meta-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <path d="m24 9 4.4 8.9 9.8 1.4-7.1 6.9 1.7 9.8L24 31.4 15.2 36l1.7-9.8-7.1-6.9 9.8-1.4L24 9Z" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <span class="mobile-project-meta-label">Status:</span>
+                                                <strong>Featured Project</strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile-project-meta-item">
+                                            <div class="mobile-project-meta-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <path d="M24 9v21M17 23l7 7 7-7M13 37h22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <span class="mobile-project-meta-label">Download:</span>
+                                                <strong>Coming Soon</strong>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <footer class="mobile-project-footer">
+                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
+                                        <p>© 2026 EVANØESIS. All rights reserved.</p>
+                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
+                                    </footer>
+                                </div>
+
                                 <div class="project-meta-column" aria-hidden="true">
                                     <span>Project</span>
                                     <strong>01</strong>
@@ -73,6 +185,117 @@
                             </article>
 
                             <article class="project-card project-slide">
+                                <!-- MOBILE ONLY: Project 02 uses the same reference composition as Project 01. -->
+                                <div class="mobile-project-reference">
+                                    <div class="mobile-project-hero">
+                                        <img
+                                            src="static/images/visual-pathway-preview-2.png"
+                                            alt="Visual Pathway Analysis biomedical project preview">
+                                    </div>
+
+                                    <div class="mobile-project-heading">
+                                        <p class="mobile-project-number">Project 02</p>
+                                        <h3>Visual Pathway Analysis</h3>
+                                        <span class="mobile-project-title-rule" aria-hidden="true"></span>
+                                        <p class="mobile-project-tagline">
+                                            Mapping the brain's visual system with precision and purpose.
+                                        </p>
+                                    </div>
+
+                                    <section class="mobile-project-facts" aria-label="Visual Pathway Analysis overview">
+                                        <div class="mobile-project-fact">
+                                            <div class="mobile-project-fact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <rect x="11" y="11" width="11" height="11" stroke="currentColor" stroke-width="1.7"/>
+                                                    <rect x="15" y="15" width="3" height="3" fill="currentColor"/>
+                                                    <rect x="27" y="11" width="10" height="10" stroke="currentColor" stroke-width="1.7"/>
+                                                    <rect x="30" y="14" width="4" height="4" fill="currentColor"/>
+                                                    <rect x="11" y="27" width="11" height="10" stroke="currentColor" stroke-width="1.7"/>
+                                                    <rect x="15" y="30" width="3" height="4" fill="currentColor"/>
+                                                    <path d="M27 27h4v4h-4zM34 27h4v4h-4zM27 34h4v4h-4zM34 34h4" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="mobile-project-fact-copy">
+                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Overview</h4>
+                                                <p>
+                                                    Visual Pathway Analysis is an AI-powered imaging platform that helps
+                                                    clinicians and researchers visualize and interpret the complex networks
+                                                    of the human visual system.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile-project-fact">
+                                            <div class="mobile-project-fact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <circle cx="24" cy="24" r="12" stroke="currentColor" stroke-width="1.7"/>
+                                                    <circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="1.7"/>
+                                                    <path d="M24 5v10M24 33v10M5 24h10M33 24h10" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="mobile-project-fact-copy">
+                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>What It Helps With</h4>
+                                                <p>
+                                                    Advanced tractography, anatomical modeling, and machine learning bring
+                                                    deeper insight into optic pathways for clinical and research work.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile-project-fact">
+                                            <div class="mobile-project-fact-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <ellipse cx="24" cy="13" rx="12" ry="5" stroke="currentColor" stroke-width="1.7"/>
+                                                    <path d="M12 13v20c0 2.8 5.4 5 12 5s12-2.2 12-5V13" stroke="currentColor" stroke-width="1.7"/>
+                                                    <path d="M12 23c0 2.8 5.4 5 12 5s12-2.2 12-5M12 33c0 2.8 5.4 5 12 5s12-2.2 12-5" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="mobile-project-fact-copy">
+                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Why It Matters</h4>
+                                                <p>
+                                                    Clearer pathway insight can support earlier diagnosis, better treatment
+                                                    planning, and deeper understanding of the human visual system.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <section class="mobile-project-meta" aria-label="Project status and download">
+                                        <div class="mobile-project-meta-item">
+                                            <div class="mobile-project-meta-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <path d="m24 9 4.4 8.9 9.8 1.4-7.1 6.9 1.7 9.8L24 31.4 15.2 36l1.7-9.8-7.1-6.9 9.8-1.4L24 9Z" stroke="currentColor" stroke-width="1.7"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <span class="mobile-project-meta-label">Status:</span>
+                                                <strong>In Development</strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile-project-meta-item">
+                                            <div class="mobile-project-meta-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 48 48" fill="none">
+                                                    <path d="M24 9v21M17 23l7 7 7-7M13 37h22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <span class="mobile-project-meta-label">Download:</span>
+                                                <strong>Coming Soon</strong>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <footer class="mobile-project-footer">
+                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
+                                        <p>© 2026 EVANØESIS. All rights reserved.</p>
+                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
+                                    </footer>
+                                </div>
+
                                 <div class="project-meta-column" aria-hidden="true">
                                     <span>Project</span>
                                     <strong>02</strong>
@@ -132,6 +355,232 @@
             `,
 
             about: `
+                <!-- MOBILE ONLY: What We Do reference composition.
+                     Desktop continues to use the existing about slider below. -->
+                <article class="mobile-about-reference mobile-about-page is-mobile-about-active" aria-label="What EVANOESIS does — page 1">
+
+                    <div class="mobile-about-hero">
+                        <img
+                            src="static/images/what-we-do-mobile-hero.png"
+                            alt="EVANOESIS What We Do — digital project studio workspace">
+                    </div>
+
+                    <section class="mobile-about-cards" aria-label="What EVANOESIS does">
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <path d="M16 23 32 14l16 9v18L32 50 16 41V23Z" stroke="currentColor" stroke-width="1.7"/>
+                                    <path d="m16 23 16 10 16-10M32 33v17" stroke="currentColor" stroke-width="1.7"/>
+                                    <path d="M23 19.5 39 29" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">01</span>
+                                <h3>Independent digital<br>project studio</h3>
+                                <p>
+                                    We are an independent digital project studio that turns meaningful ideas
+                                    into practical technology projects with real impact.
+                                </p>
+                            </div>
+
+                            <span class="mobile-about-plus" aria-hidden="true">＋</span>
+                        </article>
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <circle cx="19" cy="48" r="4" stroke="currentColor" stroke-width="1.7"/>
+                                    <path d="M23 48h9c7 0 9-4 9-9s-3-8-9-8H21c-5 0-8-3-8-7s3-7 8-7h22" stroke="currentColor" stroke-width="1.7" stroke-dasharray="4 3"/>
+                                    <path d="M42 12v18" stroke="currentColor" stroke-width="1.7"/>
+                                    <path d="M42 12h11l-4 5 4 5H42" fill="currentColor"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">02</span>
+                                <h3>From concept to<br>working reality</h3>
+                                <p>
+                                    We develop focused digital products from early concept to working reality,
+                                    combining research, design, software, and applied AI where it creates real value.
+                                </p>
+                            </div>
+
+                            <span class="mobile-about-plus" aria-hidden="true">＋</span>
+                        </article>
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <path d="M32 49 16.5 33.7C9.8 27 14.2 16 23.2 16c4.2 0 7 2.2 8.8 5 1.8-2.8 4.6-5 8.8-5 9 0 13.4 11 6.7 17.7L32 49Z" stroke="currentColor" stroke-width="1.7"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">03</span>
+                                <h3>Purpose, clarity,<br>and care</h3>
+                                <p>
+                                    Every project begins with a problem worth solving and moves toward a useful tool
+                                    that people can understand, trust, and use.
+                                </p>
+                            </div>
+
+                            <span class="mobile-about-plus" aria-hidden="true">＋</span>
+                        </article>
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <path d="M38 13c8 0 13 0 13 0s0 5-1.5 10.5C47 33 41 39 32 42l-9-9c3-9 9-15 18.5-17.5C36 13.8 38 13 38 13Z" stroke="currentColor" stroke-width="1.7"/>
+                                    <circle cx="40.5" cy="23.5" r="4" stroke="currentColor" stroke-width="1.7"/>
+                                    <path d="m24 31-8 1-5 7 10 1M34 41l-1 8-7 5-1-10M26 42l-8 8" stroke="currentColor" stroke-width="1.7"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">04</span>
+                                <h3>Founder-led<br>execution</h3>
+                                <p>
+                                    EVANØESIS is founder-led, with each project shaped through direct research,
+                                    careful design, and hands-on execution.
+                                </p>
+                            </div>
+
+                            <span class="mobile-about-plus" aria-hidden="true">＋</span>
+                        </article>
+
+                    </section>
+
+                    <div class="mobile-about-slide-indicator" aria-label="What We Do slide 1 of 2">
+                        <span class="mobile-about-slide-chevron" aria-hidden="true">‹</span>
+                        <span class="mobile-about-slide-dot is-active" aria-hidden="true"></span>
+                        <span class="mobile-about-slide-dot" aria-hidden="true"></span>
+                        <span class="mobile-about-slide-count">1 / 2</span>
+                        <span class="mobile-about-slide-chevron" aria-hidden="true">›</span>
+                    </div>
+
+                    <footer class="mobile-about-motto" aria-label="EVANOESIS motto">
+                        <p>Ideas with purpose · Technology with humanity</p>
+                        <div class="mobile-about-motto-rule" aria-hidden="true">
+                            <span></span>
+                        </div>
+                    </footer>
+
+                </article>
+
+
+                <!-- MOBILE ONLY: What We Do reference composition — page 2 -->
+                <article class="mobile-about-reference mobile-about-page mobile-about-reference-secondary"
+                    aria-label="How Ideas Become Reality — page 2">
+
+                    <div class="mobile-about-hero">
+                        <img
+                            src="static/images/what-we-do-mobile-hero-2.png"
+                            alt="How Ideas Become Reality — a young plant growing from a design sketch">
+                    </div>
+
+                    <section class="mobile-about-cards" aria-label="How ideas become reality">
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <circle cx="28" cy="27" r="14" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="m38 38 12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">01</span>
+                                <h3>Start with the reason</h3>
+                                <p>
+                                    We begin by understanding why an idea matters, who it serves,
+                                    and what real problem it should solve.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <circle cx="32" cy="32" r="13" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="32" cy="32" r="4" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M32 9v12M32 43v12M9 32h12M43 32h12" stroke="currentColor" stroke-width="1.8"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">02</span>
+                                <h3>Build with precision</h3>
+                                <p>
+                                    Research, design, prototyping, testing, and implementation are approached carefully,
+                                    with close attention to the details that make a product useful and dependable.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <path d="M21 29c0-7 5-13 11-13s11 6 11 13c0 5-2 8-5 11-2 2-3 4-3 7h-6c0-3-1-5-3-7-3-3-5-6-5-11Z" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M28 51h8M29 55h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">03</span>
+                                <h3>Ideas with meaningful impact</h3>
+                                <p>
+                                    We are drawn to innovative ideas with the potential to create genuine human value
+                                    and improve understanding, capability, or quality of life.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="mobile-about-card">
+                            <div class="mobile-about-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none">
+                                    <circle cx="16" cy="43" r="3" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="28" cy="27" r="3" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="40" cy="37" r="3" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="51" cy="19" r="3" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="m18 41 8-11M31 29l7 6M42 34l7-12" stroke="currentColor" stroke-width="1.8"/>
+                                </svg>
+                            </div>
+
+                            <div class="mobile-about-card-copy">
+                                <span class="mobile-about-number">04</span>
+                                <h3>Where we are heading</h3>
+                                <p>
+                                    Our long-term direction includes biomedical, life-science, microbiological,
+                                    medical-technology, and human-health applications — with the aim of contributing
+                                    to work that can meaningfully serve humanity.
+                                </p>
+                            </div>
+                        </article>
+
+                    </section>
+
+                    <div class="mobile-about-slide-indicator" aria-label="What We Do slide 2 of 2">
+                        <span class="mobile-about-slide-chevron" aria-hidden="true">‹</span>
+                        <span class="mobile-about-slide-dot" aria-hidden="true"></span>
+                        <span class="mobile-about-slide-dot is-active" aria-hidden="true"></span>
+                        <span class="mobile-about-slide-count">2 / 2</span>
+                        <span class="mobile-about-slide-chevron" aria-hidden="true">›</span>
+                    </div>
+
+                    <footer class="mobile-about-motto mobile-about-motto-secondary" aria-label="EVANOESIS motto">
+                        <p>
+                            <span>Ideas with purpose</span>
+                            <span>Technology with humanity</span>
+                        </p>
+                        <div class="mobile-about-motto-rule" aria-hidden="true">
+                            <span></span>
+                        </div>
+                    </footer>
+
+                </article>
+
                 <div class="about-slider" data-about-slider>
                     <div class="about-slider-window">
                         <div class="about-slider-track" data-about-track>
@@ -206,20 +655,65 @@
             `,
 
             contact: `
-                <h2>Contact Us</h2>
+                <!-- MOBILE ONLY: Contact reference composition.
+                     Desktop keeps the existing Contact content below. -->
+                <article class="mobile-contact-reference" aria-label="Contact EVANOESIS">
 
-                <p class="body-text">
-                    For project enquiries, collaborations, or business communication,
-                    contact EVANØESIS directly.
-                </p>
+                    <div class="mobile-contact-ornamental-top" aria-hidden="true">
+                        <span></span>
+                    </div>
 
-                <a class="email-link" href="mailto:contact@evanoesis.com">
-                    contact@evanoesis.com
-                </a>
+                    <section class="mobile-contact-main">
+                        <h2>Contact Us</h2>
 
-                <p class="body-text contact-note">
-                    LinkedIn and additional official channels will be added soon.
-                </p>
+                        <div class="mobile-contact-title-rule" aria-hidden="true">
+                            <span class="mobile-contact-title-rule-line"></span>
+                            <span class="mobile-contact-title-rule-gem"></span>
+                            <span class="mobile-contact-title-rule-line"></span>
+                        </div>
+
+                        <p class="mobile-contact-intro">
+                            For project enquiries, collaborations,<br>
+                            and business communication,<br>
+                            contact EVANØESIS directly.
+                        </p>
+
+                        <div class="mobile-contact-email-block">
+                            <span class="mobile-contact-email-label">Email</span>
+
+                            <a class="mobile-contact-email"
+                                href="mailto:contact@evanoesis.com">
+                                contact@evanoesis.com
+                            </a>
+
+                            <span class="mobile-contact-email-rule" aria-hidden="true"></span>
+                        </div>
+
+                    </section>
+
+                    <img
+                        class="mobile-contact-figure"
+                        src="static/images/contact-mobile-figure.png"
+                        alt=""
+                        aria-hidden="true">
+                </article>
+
+                <div class="contact-desktop-content">
+                    <h2>Contact Us</h2>
+
+                    <p class="body-text">
+                        For project enquiries, collaborations, or business communication,
+                        contact EVANØESIS directly.
+                    </p>
+
+                    <a class="email-link" href="mailto:contact@evanoesis.com">
+                        contact@evanoesis.com
+                    </a>
+
+                    <p class="body-text contact-note">
+                        LinkedIn and additional official channels will be added soon.
+                    </p>
+                </div>
             `
         };
 
@@ -232,6 +726,44 @@
 
         function isMobileViewport() {
             return window.matchMedia("(max-width: 520px)").matches;
+        }
+
+        /*
+           MOBILE TAB ZOOM RESET
+           -----------------------------------------------------
+           Native pinch zoom belongs to the browser, so there is no
+           JavaScript API for assigning visualViewport.scale directly.
+
+           When the user changes EVANOESIS tabs, briefly lock the viewport
+           to 1x, then immediately restore normal user zoom capability.
+           This returns the NEW tab to its initial 1x view.
+        */
+        function resetMobileZoomForTabChange() {
+            if (!isMobileViewport()) {
+                return;
+            }
+
+            const viewportMeta = document.querySelector('meta[name="viewport"]');
+
+            if (!viewportMeta) {
+                return;
+            }
+
+            const normalViewport =
+                "width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes";
+
+            viewportMeta.setAttribute(
+                "content",
+                "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            );
+
+            window.scrollTo(0, 0);
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    viewportMeta.setAttribute("content", normalViewport);
+                });
+            });
         }
 
 
@@ -280,15 +812,6 @@
             }, 250);
         });
 
-        document.addEventListener("touchmove", (event) => {
-            if (!isMobileViewport()) {
-                return;
-            }
-
-            if (!event.target.closest(".text-zone")) {
-                event.preventDefault();
-            }
-        }, { passive: false });
 
         function clearProjectBackground() {
             document.body.classList.remove("is-project-code", "is-project-visual");
@@ -304,6 +827,7 @@
             document.body.classList.toggle("is-section-open", target !== "home");
             document.body.classList.toggle("is-projects", target === "projects");
             document.body.classList.toggle("is-about", target === "about");
+            document.body.classList.toggle("is-contact", target === "contact");
 
             if (target !== "projects") {
                 clearProjectBackground();
@@ -520,6 +1044,14 @@
                 `${Math.round(Math.min(desiredTop, maximumTop))}px`;
         }
 
+        /*
+           MOBILE TOUCH POLICY
+           -----------------------------------------------------
+           Do not intercept touchstart/touchmove/touchend on phones.
+           The browser owns pinch zoom and one-finger panning.
+           Project navigation on phones uses the visible arrow controls.
+           Desktop mouse dragging remains available.
+        */
         function initProjectSlider() {
             const slider = document.querySelector("[data-project-slider]");
 
@@ -650,9 +1182,48 @@
             previousButton.addEventListener("click", moveToPrevious);
             nextButton.addEventListener("click", moveToNext);
 
+            /*
+               MOBILE PROJECT SWIPE
+               -------------------------------------------------
+               At 1x only:
+               - swipe right-to-left -> next project
+               - swipe left-to-right -> previous project
+
+               During pinch zoom, or whenever the page is already zoomed,
+               this code stands down completely so the browser keeps native
+               pinch zoom + one-finger panning.
+            */
+            function mobileProjectZoomScale() {
+                if (!window.visualViewport) {
+                    return 1;
+                }
+
+                const scale = window.visualViewport.scale;
+
+                return Number.isFinite(scale) && scale > 0
+                    ? scale
+                    : 1;
+            }
+
+            function mobileProjectIsZoomed() {
+                return mobileProjectZoomScale() > 1.01;
+            }
+
+            function cancelMobileProjectSwipe() {
+                slider.classList.remove("is-dragging");
+                isTouching = false;
+                gestureMode = null;
+                currentX = startX;
+
+                track.style.transition = "transform 220ms ease";
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
             slider.addEventListener("touchstart", (event) => {
                 if (
-                    !event.touches.length ||
+                    !isMobileViewport() ||
+                    event.touches.length !== 1 ||
+                    mobileProjectIsZoomed() ||
                     event.target.closest(".project-slider-controls")
                 ) {
                     return;
@@ -665,27 +1236,123 @@
             }, { passive: true });
 
             slider.addEventListener("touchmove", (event) => {
+                if (!isMobileViewport()) {
+                    return;
+                }
+
+                /*
+                   Two fingers = pinch gesture.
+                   Zoomed viewport = browser panning.
+                   Never preventDefault in either case.
+                */
                 if (
-                    !event.touches.length ||
+                    event.touches.length !== 1 ||
+                    mobileProjectIsZoomed()
+                ) {
+                    if (isTouching) {
+                        cancelMobileProjectSwipe();
+                    }
+
+                    return;
+                }
+
+                if (
+                    !isTouching ||
                     event.target.closest(".project-slider-controls")
                 ) {
                     return;
                 }
 
-                moveTouch(
-                    event.touches[0].clientX,
-                    event.touches[0].clientY,
-                    event
-                );
+                const clientX = event.touches[0].clientX;
+                const clientY = event.touches[0].clientY;
+
+                const dragX = clientX - startX;
+                const dragY = clientY - startY;
+
+                if (!gestureMode) {
+                    if (
+                        Math.abs(dragX) < directionThreshold &&
+                        Math.abs(dragY) < directionThreshold
+                    ) {
+                        return;
+                    }
+
+                    gestureMode =
+                        Math.abs(dragX) > Math.abs(dragY)
+                            ? "horizontal"
+                            : "vertical";
+                }
+
+                /*
+                   Vertical movement remains native page scrolling.
+                   Only a clearly-horizontal gesture is intercepted.
+                */
+                if (gestureMode !== "horizontal") {
+                    isTouching = false;
+                    return;
+                }
+
+                event.preventDefault();
+
+                currentX = clientX;
+                slider.classList.add("is-dragging");
+
+                track.style.transition = "none";
+                track.style.transform =
+                    `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`;
             }, { passive: false });
 
             slider.addEventListener("touchend", (event) => {
-                endTouch(event);
-            }, { passive: false });
+                if (
+                    !isMobileViewport() ||
+                    mobileProjectIsZoomed() ||
+                    !isTouching
+                ) {
+                    return;
+                }
 
-            slider.addEventListener("touchcancel", (event) => {
-                endTouch(event);
-            }, { passive: false });
+                const dragDistance = currentX - startX;
+
+                slider.classList.remove("is-dragging");
+                isTouching = false;
+
+                if (gestureMode !== "horizontal") {
+                    gestureMode = null;
+                    updateSlider();
+                    return;
+                }
+
+                gestureMode = null;
+
+                if (dragDistance <= -swipeThreshold) {
+                    moveToNext();
+
+                    if (textZone) {
+                        textZone.scrollTop = 0;
+                    }
+
+                    return;
+                }
+
+                if (dragDistance >= swipeThreshold) {
+                    moveToPrevious();
+
+                    if (textZone) {
+                        textZone.scrollTop = 0;
+                    }
+
+                    return;
+                }
+
+                updateSlider();
+            }, { passive: true });
+
+            slider.addEventListener("touchcancel", () => {
+                if (isTouching) {
+                    cancelMobileProjectSwipe();
+                }
+            }, { passive: true });
+
 
             slider.addEventListener("mousedown", (event) => {
                 if (event.target.closest(".project-slider-controls")) {
@@ -749,6 +1416,166 @@
                 return;
             }
 
+            /*
+               MOBILE WHAT WE DO — TWO REFERENCE PAGES
+               -----------------------------------------------------
+               Horizontal swipe changes page only at normal 1x zoom.
+               We never call preventDefault(), so browser pinch zoom,
+               one-finger panning while zoomed, and vertical scrolling
+               remain native.
+            */
+            const mobilePages = Array.from(
+                document.querySelectorAll(".mobile-about-page")
+            );
+
+            function mobileZoomScale() {
+                const viewport = window.visualViewport;
+
+                if (!viewport) {
+                    return 1;
+                }
+
+                const reported =
+                    Number.isFinite(viewport.scale) && viewport.scale > 0
+                        ? viewport.scale
+                        : 1;
+
+                const layoutWidth =
+                    document.documentElement.clientWidth ||
+                    window.innerWidth ||
+                    1;
+
+                const derived =
+                    viewport.width > 0
+                        ? layoutWidth / viewport.width
+                        : 1;
+
+                return Math.max(reported, derived);
+            }
+
+            function showMobileAboutPage(index) {
+                if (!mobilePages.length) {
+                    return;
+                }
+
+                const total = mobilePages.length;
+                const normalized = ((index % total) + total) % total;
+
+                mobilePages.forEach((page, pageIndex) => {
+                    page.classList.toggle(
+                        "is-mobile-about-active",
+                        pageIndex === normalized
+                    );
+                });
+
+                contentInner.dataset.mobileAboutPage = String(normalized);
+
+                if (textZone) {
+                    textZone.scrollTop = 0;
+                }
+            }
+
+            if (isMobileViewport() && mobilePages.length > 1) {
+                showMobileAboutPage(0);
+
+                if (!contentInner.dataset.mobileAboutSwipeBound) {
+                    contentInner.dataset.mobileAboutSwipeBound = "true";
+
+                    let swipeStartX = 0;
+                    let swipeStartY = 0;
+                    let swipeTracking = false;
+
+                    contentInner.addEventListener(
+                        "touchstart",
+                        (event) => {
+                            if (
+                                !document.body.classList.contains("is-about") ||
+                                event.touches.length !== 1 ||
+                                mobileZoomScale() > 1.01
+                            ) {
+                                swipeTracking = false;
+                                return;
+                            }
+
+                            swipeTracking = true;
+                            swipeStartX = event.touches[0].clientX;
+                            swipeStartY = event.touches[0].clientY;
+                        },
+                        { passive: true }
+                    );
+
+                    contentInner.addEventListener(
+                        "touchend",
+                        (event) => {
+                            if (
+                                !swipeTracking ||
+                                !document.body.classList.contains("is-about") ||
+                                mobileZoomScale() > 1.01 ||
+                                !event.changedTouches.length
+                            ) {
+                                swipeTracking = false;
+                                return;
+                            }
+
+                            const endX = event.changedTouches[0].clientX;
+                            const endY = event.changedTouches[0].clientY;
+
+                            const dx = endX - swipeStartX;
+                            const dy = endY - swipeStartY;
+
+                            swipeTracking = false;
+
+                            if (
+                                Math.abs(dx) < 64 ||
+                                Math.abs(dx) <= Math.abs(dy) * 1.25
+                            ) {
+                                return;
+                            }
+
+                            const pages = Array.from(
+                                document.querySelectorAll(".mobile-about-page")
+                            );
+
+                            if (pages.length < 2) {
+                                return;
+                            }
+
+                            const activeIndex = Math.max(
+                                0,
+                                pages.findIndex((page) =>
+                                    page.classList.contains("is-mobile-about-active")
+                                )
+                            );
+
+                            const nextIndex =
+                                dx < 0
+                                    ? activeIndex + 1
+                                    : activeIndex - 1;
+
+                            const total = pages.length;
+                            const normalized =
+                                ((nextIndex % total) + total) % total;
+
+                            pages.forEach((page, pageIndex) => {
+                                page.classList.toggle(
+                                    "is-mobile-about-active",
+                                    pageIndex === normalized
+                                );
+                            });
+
+                            contentInner.dataset.mobileAboutPage =
+                                String(normalized);
+
+                            if (textZone) {
+                                textZone.scrollTop = 0;
+                            }
+                        },
+                        { passive: true }
+                    );
+                }
+            }
+
+            /* Existing desktop About slider — unchanged. */
             const track = slider.querySelector("[data-about-track]");
             const previousButton = slider.querySelector("[data-about-prev]");
             const nextButton = slider.querySelector("[data-about-next]");
@@ -798,6 +1625,8 @@
                 ) {
                     return;
                 }
+
+                resetMobileZoomForTabChange();
 
                 isChanging = true;
 
