@@ -1,3 +1,360 @@
+
+        /* =====================================================
+           PROJECT CONTENT DATA LAYER
+           -----------------------------------------------------
+           Visible project markup/classes stay exactly the same.
+
+           Source of truth:
+             static/data/projects.json
+
+           Safety:
+           - current two projects are embedded as a known-good fallback;
+           - invalid/missing JSON never blanks the Projects page;
+           - all editable text is HTML-escaped before rendering;
+           - only published projects are rendered;
+           - project numbering follows display order automatically.
+           ===================================================== */
+
+        const PROJECTS_FALLBACK_DATA = [
+    {
+        "slug": "code-evryma",
+        "published": true,
+        "order": 1,
+        "title": "Code Evryma",
+        "subtitle": "Built for the field. Designed for discovery.",
+        "status": "Featured Project",
+        "downloadText": "Coming Soon",
+        "downloadUrl": "",
+        "showDesktopDownload": true,
+        "desktopDownloadText": "Coming soon",
+        "heroImage": "static/images/code-evryma-preview-2.png",
+        "heroAlt": "Code Evryma field intelligence project preview",
+        "overview": "Code Evryma is an AI-powered field intelligence system that helps metal detectorists interpret signals, understand ground conditions, and capture real-time discovery data.",
+        "helps": "Signal reading, target context, depth awareness, and ground behaviour — all delivered in real time through a connected set of smart tools.",
+        "matters": "Smarter decisions in the field. Less guesswork. Organised discovery data that builds knowledge, supports analysis, and elevates every hunt.",
+        "desktopIntro": "Code Evryma brings AI-powered field intelligence to metal detecting — helping users interpret detector signals, understand ground conditions, and work with real-time field data through a powerful set of connected tools.",
+        "desktopExtra": "The project is designed for people who need clearer decisions in the field: signal reading, target context, depth awareness, ground behaviour, and organised discovery data brought together into one practical digital experience.",
+        "previewAriaLabel": "Code Evryma project preview",
+        "previewBaseImage": "static/images/code-evryma-preview-1.png",
+        "previewBaseAlt": "Code Evryma field intelligence preview, marble style",
+        "previewTopImage": "static/images/code-evryma-preview-2.png",
+        "previewTopAlt": "Code Evryma field intelligence preview, blue sky style"
+    },
+    {
+        "slug": "visual-pathway-analysis",
+        "published": true,
+        "order": 2,
+        "title": "Visual Pathway Analysis",
+        "subtitle": "Mapping the brain's visual system with precision and purpose.",
+        "status": "In Development",
+        "downloadText": "Coming Soon",
+        "downloadUrl": "",
+        "showDesktopDownload": false,
+        "desktopDownloadText": "",
+        "heroImage": "static/images/visual-pathway-preview-2.png",
+        "heroAlt": "Visual Pathway Analysis biomedical project preview",
+        "overview": "Visual Pathway Analysis is an AI-powered imaging platform that helps clinicians and researchers visualize and interpret the complex networks of the human visual system.",
+        "helps": "Advanced tractography, anatomical modeling, and machine learning bring deeper insight into optic pathways for clinical and research work.",
+        "matters": "Clearer pathway insight can support earlier diagnosis, better treatment planning, and deeper understanding of the human visual system.",
+        "desktopIntro": "Visual Pathway Analysis is an AI-powered imaging platform that helps clinicians and researchers visualize and interpret the complex networks of the human visual system.",
+        "desktopExtra": "By combining advanced tractography, anatomical modeling, and machine learning, the project delivers deeper insight into optic pathways — supporting earlier diagnosis, better treatment planning, and deeper understanding.",
+        "previewAriaLabel": "Visual pathway biomedical project preview",
+        "previewBaseImage": "static/images/visual-pathway-preview-1.png",
+        "previewBaseAlt": "Biomedical visual nervous system preview, marble style",
+        "previewTopImage": "static/images/visual-pathway-preview-2.png",
+        "previewTopAlt": "Biomedical visual nervous system preview, full colour style"
+    }
+];
+
+        function escapeProjectHtml(value) {
+            return String(value ?? "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#39;");
+        }
+
+        function normalizeProjectsData(payload) {
+            const rawProjects = Array.isArray(payload)
+                ? payload
+                : payload && Array.isArray(payload.projects)
+                    ? payload.projects
+                    : [];
+
+            return rawProjects
+                .filter((project) => project && project.published !== false)
+                .map((project, index) => ({
+                    slug: String(project.slug || `project-${index + 1}`),
+                    order: Number.isFinite(Number(project.order))
+                        ? Number(project.order)
+                        : index + 1,
+                    title: String(project.title || ""),
+                    subtitle: String(project.subtitle || ""),
+                    status: String(project.status || ""),
+                    downloadText: String(project.downloadText || "Coming Soon"),
+                    downloadUrl: String(project.downloadUrl || ""),
+                    showDesktopDownload: project.showDesktopDownload === true,
+                    desktopDownloadText: String(
+                        project.desktopDownloadText || project.downloadText || "Coming Soon"
+                    ),
+                    heroImage: String(project.heroImage || ""),
+                    heroAlt: String(project.heroAlt || ""),
+                    overview: String(project.overview || ""),
+                    helps: String(project.helps || ""),
+                    matters: String(project.matters || ""),
+                    desktopIntro: String(project.desktopIntro || ""),
+                    desktopExtra: String(project.desktopExtra || ""),
+                    previewAriaLabel: String(project.previewAriaLabel || ""),
+                    previewBaseImage: String(project.previewBaseImage || ""),
+                    previewBaseAlt: String(project.previewBaseAlt || ""),
+                    previewTopImage: String(project.previewTopImage || ""),
+                    previewTopAlt: String(project.previewTopAlt || "")
+                }))
+                .filter((project) =>
+                    project.title &&
+                    project.subtitle &&
+                    project.heroImage &&
+                    project.overview &&
+                    project.helps &&
+                    project.matters
+                )
+                .sort((a, b) => a.order - b.order);
+        }
+
+        function safeProjectDownloadUrl(value) {
+            const url = String(value || "").trim();
+
+            if (!url) {
+                return "";
+            }
+
+            if (!/^https:\/\/[^\s]+$/i.test(url)) {
+                return "";
+            }
+
+            return url;
+        }
+
+        const PROJECT_ICON_OVERVIEW = `
+            <svg viewBox="0 0 48 48" fill="none">
+                <rect x="11" y="11" width="11" height="11" stroke="currentColor" stroke-width="1.7"/>
+                <rect x="15" y="15" width="3" height="3" fill="currentColor"/>
+                <rect x="27" y="11" width="10" height="10" stroke="currentColor" stroke-width="1.7"/>
+                <rect x="30" y="14" width="4" height="4" fill="currentColor"/>
+                <rect x="11" y="27" width="11" height="10" stroke="currentColor" stroke-width="1.7"/>
+                <rect x="15" y="30" width="3" height="4" fill="currentColor"/>
+                <path d="M27 27h4v4h-4zM34 27h4v4h-4zM27 34h4v4h-4zM34 34h4" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+        `;
+
+        const PROJECT_ICON_HELPS = `
+            <svg viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="12" stroke="currentColor" stroke-width="1.7"/>
+                <circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M24 5v10M24 33v10M5 24h10M33 24h10" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+        `;
+
+        const PROJECT_ICON_MATTERS = `
+            <svg viewBox="0 0 48 48" fill="none">
+                <ellipse cx="24" cy="13" rx="12" ry="5" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M12 13v20c0 2.8 5.4 5 12 5s12-2.2 12-5V13" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M12 23c0 2.8 5.4 5 12 5s12-2.2 12-5M12 33c0 2.8 5.4 5 12 5s12-2.2 12-5" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+        `;
+
+        const PROJECT_ICON_STATUS = `
+            <svg viewBox="0 0 48 48" fill="none">
+                <path d="m24 9 4.4 8.9 9.8 1.4-7.1 6.9 1.7 9.8L24 31.4 15.2 36l1.7-9.8-7.1-6.9 9.8-1.4L24 9Z" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+        `;
+
+        const PROJECT_ICON_DOWNLOAD = `
+            <svg viewBox="0 0 48 48" fill="none">
+                <path d="M24 9v21M17 23l7 7 7-7M13 37h22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
+
+        function renderMobileProjectFact(title, text, iconMarkup) {
+            return `
+                <div class="mobile-project-fact">
+                    <div class="mobile-project-fact-icon" aria-hidden="true">
+                        ${iconMarkup}
+                    </div>
+
+                    <div class="mobile-project-fact-copy">
+                        <h4><span class="mobile-project-dot" aria-hidden="true"></span>${escapeProjectHtml(title)}</h4>
+                        <p>${escapeProjectHtml(text)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProjectSlide(project, displayIndex) {
+            const number = String(displayIndex + 1).padStart(2, "0");
+
+            const title = escapeProjectHtml(project.title);
+            const subtitle = escapeProjectHtml(project.subtitle);
+            const status = escapeProjectHtml(project.status);
+            const downloadText = escapeProjectHtml(project.downloadText);
+            const desktopDownloadText = escapeProjectHtml(project.desktopDownloadText);
+
+            const downloadUrl = safeProjectDownloadUrl(project.downloadUrl);
+            const escapedDownloadUrl = escapeProjectHtml(downloadUrl);
+
+            const desktopDownload = project.showDesktopDownload
+                ? downloadUrl
+                    ? `
+                        <a
+                            class="project-link"
+                            href="${escapedDownloadUrl}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="${title} app download link"
+                        >
+                            App download link: ${desktopDownloadText}
+                        </a>
+                    `
+                    : `
+                        <a class="project-link" aria-label="${title} app download link">
+                            App download link: ${desktopDownloadText}
+                        </a>
+                    `
+                : "";
+
+            return `
+                <article class="project-card project-slide" data-project-slug="${escapeProjectHtml(project.slug)}">
+                    <div class="mobile-project-reference">
+                        <div class="mobile-project-hero">
+                            <img
+                                src="${escapeProjectHtml(project.heroImage)}"
+                                alt="${escapeProjectHtml(project.heroAlt)}">
+                        </div>
+
+                        <div class="mobile-project-heading">
+                            <button
+                                type="button"
+                                class="mobile-project-inline-next"
+                                data-mobile-project-next
+                                aria-label="Next project"
+                            >→</button>
+
+                            <p class="mobile-project-number">Project ${number}</p>
+                            <h3>${title}</h3>
+                            <span class="mobile-project-title-rule" aria-hidden="true"></span>
+                            <p class="mobile-project-tagline">${subtitle}</p>
+                        </div>
+
+                        <section class="mobile-project-facts" aria-label="${title} overview">
+                            ${renderMobileProjectFact("Overview", project.overview, PROJECT_ICON_OVERVIEW)}
+                            ${renderMobileProjectFact("What It Helps With", project.helps, PROJECT_ICON_HELPS)}
+                            ${renderMobileProjectFact("Why It Matters", project.matters, PROJECT_ICON_MATTERS)}
+                        </section>
+
+                        <section class="mobile-project-meta" aria-label="Project status and download">
+                            <div class="mobile-project-meta-item">
+                                <div class="mobile-project-meta-icon" aria-hidden="true">
+                                    ${PROJECT_ICON_STATUS}
+                                </div>
+                                <div>
+                                    <span class="mobile-project-meta-label">Status:</span>
+                                    <strong>${status}</strong>
+                                </div>
+                            </div>
+
+                            <div class="mobile-project-meta-item">
+                                <div class="mobile-project-meta-icon" aria-hidden="true">
+                                    ${PROJECT_ICON_DOWNLOAD}
+                                </div>
+                                <div>
+                                    <span class="mobile-project-meta-label">Download:</span>
+                                    <strong>${downloadText}</strong>
+                                </div>
+                            </div>
+                        </section>
+
+                        <footer class="mobile-project-footer">
+                            <span class="mobile-project-footer-line" aria-hidden="true"></span>
+                            <p>© 2026 EVANØESIS. All rights reserved.</p>
+                            <span class="mobile-project-footer-line" aria-hidden="true"></span>
+                        </footer>
+                    </div>
+
+                    <div class="project-meta-column" aria-hidden="true">
+                        <span>Project</span>
+                        <strong>${number}</strong>
+                    </div>
+
+                    <div class="project-copy-pane">
+                        <p class="project-stage">${status}</p>
+
+                        <h3>${title}</h3>
+
+                        <p class="project-subtitle">${subtitle}</p>
+
+                        <div class="project-ornament" aria-hidden="true"></div>
+
+                        <p class="body-text">
+                            ${escapeProjectHtml(project.desktopIntro)}
+                        </p>
+
+                        <p class="body-text project-extra">
+                            ${escapeProjectHtml(project.desktopExtra)}
+                        </p>
+
+                        <p class="project-status">
+                            Status: ${status}
+                        </p>
+
+                        ${desktopDownload}
+                    </div>
+
+                    <div class="project-visual-pane">
+                        <div class="project-preview-slider" aria-label="${escapeProjectHtml(project.previewAriaLabel)}">
+                            <img
+                                class="project-preview-image project-preview-base"
+                                src="${escapeProjectHtml(project.previewBaseImage)}"
+                                alt="${escapeProjectHtml(project.previewBaseAlt)}">
+
+                            <img
+                                class="project-preview-image project-preview-top"
+                                src="${escapeProjectHtml(project.previewTopImage)}"
+                                alt="${escapeProjectHtml(project.previewTopAlt)}">
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderProjects(projectsInput) {
+            const projects = normalizeProjectsData(projectsInput);
+
+            if (!projects.length) {
+                return "";
+            }
+
+            return `
+                <h2>Projects</h2>
+
+                <div class="project-slider" data-project-slider>
+                    <div class="project-slider-window" data-project-window>
+                        <div class="project-slider-track" data-project-track>
+                            ${projects.map(renderProjectSlide).join("")}
+                        </div>
+                    </div>
+
+                    <div class="project-slider-controls" aria-label="Project slider controls">
+                        <button type="button" class="project-arrow" data-project-prev aria-label="Previous project">←</button>
+                        <span class="project-counter" data-project-counter>1 / ${projects.length}</span>
+                        <button type="button" class="project-arrow" data-project-next aria-label="Next project">→</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        let projectsData = normalizeProjectsData(PROJECTS_FALLBACK_DATA);
+
         const content = {
             home: `
                 <h1 class="brand-title">EVANØESIS<span>TM</span></h1>
@@ -12,361 +369,7 @@
                 </p>
             `,
 
-            projects: `
-                <h2>Projects</h2>
-
-                <div class="project-slider" data-project-slider>
-                    <div class="project-slider-window" data-project-window>
-                        <div class="project-slider-track" data-project-track>
-
-                            <article class="project-card project-slide">
-                                <!-- MOBILE ONLY: Project 01 reference composition.
-                                     Existing desktop Project 01 markup remains below. -->
-                                <div class="mobile-project-reference">
-                                    <div class="mobile-project-hero">
-                                        <img
-                                            src="static/images/code-evryma-preview-2.png"
-                                            alt="Code Evryma field intelligence project preview">
-                                    </div>
-
-                                    <div class="mobile-project-heading">
-                                        <button
-                                            type="button"
-                                            class="mobile-project-inline-next"
-                                            data-mobile-project-next
-                                            aria-label="Next project"
-                                        >→</button>
-
-                                        <p class="mobile-project-number">Project 01</p>
-                                        <h3>Code Evryma</h3>
-                                        <span class="mobile-project-title-rule" aria-hidden="true"></span>
-                                        <p class="mobile-project-tagline">
-                                            Built for the field. Designed for discovery.
-                                        </p>
-                                    </div>
-
-                                    <section class="mobile-project-facts" aria-label="Code Evryma overview">
-                                        <div class="mobile-project-fact">
-                                            <div class="mobile-project-fact-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <rect x="11" y="11" width="11" height="11" stroke="currentColor" stroke-width="1.7"/>
-                                                    <rect x="15" y="15" width="3" height="3" fill="currentColor"/>
-                                                    <rect x="27" y="11" width="10" height="10" stroke="currentColor" stroke-width="1.7"/>
-                                                    <rect x="30" y="14" width="4" height="4" fill="currentColor"/>
-                                                    <rect x="11" y="27" width="11" height="10" stroke="currentColor" stroke-width="1.7"/>
-                                                    <rect x="15" y="30" width="3" height="4" fill="currentColor"/>
-                                                    <path d="M27 27h4v4h-4zM34 27h4v4h-4zM27 34h4v4h-4zM34 34h4" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-
-                                            <div class="mobile-project-fact-copy">
-                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Overview</h4>
-                                                <p>
-                                                    Code Evryma is an AI-powered field intelligence system that helps metal
-                                                    detectorists interpret signals, understand ground conditions, and capture
-                                                    real-time discovery data.
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div class="mobile-project-fact">
-                                            <div class="mobile-project-fact-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <circle cx="24" cy="24" r="12" stroke="currentColor" stroke-width="1.7"/>
-                                                    <circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="1.7"/>
-                                                    <path d="M24 5v10M24 33v10M5 24h10M33 24h10" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-
-                                            <div class="mobile-project-fact-copy">
-                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>What It Helps With</h4>
-                                                <p>
-                                                    Signal reading, target context, depth awareness, and ground behaviour —
-                                                    all delivered in real time through a connected set of smart tools.
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div class="mobile-project-fact">
-                                            <div class="mobile-project-fact-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <ellipse cx="24" cy="13" rx="12" ry="5" stroke="currentColor" stroke-width="1.7"/>
-                                                    <path d="M12 13v20c0 2.8 5.4 5 12 5s12-2.2 12-5V13" stroke="currentColor" stroke-width="1.7"/>
-                                                    <path d="M12 23c0 2.8 5.4 5 12 5s12-2.2 12-5M12 33c0 2.8 5.4 5 12 5s12-2.2 12-5" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-
-                                            <div class="mobile-project-fact-copy">
-                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Why It Matters</h4>
-                                                <p>
-                                                    Smarter decisions in the field. Less guesswork. Organised discovery data
-                                                    that builds knowledge, supports analysis, and elevates every hunt.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <section class="mobile-project-meta" aria-label="Project status and download">
-                                        <div class="mobile-project-meta-item">
-                                            <div class="mobile-project-meta-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <path d="m24 9 4.4 8.9 9.8 1.4-7.1 6.9 1.7 9.8L24 31.4 15.2 36l1.7-9.8-7.1-6.9 9.8-1.4L24 9Z" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <span class="mobile-project-meta-label">Status:</span>
-                                                <strong>Featured Project</strong>
-                                            </div>
-                                        </div>
-
-                                        <div class="mobile-project-meta-item">
-                                            <div class="mobile-project-meta-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <path d="M24 9v21M17 23l7 7 7-7M13 37h22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <span class="mobile-project-meta-label">Download:</span>
-                                                <strong>Coming Soon</strong>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <footer class="mobile-project-footer">
-                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
-                                        <p>© 2026 EVANØESIS. All rights reserved.</p>
-                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
-                                    </footer>
-                                </div>
-
-                                <div class="project-meta-column" aria-hidden="true">
-                                    <span>Project</span>
-                                    <strong>01</strong>
-                                </div>
-
-                                <div class="project-copy-pane">
-                                    <p class="project-stage">Featured Project</p>
-
-                                    <h3>Code Evryma</h3>
-
-                                    <p class="project-subtitle">
-                                        Built for the field. Designed for discovery.
-                                    </p>
-
-                                    <div class="project-ornament" aria-hidden="true"></div>
-
-                                    <p class="body-text">
-                                        Code Evryma brings AI-powered field intelligence to metal detecting —
-                                        helping users interpret detector signals, understand ground conditions,
-                                        and work with real-time field data through a powerful set of connected tools.
-                                    </p>
-
-                                    <p class="body-text project-extra">
-                                        The project is designed for people who need clearer decisions in the field:
-                                        signal reading, target context, depth awareness, ground behaviour, and organised
-                                        discovery data brought together into one practical digital experience.
-                                    </p>
-
-                                    <p class="project-status">
-                                        Status: Featured Project
-                                    </p>
-
-                                    <a class="project-link" aria-label="Code Evryma app download link">
-                                        App download link: Coming soon
-                                    </a>
-                                </div>
-
-                                <div class="project-visual-pane">
-                                    <div class="project-preview-slider" aria-label="Code Evryma project preview">
-                                        <img
-                                            class="project-preview-image project-preview-base"
-                                            src="static/images/code-evryma-preview-1.png"
-                                            alt="Code Evryma field intelligence preview, marble style">
-
-                                        <img
-                                            class="project-preview-image project-preview-top"
-                                            src="static/images/code-evryma-preview-2.png"
-                                            alt="Code Evryma field intelligence preview, blue sky style">
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="project-card project-slide">
-                                <!-- MOBILE ONLY: Project 02 uses the same reference composition as Project 01. -->
-                                <div class="mobile-project-reference">
-                                    <div class="mobile-project-hero">
-                                        <img
-                                            src="static/images/visual-pathway-preview-2.png"
-                                            alt="Visual Pathway Analysis biomedical project preview">
-                                    </div>
-
-                                    <div class="mobile-project-heading">
-                                        <button
-                                            type="button"
-                                            class="mobile-project-inline-next"
-                                            data-mobile-project-next
-                                            aria-label="Next project"
-                                        >→</button>
-
-                                        <p class="mobile-project-number">Project 02</p>
-                                        <h3>Visual Pathway Analysis</h3>
-                                        <span class="mobile-project-title-rule" aria-hidden="true"></span>
-                                        <p class="mobile-project-tagline">
-                                            Mapping the brain's visual system with precision and purpose.
-                                        </p>
-                                    </div>
-
-                                    <section class="mobile-project-facts" aria-label="Visual Pathway Analysis overview">
-                                        <div class="mobile-project-fact">
-                                            <div class="mobile-project-fact-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <rect x="11" y="11" width="11" height="11" stroke="currentColor" stroke-width="1.7"/>
-                                                    <rect x="15" y="15" width="3" height="3" fill="currentColor"/>
-                                                    <rect x="27" y="11" width="10" height="10" stroke="currentColor" stroke-width="1.7"/>
-                                                    <rect x="30" y="14" width="4" height="4" fill="currentColor"/>
-                                                    <rect x="11" y="27" width="11" height="10" stroke="currentColor" stroke-width="1.7"/>
-                                                    <rect x="15" y="30" width="3" height="4" fill="currentColor"/>
-                                                    <path d="M27 27h4v4h-4zM34 27h4v4h-4zM27 34h4v4h-4zM34 34h4" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-
-                                            <div class="mobile-project-fact-copy">
-                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Overview</h4>
-                                                <p>
-                                                    Visual Pathway Analysis is an AI-powered imaging platform that helps
-                                                    clinicians and researchers visualize and interpret the complex networks
-                                                    of the human visual system.
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div class="mobile-project-fact">
-                                            <div class="mobile-project-fact-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <circle cx="24" cy="24" r="12" stroke="currentColor" stroke-width="1.7"/>
-                                                    <circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="1.7"/>
-                                                    <path d="M24 5v10M24 33v10M5 24h10M33 24h10" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-
-                                            <div class="mobile-project-fact-copy">
-                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>What It Helps With</h4>
-                                                <p>
-                                                    Advanced tractography, anatomical modeling, and machine learning bring
-                                                    deeper insight into optic pathways for clinical and research work.
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div class="mobile-project-fact">
-                                            <div class="mobile-project-fact-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <ellipse cx="24" cy="13" rx="12" ry="5" stroke="currentColor" stroke-width="1.7"/>
-                                                    <path d="M12 13v20c0 2.8 5.4 5 12 5s12-2.2 12-5V13" stroke="currentColor" stroke-width="1.7"/>
-                                                    <path d="M12 23c0 2.8 5.4 5 12 5s12-2.2 12-5M12 33c0 2.8 5.4 5 12 5s12-2.2 12-5" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-
-                                            <div class="mobile-project-fact-copy">
-                                                <h4><span class="mobile-project-dot" aria-hidden="true"></span>Why It Matters</h4>
-                                                <p>
-                                                    Clearer pathway insight can support earlier diagnosis, better treatment
-                                                    planning, and deeper understanding of the human visual system.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <section class="mobile-project-meta" aria-label="Project status and download">
-                                        <div class="mobile-project-meta-item">
-                                            <div class="mobile-project-meta-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <path d="m24 9 4.4 8.9 9.8 1.4-7.1 6.9 1.7 9.8L24 31.4 15.2 36l1.7-9.8-7.1-6.9 9.8-1.4L24 9Z" stroke="currentColor" stroke-width="1.7"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <span class="mobile-project-meta-label">Status:</span>
-                                                <strong>In Development</strong>
-                                            </div>
-                                        </div>
-
-                                        <div class="mobile-project-meta-item">
-                                            <div class="mobile-project-meta-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 48 48" fill="none">
-                                                    <path d="M24 9v21M17 23l7 7 7-7M13 37h22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <span class="mobile-project-meta-label">Download:</span>
-                                                <strong>Coming Soon</strong>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <footer class="mobile-project-footer">
-                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
-                                        <p>© 2026 EVANØESIS. All rights reserved.</p>
-                                        <span class="mobile-project-footer-line" aria-hidden="true"></span>
-                                    </footer>
-                                </div>
-
-                                <div class="project-meta-column" aria-hidden="true">
-                                    <span>Project</span>
-                                    <strong>02</strong>
-                                </div>
-
-                                <div class="project-copy-pane">
-                                    <p class="project-stage">In Development</p>
-
-                                    <h3>Visual Pathway Analysis</h3>
-
-                                    <p class="project-subtitle">
-                                        Mapping the brain's visual system with precision and purpose.
-                                    </p>
-
-                                    <div class="project-ornament" aria-hidden="true"></div>
-
-                                    <p class="body-text">
-                                        Visual Pathway Analysis is an AI-powered imaging platform that helps clinicians
-                                        and researchers visualize and interpret the complex networks of the human visual system.
-                                    </p>
-
-                                    <p class="body-text project-extra">
-                                        By combining advanced tractography, anatomical modeling, and machine learning,
-                                        the project delivers deeper insight into optic pathways — supporting earlier diagnosis,
-                                        better treatment planning, and deeper understanding.
-                                    </p>
-
-                                    <p class="project-status">
-                                        Status: In Development
-                                    </p>
-                                </div>
-
-                                <div class="project-visual-pane">
-                                    <div class="project-preview-slider" aria-label="Visual pathway biomedical project preview">
-                                        <img
-                                            class="project-preview-image project-preview-base"
-                                            src="static/images/visual-pathway-preview-1.png"
-                                            alt="Biomedical visual nervous system preview, marble style">
-
-                                        <img
-                                            class="project-preview-image project-preview-top"
-                                            src="static/images/visual-pathway-preview-2.png"
-                                            alt="Biomedical visual nervous system preview, full colour style">
-                                    </div>
-                                </div>
-                            </article>
-
-                        </div>
-                    </div>
-
-                    <div class="project-slider-controls" aria-label="Project slider controls">
-                        <button type="button" class="project-arrow" data-project-prev aria-label="Previous project">←</button>
-                        <span class="project-counter" data-project-counter>1 / 2</span>
-                        <button type="button" class="project-arrow" data-project-next aria-label="Next project">→</button>
-                    </div>
-                </div>
-            `,
+            projects: renderProjects(projectsData),
 
             about: `
                 <!-- MOBILE ONLY: What We Do reference composition.
@@ -730,6 +733,39 @@
                 </div>
             `
         };
+
+        async function loadProjectsData() {
+            try {
+                const response = await fetch(
+                    "static/data/projects.json",
+                    {
+                        cache: "no-store",
+                        credentials: "same-origin"
+                    }
+                );
+
+                if (!response.ok) {
+                    return;
+                }
+
+                const payload = await response.json();
+                const loadedProjects = normalizeProjectsData(payload);
+
+                if (!loadedProjects.length) {
+                    return;
+                }
+
+                projectsData = loadedProjects;
+                content.projects = renderProjects(projectsData);
+            } catch {
+                /*
+                   If loading fails, the known-good fallback remains active.
+                   Do not blank or partially render the Projects page.
+                */
+            }
+        }
+
+        void loadProjectsData();
 
         const buttons = document.querySelectorAll("[data-content]");
         const contentInner = document.getElementById("content-inner");
