@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "slug": "code-evryma",
+      "published": true,
+      "order": 1,
+      "title": "Code Evryma",
+      "subtitle": "Built for the field. Designed for discovery.",
+      "status": "Featured Project",
+      "downloadText": "Coming Soon",
+      "downloadUrl": "",
+      "showDesktopDownload": true,
+      "desktopDownloadText": "Coming soon",
+      "heroImage": "static/images/code-evryma-preview-2.png",
+      "heroAlt": "Code Evryma field intelligence project preview",
+      "overview": "Code Evryma is an AI-powered field intelligence system that helps metal detectorists interpret signals, understand ground conditions, and capture real-time discovery data.",
+      "helps": "Signal reading, target context, depth awareness, and ground behaviour — all delivered in real time through a connected set of smart tools.",
+      "matters": "Smarter decisions in the field. Less guesswork. Organised discovery data that builds knowledge, supports analysis, and elevates every hunt.",
+      "desktopIntro": "Code Evryma brings AI-powered field intelligence to metal detecting ,helping users interpret detector signals, understand ground conditions, and work with real-time field data through a powerful set of connected tools.",
+      "desktopExtra": "The project is designed for people who need clearer decisions in the field: signal reading, target context, depth awareness, ground behaviour, and organised discovery data brought together into one practical digital experience.",
+      "previewAriaLabel": "Code Evryma project preview",
+      "previewBaseImage": "static/images/code-evryma-preview-1.png",
+      "previewBaseAlt": "Code Evryma field intelligence preview, marble style",
+      "previewTopImage": "static/images/code-evryma-preview-2.png",
+      "previewTopAlt": "Code Evryma field intelligence preview, blue sky style"
+    },
+    {
+      "slug": "visual-pathway-analysis",
+      "published": true,
+      "order": 2,
+      "title": "Visual Pathway Analysis",
+      "subtitle": "Mapping the brain's visual system with precision and purpose.",
+      "status": "In Development",
+      "downloadText": "Coming Soon",
+      "downloadUrl": "",
+      "showDesktopDownload": false,
+      "desktopDownloadText": "",
+      "heroImage": "static/images/visual-pathway-preview-2.png",
+      "heroAlt": "Visual Pathway Analysis biomedical project preview",
+      "overview": "Visual Pathway Analysis is an AI-powered imaging platform that helps clinicians and researchers visualize and interpret the complex networks of the human visual system.",
+      "helps": "Advanced tractography, anatomical modeling, and machine learning bring deeper insight into optic pathways for clinical and research work.",
+      "matters": "Clearer pathway insight can support earlier diagnosis, better treatment planning, and deeper understanding of the human visual system.",
+      "desktopIntro": "Visual Pathway Analysis is an AI-powered imaging platform that helps clinicians and researchers visualize and interpret the complex networks of the human visual system.",
+      "desktopExtra": "By combining advanced tractography, anatomical modeling, and machine learning, the project delivers deeper insight into optic pathways — supporting earlier diagnosis, better treatment planning, and deeper understanding.",
+      "previewAriaLabel": "Visual pathway biomedical project preview",
+      "previewBaseImage": "static/images/visual-pathway-preview-1.png",
+      "previewBaseAlt": "Biomedical visual nervous system preview, marble style",
+      "previewTopImage": "static/images/visual-pathway-preview-2.png",
+      "previewTopAlt": "Biomedical visual nervous system preview, full colour style"
+    }
+  ]
+}
