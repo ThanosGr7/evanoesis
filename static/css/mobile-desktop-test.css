@@ -3798,3 +3798,89 @@
         }
     }
 }
+
+/* =========================================================
+   MOBILE V52 — TWO TARGETED CHANGES ONLY
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+
+   1) HOME:
+      add the same "© 2026 EVANØESIS. All rights reserved."
+      footer language used on the Projects page.
+
+   2) CONTACT:
+      suppress edge overscroll / rubber-band bounce while
+      keeping native pinch zoom + zoomed one-finger panning.
+
+   No JS. No Projects. No What We Do. No header. No desktop.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       1. HOME — COPYRIGHT FOOTER
+       -----------------------------------------------------
+       Added as part of the existing Home composition so the
+       current Home layout and zoom/pan behavior are untouched.
+    */
+    body.is-home .mobile-home-reference::after {
+        content: "© 2026 EVANØESIS. All rights reserved." !important;
+
+        position: absolute !important;
+        z-index: 9 !important;
+
+        left: 5vw !important;
+        right: 5vw !important;
+        bottom: 1.15vw !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        min-height: 10px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-family: "Exo 2", sans-serif !important;
+        font-size: clamp(7.2px, 1.85vw, 9.2px) !important;
+        line-height: 1.2 !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.015em !important;
+        text-align: center !important;
+
+        color: rgba(23, 21, 20, 0.64) !important;
+        white-space: nowrap !important;
+
+        /*
+           Two quiet gold side rules, matching the Project footer
+           language without adding any new HTML.
+        */
+        background:
+            linear-gradient(
+                rgba(184, 135, 67, 0.72),
+                rgba(184, 135, 67, 0.72)
+            ) left center / calc(50% - 118px) 1px no-repeat,
+            linear-gradient(
+                rgba(184, 135, 67, 0.72),
+                rgba(184, 135, 67, 0.72)
+            ) right center / calc(50% - 118px) 1px no-repeat !important;
+
+        pointer-events: none !important;
+    }
+
+    /* -----------------------------------------------------
+       2. CONTACT — NO EDGE BOUNCE
+       -----------------------------------------------------
+       Keep overflow/touch-action exactly as they are so native
+       zoom and zoomed panning continue to work. Only the edge
+       overscroll behavior is changed.
+    */
+    html body.is-contact,
+    html body.is-contact .site-shell,
+    html body.is-contact .text-zone,
+    html body.is-contact #content-inner,
+    html body.is-contact .mobile-contact-reference,
+    html body.is-contact .mobile-contact-reference * {
+        overscroll-behavior: none !important;
+    }
+}
