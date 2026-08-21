@@ -3971,3 +3971,27 @@
         bottom: 0.55vw !important;
     }
 }
+
+/* =========================================================
+   MOBILE V54 — HOME ZOOMED PAN ONLY
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+   HOME TAB ONLY
+
+   This matches the working Projects touch chain:
+   browser owns touch + overscroll on every Home content layer.
+
+   NO layout, spacing, typography, footer, menu, JS, or other
+   page rules are changed.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    html body.is-home,
+    html body.is-home .site-shell,
+    html body.is-home .text-zone,
+    html body.is-home .mobile-home-reference,
+    html body.is-home .mobile-home-reference * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+}
