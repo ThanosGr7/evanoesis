@@ -3674,7 +3674,12 @@
        overscroll while retaining native browser pinch zoom.
     */
     body.is-home {
-        overflow-y: hidden !important;
+        /*
+           Keep the Home page scroll container available to the browser.
+           This is required for native one-finger panning after pinch zoom.
+           overscroll-behavior:none still suppresses the 1x edge bounce.
+        */
+        overflow-y: auto !important;
         overscroll-behavior: none !important;
     }
 
