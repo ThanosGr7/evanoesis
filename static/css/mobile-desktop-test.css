@@ -3645,3 +3645,151 @@
         display: none !important;
     }
 }
+
+/* =========================================================
+   MOBILE V50 — THREE TARGETED FIXES
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+
+   1) HOME ONLY:
+      remove the small 1x vertical bounce/overscroll that was
+      briefly exposing the bottom motto.
+
+   2) PROJECTS ONLY:
+      browser-native pinch zoom + one-finger panning works from
+      every part of the project page in X and Y.
+
+   3) PROJECTS ONLY:
+      remove the detached bottom 1/2 controls and use one small
+      right-arrow beside each project heading instead.
+
+   Desktop / What We Do / Contact are untouched.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       1. HOME — NO 1x BOUNCE
+       -----------------------------------------------------
+       Home is a single designed composition. Prevent layout-level
+       overscroll while retaining native browser pinch zoom.
+    */
+    body.is-home {
+        overflow-y: hidden !important;
+        overscroll-behavior: none !important;
+    }
+
+    body.is-home .site-shell,
+    body.is-home .text-zone,
+    body.is-home .mobile-home-reference {
+        overscroll-behavior: none !important;
+    }
+
+    /* -----------------------------------------------------
+       2. PROJECTS — NATIVE ZOOM/PAN EVERYWHERE
+       -----------------------------------------------------
+       Older Project rules used "pan-y pinch-zoom", which explicitly
+       prevented horizontal browser panning. The final rule below
+       gives the entire Projects ancestor/descendant chain back to
+       the browser.
+
+       Project swipe is now detected passively in site.js at 1x,
+       so no touchmove prevention is needed.
+    */
+    html body.is-projects,
+    html body.is-projects .site-shell,
+    html body.is-projects .text-zone,
+    html body.is-projects #content-inner,
+    html body.is-projects .project-slider,
+    html body.is-projects .project-slider-window,
+    html body.is-projects .project-slider-track,
+    html body.is-projects .project-slide,
+    html body.is-projects .project-card,
+    html body.is-projects .mobile-project-reference,
+    html body.is-projects .mobile-project-reference *,
+    html body.is-projects .project-slider-controls,
+    html body.is-projects .project-slider-controls * {
+        touch-action: auto !important;
+        overscroll-behavior: auto !important;
+    }
+
+    /* -----------------------------------------------------
+       3. PROJECTS — INLINE MINIMAL NEXT ARROW
+       ----------------------------------------------------- */
+    body.is-projects .project-slider-controls {
+        display: none !important;
+    }
+
+    body.is-projects .mobile-project-heading {
+        position: relative !important;
+
+        /*
+           Reserve just enough room for the arrow without changing
+           the existing title / subtitle sizing.
+        */
+        padding-right: clamp(34px, 9vw, 43px) !important;
+    }
+
+    body.is-projects .mobile-project-inline-next {
+        position: absolute !important;
+
+        right: 0 !important;
+        top: clamp(13px, 3.3vw, 16px) !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        width: 30px !important;
+        height: 30px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        appearance: none !important;
+        -webkit-appearance: none !important;
+
+        font-family: Arial, sans-serif !important;
+        font-size: 20px !important;
+        line-height: 1 !important;
+        font-weight: 400 !important;
+        letter-spacing: 0 !important;
+
+        color: #171514 !important;
+        background: transparent !important;
+
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+
+        opacity: 0.72 !important;
+        transform: none !important;
+        filter: none !important;
+        text-shadow: none !important;
+
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    body.is-projects .mobile-project-inline-next:active {
+        opacity: 1 !important;
+        transform: translateX(1px) !important;
+    }
+
+    /*
+       The arrow can also be the starting point for a pinch/pan gesture.
+    */
+    html body.is-projects .mobile-project-inline-next {
+        touch-action: auto !important;
+    }
+
+    @media (max-width: 370px) {
+        body.is-projects .mobile-project-heading {
+            padding-right: 32px !important;
+        }
+
+        body.is-projects .mobile-project-inline-next {
+            width: 27px !important;
+            height: 27px !important;
+            font-size: 18px !important;
+        }
+    }
+}

@@ -30,6 +30,13 @@
                                     </div>
 
                                     <div class="mobile-project-heading">
+                                        <button
+                                            type="button"
+                                            class="mobile-project-inline-next"
+                                            data-mobile-project-next
+                                            aria-label="Next project"
+                                        >→</button>
+
                                         <p class="mobile-project-number">Project 01</p>
                                         <h3>Code Evryma</h3>
                                         <span class="mobile-project-title-rule" aria-hidden="true"></span>
@@ -194,6 +201,13 @@
                                     </div>
 
                                     <div class="mobile-project-heading">
+                                        <button
+                                            type="button"
+                                            class="mobile-project-inline-next"
+                                            data-mobile-project-next
+                                            aria-label="Next project"
+                                        >→</button>
+
                                         <p class="mobile-project-number">Project 02</p>
                                         <h3>Visual Pathway Analysis</h3>
                                         <span class="mobile-project-title-rule" aria-hidden="true"></span>
@@ -1183,175 +1197,157 @@
             nextButton.addEventListener("click", moveToNext);
 
             /*
-               MOBILE PROJECT SWIPE
+               MOBILE PROJECT SWIPE — NATIVE-TOUCH VERSION
                -------------------------------------------------
-               At 1x only:
-               - swipe right-to-left -> next project
-               - swipe left-to-right -> previous project
-
-               During pinch zoom, or whenever the page is already zoomed,
-               this code stands down completely so the browser keeps native
-               pinch zoom + one-finger panning.
+               IMPORTANT:
+               - touchmove is NEVER prevented;
+               - the browser owns pinch zoom and zoomed-page panning;
+               - at normal 1x only, a finished horizontal swipe
+                 changes projects;
+               - vertical movement remains normal scrolling.
             */
             function mobileProjectZoomScale() {
-                if (!window.visualViewport) {
+                const viewport = window.visualViewport;
+
+                if (!viewport) {
                     return 1;
                 }
 
-                const scale = window.visualViewport.scale;
+                const reported =
+                    Number.isFinite(viewport.scale) && viewport.scale > 0
+                        ? viewport.scale
+                        : 1;
 
-                return Number.isFinite(scale) && scale > 0
-                    ? scale
-                    : 1;
+                const layoutWidth =
+                    document.documentElement.clientWidth ||
+                    window.innerWidth ||
+                    1;
+
+                const derived =
+                    viewport.width > 0
+                        ? layoutWidth / viewport.width
+                        : 1;
+
+                return Math.max(reported, derived);
             }
 
             function mobileProjectIsZoomed() {
                 return mobileProjectZoomScale() > 1.01;
             }
 
-            function cancelMobileProjectSwipe() {
-                slider.classList.remove("is-dragging");
-                isTouching = false;
-                gestureMode = null;
-                currentX = startX;
+            let mobileSwipeTracking = false;
+            let mobileSwipeStartX = 0;
+            let mobileSwipeStartY = 0;
 
-                track.style.transition = "transform 220ms ease";
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }
-
-            slider.addEventListener("touchstart", (event) => {
-                if (
-                    !isMobileViewport() ||
-                    event.touches.length !== 1 ||
-                    mobileProjectIsZoomed() ||
-                    event.target.closest(".project-slider-controls")
-                ) {
-                    return;
-                }
-
-                beginTouch(
-                    event.touches[0].clientX,
-                    event.touches[0].clientY
-                );
-            }, { passive: true });
-
-            slider.addEventListener("touchmove", (event) => {
-                if (!isMobileViewport()) {
-                    return;
-                }
-
-                /*
-                   Two fingers = pinch gesture.
-                   Zoomed viewport = browser panning.
-                   Never preventDefault in either case.
-                */
-                if (
-                    event.touches.length !== 1 ||
-                    mobileProjectIsZoomed()
-                ) {
-                    if (isTouching) {
-                        cancelMobileProjectSwipe();
+            slider.addEventListener(
+                "touchstart",
+                (event) => {
+                    if (
+                        !isMobileViewport() ||
+                        event.touches.length !== 1 ||
+                        mobileProjectIsZoomed() ||
+                        event.target.closest(
+                            ".project-slider-controls, .mobile-project-inline-next"
+                        )
+                    ) {
+                        mobileSwipeTracking = false;
+                        return;
                     }
 
-                    return;
-                }
+                    mobileSwipeTracking = true;
+                    mobileSwipeStartX = event.touches[0].clientX;
+                    mobileSwipeStartY = event.touches[0].clientY;
+                },
+                { passive: true }
+            );
 
-                if (
-                    !isTouching ||
-                    event.target.closest(".project-slider-controls")
-                ) {
-                    return;
-                }
-
-                const clientX = event.touches[0].clientX;
-                const clientY = event.touches[0].clientY;
-
-                const dragX = clientX - startX;
-                const dragY = clientY - startY;
-
-                if (!gestureMode) {
+            /*
+               This listener only cancels our OWN swipe tracking when
+               pinch/zoom begins. It never calls preventDefault().
+            */
+            slider.addEventListener(
+                "touchmove",
+                (event) => {
                     if (
-                        Math.abs(dragX) < directionThreshold &&
-                        Math.abs(dragY) < directionThreshold
+                        !mobileSwipeTracking ||
+                        event.touches.length !== 1 ||
+                        mobileProjectIsZoomed()
+                    ) {
+                        mobileSwipeTracking = false;
+                    }
+                },
+                { passive: true }
+            );
+
+            slider.addEventListener(
+                "touchend",
+                (event) => {
+                    if (
+                        !mobileSwipeTracking ||
+                        !isMobileViewport() ||
+                        mobileProjectIsZoomed() ||
+                        event.touches.length !== 0 ||
+                        !event.changedTouches.length
+                    ) {
+                        mobileSwipeTracking = false;
+                        return;
+                    }
+
+                    const endX = event.changedTouches[0].clientX;
+                    const endY = event.changedTouches[0].clientY;
+
+                    const dx = endX - mobileSwipeStartX;
+                    const dy = endY - mobileSwipeStartY;
+
+                    mobileSwipeTracking = false;
+
+                    /*
+                       Require a clearly horizontal gesture.
+                       No live dragging/translation is done, so the
+                       browser remains free to pan whenever zoomed.
+                    */
+                    if (
+                        Math.abs(dx) < 58 ||
+                        Math.abs(dx) <= Math.abs(dy) * 1.25
                     ) {
                         return;
                     }
 
-                    gestureMode =
-                        Math.abs(dragX) > Math.abs(dragY)
-                            ? "horizontal"
-                            : "vertical";
-                }
-
-                /*
-                   Vertical movement remains native page scrolling.
-                   Only a clearly-horizontal gesture is intercepted.
-                */
-                if (gestureMode !== "horizontal") {
-                    isTouching = false;
-                    return;
-                }
-
-                event.preventDefault();
-
-                currentX = clientX;
-                slider.classList.add("is-dragging");
-
-                track.style.transition = "none";
-                track.style.transform =
-                    `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`;
-            }, { passive: false });
-
-            slider.addEventListener("touchend", (event) => {
-                if (
-                    !isMobileViewport() ||
-                    mobileProjectIsZoomed() ||
-                    !isTouching
-                ) {
-                    return;
-                }
-
-                const dragDistance = currentX - startX;
-
-                slider.classList.remove("is-dragging");
-                isTouching = false;
-
-                if (gestureMode !== "horizontal") {
-                    gestureMode = null;
-                    updateSlider();
-                    return;
-                }
-
-                gestureMode = null;
-
-                if (dragDistance <= -swipeThreshold) {
-                    moveToNext();
+                    if (dx < 0) {
+                        moveToNext();
+                    } else {
+                        moveToPrevious();
+                    }
 
                     if (textZone) {
                         textZone.scrollTop = 0;
                     }
+                },
+                { passive: true }
+            );
 
-                    return;
-                }
+            slider.addEventListener(
+                "touchcancel",
+                () => {
+                    mobileSwipeTracking = false;
+                },
+                { passive: true }
+            );
 
-                if (dragDistance >= swipeThreshold) {
-                    moveToPrevious();
+            /*
+               Small inline arrow in each mobile project header.
+               Project 02 wraps back to Project 01.
+            */
+            slider.querySelectorAll("[data-mobile-project-next]")
+                .forEach((button) => {
+                    button.addEventListener("click", () => {
+                        moveToNext();
 
-                    if (textZone) {
-                        textZone.scrollTop = 0;
-                    }
-
-                    return;
-                }
-
-                updateSlider();
-            }, { passive: true });
-
-            slider.addEventListener("touchcancel", () => {
-                if (isTouching) {
-                    cancelMobileProjectSwipe();
-                }
-            }, { passive: true });
+                        if (textZone) {
+                            textZone.scrollTop = 0;
+                        }
+                    });
+                });
 
 
             slider.addEventListener("mousedown", (event) => {
