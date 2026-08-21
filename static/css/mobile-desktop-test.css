@@ -3884,3 +3884,90 @@
         overscroll-behavior: none !important;
     }
 }
+
+/* =========================================================
+   MOBILE V53 — HOME ONLY
+   ---------------------------------------------------------
+   PHONE ONLY (<= 520px)
+
+   1) Restore smooth native zoomed one-finger navigation on Home.
+      The Home body is no longer used as a fixed nested scroller;
+      the browser/visual viewport owns zoom + panning, as it does
+      on the other working mobile tabs.
+
+   2) Use the available phone height for the Home composition and
+      anchor the quote, motto, and copyright closer to the bottom.
+
+   NOTHING outside body.is-home is changed.
+   ========================================================= */
+@media (max-width: 520px) {
+
+    /* -----------------------------------------------------
+       HOME — NATIVE ZOOM/PAN
+       -----------------------------------------------------
+       Remove the Home-only fixed body / clipped horizontal axis.
+       This avoids fighting the browser's visual viewport after
+       pinch zoom.
+    */
+    body.is-home {
+        position: relative !important;
+        inset: auto !important;
+
+        width: 100% !important;
+        height: auto !important;
+        min-height: var(--app-height) !important;
+
+        overflow: visible !important;
+
+        touch-action: auto !important;
+        overscroll-behavior: none !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    body.is-home .site-shell,
+    body.is-home .text-zone,
+    body.is-home .mobile-home-reference,
+    body.is-home .mobile-home-reference * {
+        touch-action: auto !important;
+    }
+
+    /*
+       Keep Home as a normal document composition instead of a
+       nested scroll surface. This leaves browser zoomed panning
+       completely native in X and Y.
+    */
+    body.is-home .site-shell,
+    body.is-home .text-zone {
+        overflow: visible !important;
+    }
+
+    /* -----------------------------------------------------
+       HOME — USE THE FULL PHONE HEIGHT
+       -----------------------------------------------------
+       177.78vw preserves the original 9:16 minimum composition.
+       Taller phones use the actual app height instead of leaving
+       unused blank space below the designed content.
+    */
+    body.is-home .mobile-home-reference {
+        height: max(177.78vw, var(--app-height)) !important;
+        min-height: max(177.78vw, var(--app-height)) !important;
+    }
+
+    /* -----------------------------------------------------
+       HOME — LOWER QUOTE / MOTTO / COPYRIGHT
+       ----------------------------------------------------- */
+    body.is-home .mobile-home-quote-card {
+        top: auto !important;
+        bottom: 11.2vw !important;
+    }
+
+    body.is-home .mobile-home-motto {
+        top: auto !important;
+        bottom: 4.8vw !important;
+    }
+
+    body.is-home .mobile-home-reference::after {
+        top: auto !important;
+        bottom: 0.55vw !important;
+    }
+}
