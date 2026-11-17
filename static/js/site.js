@@ -318,13 +318,13 @@
                             ${escapeProjectHtml(project.desktopExtra)}
                         </p>
 
-                        ${projectLegalLinks}
-
                         <p class="project-status">
                             Status: ${status}
                         </p>
 
                         ${desktopDownload}
+
+                        ${projectLegalLinks}
                     </div>
 
                     <div class="project-visual-pane">
