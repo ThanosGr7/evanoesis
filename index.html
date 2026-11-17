@@ -17,6 +17,48 @@
 
     <link rel="stylesheet" href="static/css/style.css?v=20260818-responsive-layout-v1">
     <link rel="stylesheet" href="static/css/mobile-desktop-test.css?v=20260821-mobile-v55">
+
+    <style id="evanoesis-project-legal-links-v1">
+        .project-legal-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px 7px;
+            margin: 8px 0 0;
+            font-family: "Exo 2", sans-serif;
+            font-size: 8px;
+            line-height: 1.35;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: rgba(23, 21, 20, 0.42);
+        }
+        .project-legal-links a {
+            color: rgba(23, 21, 20, 0.58);
+            text-decoration: none;
+            text-underline-offset: 3px;
+            white-space: nowrap;
+        }
+        .project-legal-links a:hover,
+        .project-legal-links a:focus-visible {
+            color: #8c642f;
+            text-decoration: underline;
+        }
+        @media (min-width: 521px) {
+            .project-copy-pane > .project-legal-links {
+                margin-left: 14px;
+            }
+        }
+        @media (max-width: 520px) {
+            body.is-projects .mobile-project-reference > .project-legal-links {
+                justify-content: center !important;
+                margin: 8px 5vw 14px !important;
+                padding: 0 !important;
+                font-size: clamp(8px, 2.05vw, 9.2px) !important;
+                letter-spacing: 0.025em !important;
+            }
+        }
+    </style>
+
 </head>
 
 <body class="is-home">
@@ -247,7 +289,7 @@
         </p>
     </footer>
 
-    <script src="static/js/site.js?v=20260821-project-data-v1"></script>
+    <script src="static/js/site.js?v=20261117-legal-links-v1"></script>
     <script src="static/js/mobile-history.js?v=20260821-mobile-v1"></script>
     <script src="static/js/mobile-menu.js?v=20260821-mobile-v1"></script>
 

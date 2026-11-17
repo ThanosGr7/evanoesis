@@ -223,6 +223,19 @@
                     `
                 : "";
 
+            const projectLegalLinks =
+                project.slug === "code-evryma"
+                    ? `
+                        <nav class="project-legal-links" aria-label="Code Evryma legal information">
+                            <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                            <span aria-hidden="true">·</span>
+                            <a href="/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                            <span aria-hidden="true">·</span>
+                            <a href="/purchase-terms" target="_blank" rel="noopener noreferrer">Purchase Terms</a>
+                        </nav>
+                    `
+                    : "";
+
             return `
                 <article class="project-card project-slide" data-project-slug="${escapeProjectHtml(project.slug)}">
                     <div class="mobile-project-reference">
@@ -274,6 +287,8 @@
                             </div>
                         </section>
 
+                        ${projectLegalLinks}
+
                         <footer class="mobile-project-footer">
                             <span class="mobile-project-footer-line" aria-hidden="true"></span>
                             <p>© 2026 EVANØESIS. All rights reserved.</p>
@@ -302,6 +317,8 @@
                         <p class="body-text project-extra">
                             ${escapeProjectHtml(project.desktopExtra)}
                         </p>
+
+                        ${projectLegalLinks}
 
                         <p class="project-status">
                             Status: ${status}
@@ -1283,7 +1300,7 @@
                         event.touches.length !== 1 ||
                         mobileProjectIsZoomed() ||
                         event.target.closest(
-                            ".project-slider-controls, .mobile-project-inline-next"
+                            ".project-slider-controls, .mobile-project-inline-next, .project-legal-links"
                         )
                     ) {
                         mobileSwipeTracking = false;
@@ -1387,7 +1404,7 @@
 
 
             slider.addEventListener("mousedown", (event) => {
-                if (event.target.closest(".project-slider-controls")) {
+                if (event.target.closest(".project-slider-controls, .project-legal-links")) {
                     return;
                 }
 
