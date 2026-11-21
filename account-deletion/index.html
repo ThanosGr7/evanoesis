@@ -260,6 +260,64 @@
   outline:none;
 }
 
+/* CODE EVRYMA account-deletion UX compact overrides v3 */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+.confirm {
+  font-size: 14px;
+}
+
+.confirm input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+#delete-account-btn {
+  font-size: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+  font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 17px;
+  }
+}
 </style>
 </head>
 <body>
@@ -280,7 +338,7 @@
       <h2>Delete from the website</h2>
       <p>Enter the same Code Evryma username and password you use in the app.</p>
 
-      <form id="delete-account-form" novalidate autocomplete="off">
+      <form id="delete-account-form" novalidate autocomplete="off" onsubmit="return false;">
         <div class="field">
           <label for="delete-username">Username</label>
           <input
@@ -316,7 +374,7 @@
           <span>I understand this permanently deletes my Code Evryma account and associated data and cannot be undone.</span>
         </label>
 
-        <button id="delete-account-btn" type="submit">
+        <button id="delete-account-btn" type="submit" disabled aria-disabled="true">
           Delete My Account Permanently
         </button>
       </form>
@@ -343,211 +401,311 @@
       </div>
     </article>
   </main>
-<script type="module" id="code-evryma-account-deletion-firebase-v1">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-import {
-  initializeAppCheck,
-  ReCaptchaEnterpriseProvider,
-  getToken as getAppCheckToken
-} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app-check.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-import {
-  getFunctions,
-  httpsCallable
-} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-functions.js";
+<script id="code-evryma-delete-guard-v2">
+(() => {
+  const form = document.getElementById("delete-account-form");
+  const confirmInput = document.getElementById("delete-confirm");
+  const submitButton = document.getElementById("delete-account-btn");
+  const statusBox = document.getElementById("delete-status");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB0GFKFX6a6WWO-fzfWKQj_X6fSRqKNj7g",
-  authDomain: "midasx-7f3e7.firebaseapp.com",
-  projectId: "midasx-7f3e7",
-  storageBucket: "midasx-7f3e7.firebasestorage.app",
-  messagingSenderId: "616869522270",
-  appId: "1:616869522270:web:8d53cdcb7edbbc02c17dcf"
-};
+  window.__codeEvrymaDeletionReady = false;
 
-const APP_CHECK_SITE_KEY = "6LdEhisuAAAAABPlvzExVft5j7F_n3uF_FmyPKvU";
-const NICKNAME_AUTH_DOMAIN = "midasx.local";
+  function setStatus(message, type = "info") {
+    statusBox.textContent = message;
+    statusBox.dataset.status = type;
+    statusBox.hidden = false;
+  }
 
-const form = document.getElementById("delete-account-form");
-const usernameInput = document.getElementById("delete-username");
-const passwordInput = document.getElementById("delete-password");
-const confirmInput = document.getElementById("delete-confirm");
-const submitButton = document.getElementById("delete-account-btn");
-const statusBox = document.getElementById("delete-status");
+  function clearStatus() {
+    statusBox.textContent = "";
+    statusBox.dataset.status = "";
+    statusBox.hidden = true;
+  }
 
-function normalizeNickname(value) {
-  return String(value || "").trim().toLowerCase();
-}
+  function updateButton() {
+    const enabled =
+      window.__codeEvrymaDeletionReady === true &&
+      confirmInput.checked === true;
 
-function isValidNickname(value) {
-  return /^[a-z0-9_]{3,20}$/.test(normalizeNickname(value));
-}
+    submitButton.disabled = !enabled;
+    submitButton.setAttribute("aria-disabled", String(!enabled));
+  }
 
-function authEmailForNickname(value) {
-  return normalizeNickname(value) + "@" + NICKNAME_AUTH_DOMAIN;
-}
+  window.__codeEvrymaSetDeletionReady = (ready) => {
+    window.__codeEvrymaDeletionReady = ready === true;
+    updateButton();
 
-function setStatus(message, type = "info") {
-  statusBox.textContent = message;
-  statusBox.dataset.status = type;
-  statusBox.hidden = false;
-}
+    if (ready) {
+      clearStatus();
+    }
+  };
 
-function clearStatus() {
-  statusBox.textContent = "";
-  statusBox.dataset.status = "";
-  statusBox.hidden = true;
-}
+  window.__codeEvrymaGuardStatus = setStatus;
+  window.__codeEvrymaGuardUpdateButton = updateButton;
 
-function setBusy(busy) {
-  submitButton.disabled = busy;
-  usernameInput.disabled = busy;
-  passwordInput.disabled = busy;
-  confirmInput.disabled = busy;
-  submitButton.textContent = busy
-    ? "Deleting account…"
-    : "Delete My Account Permanently";
-}
+  confirmInput.addEventListener("change", updateButton);
 
-let app;
-let appCheck;
-let auth;
-let functions;
+  form.addEventListener("submit", (event) => {
+    if (window.__codeEvrymaDeletionReady !== true) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setStatus(
+        "Secure account deletion is still loading. No account action was taken.",
+        "error"
+      );
+      return;
+    }
 
-try {
-  app = initializeApp(firebaseConfig);
+    if (!confirmInput.checked) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setStatus(
+        "Please tick the confirmation box before account deletion can be enabled.",
+        "error"
+      );
+      updateButton();
+    }
+  }, true);
 
-  // App Check is initialized before Auth/Functions so protected Firebase
-  // requests can carry a valid App Check token.
-  appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider(APP_CHECK_SITE_KEY),
-    isTokenAutoRefreshEnabled: true
-  });
-
-  auth = getAuth(app);
-  functions = getFunctions(app, "europe-west1");
-} catch (error) {
-  console.error("Code Evryma Firebase initialization error:", error);
-  setStatus(
-    "Account deletion service could not initialize. Please try again or contact contact@evanoesis.com.",
-    "error"
-  );
   submitButton.disabled = true;
-}
+  submitButton.setAttribute("aria-disabled", "true");
+  setStatus("Loading secure account deletion…", "info");
+})();
+</script>
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  clearStatus();
+<script type="module" id="code-evryma-account-deletion-firebase-v2">
+(async () => {
+  const form = document.getElementById("delete-account-form");
+  const usernameInput = document.getElementById("delete-username");
+  const passwordInput = document.getElementById("delete-password");
+  const confirmInput = document.getElementById("delete-confirm");
+  const submitButton = document.getElementById("delete-account-btn");
+  const statusBox = document.getElementById("delete-status");
 
-  const nickname = normalizeNickname(usernameInput.value);
-  const password = String(passwordInput.value || "");
-
-  if (
-    location.hostname === "localhost" ||
-    location.hostname === "127.0.0.1"
-  ) {
-    setStatus(
-      "For security, real account deletion is disabled on localhost. Use the production account-deletion page.",
-      "error"
-    );
-    return;
+  function setStatus(message, type = "info") {
+    if (window.__codeEvrymaGuardStatus) {
+      window.__codeEvrymaGuardStatus(message, type);
+      return;
+    }
+    statusBox.textContent = message;
+    statusBox.dataset.status = type;
+    statusBox.hidden = false;
   }
 
-  if (!isValidNickname(nickname)) {
-    setStatus(
-      "Username must be 3–20 characters using only lowercase letters, numbers, and underscore.",
-      "error"
-    );
-    usernameInput.focus();
-    return;
+  function clearStatus() {
+    statusBox.textContent = "";
+    statusBox.dataset.status = "";
+    statusBox.hidden = true;
   }
 
-  if (!password) {
-    setStatus("Please enter your password.", "error");
-    passwordInput.focus();
-    return;
+  function normalizeNickname(value) {
+    return String(value || "").trim().toLowerCase();
   }
 
-  if (!confirmInput.checked) {
-    setStatus(
-      "Please confirm that you understand the deletion is permanent.",
-      "error"
-    );
-    return;
+  function isValidNickname(value) {
+    return /^[a-z0-9_]{3,20}$/.test(normalizeNickname(value));
   }
 
-  setBusy(true);
+  function authEmailForNickname(value) {
+    return normalizeNickname(value) + "@midasx.local";
+  }
+
+  function setBusy(busy) {
+    usernameInput.disabled = busy;
+    passwordInput.disabled = busy;
+    confirmInput.disabled = busy;
+
+    if (busy) {
+      submitButton.disabled = true;
+      submitButton.setAttribute("aria-disabled", "true");
+      submitButton.textContent = "Deleting account…";
+    } else {
+      submitButton.textContent = "Delete My Account Permanently";
+      if (window.__codeEvrymaGuardUpdateButton) {
+        window.__codeEvrymaGuardUpdateButton();
+      }
+    }
+  }
 
   try {
-    // Force an App Check attestation before protected Firebase calls.
-    await getAppCheckToken(appCheck, true);
+    const appMod = await import("https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js");
+    const appCheckMod = await import("https://www.gstatic.com/firebasejs/13.4.0/firebase-app-check.js");
+    const authMod = await import("https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js");
+    const functionsMod = await import("https://www.gstatic.com/firebasejs/13.4.0/firebase-functions.js");
 
-    await signInWithEmailAndPassword(
-      auth,
-      authEmailForNickname(nickname),
-      password
-    );
+    const firebaseConfig = {
+      apiKey: "AIzaSyB0GFKFX6a6WWO-fzfWKQj_X6fSRqKNj7g",
+      authDomain: "midasx-7f3e7.firebaseapp.com",
+      projectId: "midasx-7f3e7",
+      storageBucket: "midasx-7f3e7.firebasestorage.app",
+      messagingSenderId: "616869522270",
+      appId: "1:616869522270:web:8d53cdcb7edbbc02c17dcf"
+    };
 
-    const deleteMyAccountAndData = httpsCallable(
-      functions,
-      "deleteMyAccountAndData"
-    );
+    const app = appMod.initializeApp(firebaseConfig);
 
-    await deleteMyAccountAndData({});
+    const appCheck = appCheckMod.initializeAppCheck(app, {
+      provider: new appCheckMod.ReCaptchaEnterpriseProvider("6LdEhisuAAAAABPlvzExVft5j7F_n3uF_FmyPKvU"),
+      isTokenAutoRefreshEnabled: true
+    });
 
-    try {
-      await signOut(auth);
-    } catch (_) {}
+    const auth = authMod.getAuth(app);
+    const functions = functionsMod.getFunctions(app, "europe-west1");
 
-    passwordInput.value = "";
-    usernameInput.value = "";
-    confirmInput.checked = false;
-    form.hidden = true;
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearStatus();
+
+      const nickname = normalizeNickname(usernameInput.value);
+      const password = String(passwordInput.value || "");
+
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        setStatus(
+          "Real account deletion is disabled on localhost. No account action was taken.",
+          "error"
+        );
+        return;
+      }
+
+      if (!isValidNickname(nickname)) {
+        setStatus(
+          "Username must be 3–20 characters using only lowercase letters, numbers, and underscore.",
+          "error"
+        );
+        usernameInput.focus();
+        return;
+      }
+
+      if (!password) {
+        setStatus("Please enter your password.", "error");
+        passwordInput.focus();
+        return;
+      }
+
+      if (!confirmInput.checked) {
+        setStatus(
+          "Please tick the confirmation box before account deletion can be enabled.",
+          "error"
+        );
+        return;
+      }
+
+      setBusy(true);
+      setStatus("Verifying account credentials…", "info");
+
+      let signedIn = false;
+
+      try {
+        await appCheckMod.getToken(appCheck, true);
+
+        await authMod.signInWithEmailAndPassword(
+          auth,
+          authEmailForNickname(nickname),
+          password
+        );
+        signedIn = true;
+
+        setStatus(
+          "Credentials verified. Permanently deleting the account and associated data…",
+          "info"
+        );
+
+        const deleteMyAccountAndData = functionsMod.httpsCallable(
+          functions,
+          "deleteMyAccountAndData"
+        );
+
+        await deleteMyAccountAndData({});
+
+        try {
+          await authMod.signOut(auth);
+        } catch (_) {}
+
+        signedIn = false;
+        passwordInput.value = "";
+        usernameInput.value = "";
+        confirmInput.checked = false;
+        form.hidden = true;
+
+        setStatus(
+          "Your Code Evryma account has been deleted successfully.",
+          "success"
+        );
+      } catch (error) {
+        if (signedIn) {
+          try {
+            await authMod.signOut(auth);
+          } catch (_) {}
+        }
+
+        console.error("Code Evryma deletion error:", error);
+
+        const code = String(
+          error && error.code ? error.code : ""
+        ).toLowerCase();
+
+        if (
+          code.includes("invalid-credential") ||
+          code.includes("wrong-password") ||
+          code.includes("user-not-found")
+        ) {
+          setStatus(
+            "Username or password is incorrect. No account was deleted.",
+            "error"
+          );
+        } else if (code.includes("user-disabled")) {
+          setStatus(
+            "This account is disabled. No account was deleted. Please contact contact@evanoesis.com.",
+            "error"
+          );
+        } else if (code.includes("too-many-requests")) {
+          setStatus(
+            "Too many attempts. No account was deleted. Please try again later.",
+            "error"
+          );
+        } else if (
+          code.includes("app-check") ||
+          code.includes("appcheck") ||
+          code.includes("recaptcha")
+        ) {
+          setStatus(
+            "Security verification failed. No account was deleted. Reload the page and try again.",
+            "error"
+          );
+        } else {
+          setStatus(
+            "We could not complete the account deletion. No account was confirmed deleted. Please try again or contact contact@evanoesis.com.",
+            "error"
+          );
+        }
+      } finally {
+        if (!form.hidden) {
+          setBusy(false);
+        }
+      }
+    });
+
+    // Only now can the destructive button ever become enabled.
+    if (window.__codeEvrymaSetDeletionReady) {
+      window.__codeEvrymaSetDeletionReady(true);
+    }
+  } catch (error) {
+    console.error("Code Evryma Firebase initialization error:", error);
+
+    if (window.__codeEvrymaSetDeletionReady) {
+      window.__codeEvrymaSetDeletionReady(false);
+    }
 
     setStatus(
-      "Your Code Evryma account has been deleted successfully. Your account and associated data were processed according to the Code Evryma deletion policy.",
-      "success"
+      "Secure account deletion could not initialize. No account action can be taken from this page. Please reload or contact contact@evanoesis.com.",
+      "error"
     );
-  } catch (error) {
-    try {
-      await signOut(auth);
-    } catch (_) {}
-
-    console.error("Code Evryma deletion error:", error);
-
-    const code = String(error && error.code ? error.code : "").toLowerCase();
-
-    if (
-      code.includes("invalid-credential") ||
-      code.includes("wrong-password") ||
-      code.includes("user-not-found")
-    ) {
-      setStatus("Username or password is incorrect.", "error");
-    } else if (code.includes("user-disabled")) {
-      setStatus(
-        "This account is disabled. Please contact contact@evanoesis.com.",
-        "error"
-      );
-    } else if (code.includes("too-many-requests")) {
-      setStatus("Too many attempts. Please try again later.", "error");
-    } else {
-      setStatus(
-        "We could not complete the account deletion. Your account has not been confirmed as deleted. Please try again or contact contact@evanoesis.com.",
-        "error"
-      );
-    }
-  } finally {
-    if (!form.hidden) {
-      setBusy(false);
-    }
   }
-});
-</script>
-<script id="evanoesis-password-eye-script-v2">
+})();
+</script><script id="evanoesis-password-eye-script-v2">
 (() => {
   const eye = document.getElementById('password-eye');
   const password =
